@@ -1,0 +1,47 @@
+# Supply-chain demand graph. THIS FILE IS THE ANTI-HALLUCINATION ANCHOR.
+#
+# A directed edge  A -> B  means: "A's demand propagates to B" (B supplies A / B benefits
+# when A's volume grows). Propagation walks edges forward from a catalyst's seed nodes.
+#
+# EVERY edge MUST carry:
+#   source   : a citable origin (filing, earnings call, reputable news + enough to find it)
+#   verified : true only when a human/source confirms the relationship.
+# Claude may PROPOSE new edges from filings, but they enter as verified:false and CANNOT
+# raise a recommendation's confidence until a source is attached and verified flipped.
+#
+# Node ids are "<market>:<id>" matching the universe files (us:NVDA, tw:2330).
+
+catalysts:
+  - id: ai_capex
+    name: "AI 資料中心 capex 爆發"
+    description: >
+      Hyperscaler 加速建置 AI 訓練/推論叢集，capex 年增顯著，需求沿運算硬體鏈往下傳導。
+    seeds: ["us:NVDA", "us:AMD"]          # 催化劑首先灌入的節點（運算晶片）
+    drivers: ["us:MSFT", "us:GOOGL", "us:META"]  # capex 來源，用於自動偵測強度
+    source: "MSFT/GOOGL/META FY24-25 10-K & earnings calls: record data-center capex guidance"
+
+edges:
+  # 運算晶片 -> 記憶體 / 代工 / 網通
+  - {from: "us:NVDA", to: "us:MU",   relation: "GPU 模組需 HBM 高頻寬記憶體",   source: "Micron earnings: HBM capacity sold out through next year", verified: true}
+  - {from: "us:NVDA", to: "tw:2330", relation: "GPU 由台積電先進製程代工",       source: "TSMC earnings: HPC/AI is primary growth driver; NVDA is a major customer", verified: true}
+  - {from: "us:AMD",  to: "tw:2330", relation: "MI 系列 GPU 台積電代工",         source: "TSMC/AMD earnings disclosures", verified: true}
+  - {from: "us:NVDA", to: "us:AVGO", relation: "AI 叢集需高速網通/自研 ASIC 配套", source: "Broadcom earnings: AI networking + custom accelerator ramp", verified: true}
+  - {from: "us:NVDA", to: "us:MRVL", relation: "資料中心互連與光通訊晶片",        source: "Marvell earnings: data-center/AI revenue growth", verified: true}
+
+  # 台積電 -> 先進封裝 / ABF 載板 / 半導體設備
+  - {from: "tw:2330", to: "tw:3037", relation: "AI 晶片封裝需 ABF 載板",          source: "Unimicron investor materials: ABF substrate demand from HPC", verified: true}
+  - {from: "tw:2330", to: "tw:8046", relation: "ABF 載板供應",                    source: "Nan Ya PCB disclosures on ABF substrate", verified: true}
+  - {from: "tw:2330", to: "tw:3711", relation: "委外封測/CoWoS 產能外溢至 OSAT",   source: "ASE earnings commentary on advanced packaging", verified: true}
+  - {from: "tw:2330", to: "us:AMAT", relation: "擴產帶動半導體設備採購",          source: "Applied Materials earnings: leading-edge foundry capex", verified: true}
+  - {from: "tw:2330", to: "us:LRCX", relation: "蝕刻/沉積設備採購",               source: "Lam Research earnings disclosures", verified: true}
+
+  # 運算晶片 -> AI 伺服器 ODM/品牌 -> 電源 / 散熱
+  - {from: "us:NVDA", to: "us:SMCI", relation: "GPU 整合進 AI 伺服器系統",        source: "Super Micro earnings: GPU server demand", verified: true}
+  - {from: "us:NVDA", to: "tw:2317", relation: "鴻海組裝 AI 伺服器/GB 機櫃",       source: "Hon Hai earnings: AI server is key growth driver", verified: true}
+  - {from: "us:NVDA", to: "tw:2382", relation: "廣達代工 AI 伺服器",              source: "Quanta earnings: AI server shipments", verified: true}
+  - {from: "us:NVDA", to: "tw:6669", relation: "緯穎供應雲端 AI 伺服器",          source: "Wiwynn earnings: hyperscale AI demand", verified: true}
+  - {from: "tw:2317", to: "tw:2308", relation: "AI 伺服器需高功率電源",            source: "Delta earnings: AI power/PSU demand", verified: true}
+  - {from: "tw:2382", to: "tw:3017", relation: "高功耗 GPU 機櫃需散熱方案",        source: "AVC earnings commentary on thermal demand", verified: true}
+
+  # 範例：尚未查證的提議邊（示範防呆機制；不得提升信心，直到附來源並 verified:true）
+  - {from: "us:NVDA", to: "tw:3661", relation: "（待查）部分自研 ASIC 代工/IP 關聯", source: "", verified: false}

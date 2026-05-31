@@ -1,0 +1,28 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+build/
+dist/
+.venv/
+venv/
+
+# Env / secrets
+.env
+*.local
+
+# Data cache (regenerated; can be large)
+data_cache/
+*.parquet
+*.sqlite
+*.db
+
+# OS / editor
+.DS_Store
+.idea/
+.vscode/
+
+# Test / tooling
+.pytest_cache/
+.ruff_cache/

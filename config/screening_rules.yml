@@ -1,0 +1,37 @@
+# Engine-one (quantitative fundamentals) scoring config.
+# Each metric is scored 0..1 against thresholds, then weighted into a 0..100 score.
+# Direction "higher"/"lower" sets whether bigger raw values score better.
+# good = value scoring 1.0; floor = value scoring 0.0; linear in between (clamped).
+# Mid/long-term value bias: profitability quality + cash flow + sane valuation,
+# not momentum. Tune freely — this file is the single source of truth for ranking.
+
+weights:
+  growth: 0.25
+  profitability: 0.30
+  balance_sheet: 0.15
+  cash_flow: 0.20
+  valuation: 0.10
+
+metrics:
+  # --- growth ---
+  revenue_cagr_3y:      {group: growth,        direction: higher, floor: 0.0,  good: 0.20}
+  earnings_growth_yoy:  {group: growth,        direction: higher, floor: -0.1, good: 0.30}
+
+  # --- profitability quality ---
+  gross_margin:         {group: profitability, direction: higher, floor: 0.10, good: 0.50}
+  operating_margin:     {group: profitability, direction: higher, floor: 0.0,  good: 0.25}
+  roe:                  {group: profitability, direction: higher, floor: 0.05, good: 0.25}
+
+  # --- balance sheet strength ---
+  debt_ratio:           {group: balance_sheet, direction: lower,  floor: 0.80, good: 0.30}
+
+  # --- cash flow ---
+  fcf_margin:           {group: cash_flow,     direction: higher, floor: 0.0,  good: 0.20}
+  ocf_to_net_income:    {group: cash_flow,     direction: higher, floor: 0.5,  good: 1.20}
+
+  # --- valuation (avoid overpaying) ---
+  fcf_yield:            {group: valuation,     direction: higher, floor: 0.0,  good: 0.06}
+
+# Candidates below this fundamentals score are dropped before demand-chain analysis,
+# so we never recommend a "great story, broken financials" name.
+min_fundamentals_score: 55

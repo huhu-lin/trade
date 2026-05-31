@@ -1,0 +1,80 @@
+name: weekly-screen
+
+# Runs the full dual-engine research pipeline on a schedule and commits the report back.
+# Committing the report each run also keeps the workflow active (GitHub disables cron on
+# repos with 60 days of no activity). Secrets are injected as env — never committed.
+
+on:
+  schedule:
+    - cron: "0 1 * * 1"   # every Monday 01:00 UTC (~09:00 Taipei)
+  workflow_dispatch:
+    inputs:
+      catalyst:
+        description: "Catalyst id (blank = hottest detected)"
+        required: false
+        default: ""
+      no_analyst:
+        description: "Skip Claude analysis (true/false)"
+        required: false
+        default: "false"
+
+permissions:
+  contents: write   # needed to commit the report back to the repo
+
+concurrency:
+  group: weekly-screen
+  cancel-in-progress: false
+
+jobs:
+  screen:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Cache data_cache (parquet API responses)
+        uses: actions/cache@v4
+        with:
+          path: data_cache
+          key: data-cache-${{ github.run_id }}
+          restore-keys: |
+            data-cache-
+
+      - name: Install
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e .
+
+      - name: Run pipeline
+        env:
+          FINMIND_TOKEN: ${{ secrets.FINMIND_TOKEN }}
+          SEC_USER_AGENT: ${{ secrets.SEC_USER_AGENT }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: |
+          ARGS=""
+          if [ -n "${{ github.event.inputs.catalyst }}" ]; then
+            ARGS="$ARGS --catalyst ${{ github.event.inputs.catalyst }}"
+          fi
+          if [ "${{ github.event.inputs.no_analyst }}" = "true" ]; then
+            ARGS="$ARGS --no-analyst"
+          fi
+          python -m trade.cli run $ARGS
+
+      - name: Commit report
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add reports/
+          if git diff --cached --quiet; then
+            echo "No new report to commit."
+          else
+            git commit -m "report: weekly screen $(date -u +%Y-%m-%d)"
+            git push
+          fi

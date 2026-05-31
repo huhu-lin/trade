@@ -1,0 +1,73 @@
+# 中長期價值投資研究報告 — {{ period }}
+
+> 產生時間：{{ generated_at }} ·
+> 催化劑：**{{ catalyst.name }}**（`{{ catalyst.id }}`）·
+> 推薦 {{ recommendations | length }} 檔 · 觀察 {{ watchlist | length }} 檔
+
+每檔推薦都是**雙引擎交集**：通過量化基本面門檻 **且** 位於一條*已查證*的需求傳導鏈上、
+且該節點有真實需求流動證據。信心分數由公式計算，分析文字只負責解釋、不得灌水。
+
+## 催化劑熱度（需求源動能）
+
+| 催化劑 | 熱度 | 來源節點動能 |
+|---|---:|---|
+{% for h in catalyst_heat -%}
+| {{ h.catalyst.name }} (`{{ h.catalyst.id }}`) | {{ "%.1f"|format(h.heat) }} | {{ h.summary }} |
+{% endfor %}
+
+---
+
+## 推薦標的（通過雙引擎）
+{% if not recommendations %}
+（本期無標的同時通過兩引擎。）
+{% endif %}
+{% for r in recommendations %}
+{% set p = r.packet %}
+### {{ loop.index }}. {{ p.name }}（{{ p.market | upper }}:{{ p.ticker }}） · 信心 {{ "%.1f"|format(p.confidence) }} / 100（{{ p.confidence_tier }}）
+
+- **基本面分數**：{{ "%.1f"|format(p.fundamentals_score) }}／100（{{ "通過" if p.fundamentals_passes else "未過門檻" }}）
+- **傳導分數**：{{ "%.1f"|format(p.propagation_score) }}／100 · 離催化劑 {{ p.chain_hops }} 跳
+- **信心拆解**：基本面 {{ p.confidence_breakdown.fundamentals_score }} × {{ p.confidence_breakdown.weights.fundamentals }} ＋ 傳導 {{ p.confidence_breakdown.propagation_score }} × {{ p.confidence_breakdown.weights.propagation }}，資料完整度係數 {{ p.confidence_breakdown.completeness_factor }}（{{ p.confidence_breakdown.inputs_present }}/{{ p.confidence_breakdown.inputs_total }} 項有資料）
+
+**需求傳導路徑**：{{ p.chain_path | join("  →  ") }}
+{% for ln in p.chain_links %}
+- `{{ ln.from_id }} → {{ ln.to_id }}`：{{ ln.relation }}{% if ln.verified %} ｜來源：{{ ln.source }}{% else %} ｜**⚠ 敘事假設（未查證）**{% endif %}
+{% endfor %}
+
+**需求流動證據**
+
+| 指標 | 數值 | 期間 | 來源 |
+|---|---:|---|---|
+{% for e in p.demand_evidence -%}
+{% if e.value is not none %}| {{ e.metric }} | {{ "%+.2f%%"|format(e.value * 100) }} | {{ e.period or "—" }} | {{ e.source }} |
+{% endif %}{% endfor %}
+{% if p.demand_data_gaps %}> 資料缺口：{{ p.demand_data_gaps | join(", ") }}（明列、未估算）{% endif %}
+
+**基本面佐證**
+
+| 指標 | 數值 | 子分數 |
+|---|---:|---:|
+{% for m in p.metrics -%}
+{% if m.value is not none %}| {{ m.name }} | {{ "%.4f"|format(m.value) }} | {{ "%.2f"|format(m.sub_score) if m.sub_score is not none else "—" }} |
+{% endif %}{% endfor %}
+{% if p.fundamentals_missing %}> 缺漏指標：{{ p.fundamentals_missing | join(", ") }}{% endif %}
+
+{% if r.verdict.available %}**Claude 受限分析**（模型：{{ r.verdict.model }}）
+
+{{ r.verdict.narrative }}
+{% else %}> Claude 分析未啟用（{{ r.verdict.note }}）。以上分數與證據均為確定性計算，可獨立判讀。
+{% endif %}
+
+---
+{% endfor %}
+
+## 觀察名單（在鏈上但未通過雙引擎）
+
+| 標的 | 基本面 | 傳導 | 信心 | 未過原因 |
+|---|---:|---:|---:|---|
+{% for p in watchlist -%}
+| {{ p.name }} ({{ p.market | upper }}:{{ p.ticker }}) | {{ "%.0f"|format(p.fundamentals_score) }} | {{ "%.0f"|format(p.propagation_score) }} | {{ "%.0f"|format(p.confidence) }} | {{ p.reason }} |
+{% endfor %}
+
+---
+*本報告由自動化雙引擎研究工具產生。所有數據附帶出處；標記「敘事假設」的環節尚未經來源證實，不得視為事實。非投資建議。*

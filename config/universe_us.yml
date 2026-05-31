@@ -1,0 +1,17 @@
+# US seed universe. ticker resolves to CIK via EDGAR. Hyperscalers are included as the
+# upstream demand source (their capex is the catalyst that propagates down the chain).
+- {id: "NVDA", name: "NVIDIA",            sectors: [gpu, ai_compute, ai_hardware]}
+- {id: "AMD",  name: "AMD",               sectors: [gpu, cpu, ai_compute]}
+- {id: "AVGO", name: "Broadcom",          sectors: [networking, asic, ai_hardware]}
+- {id: "MRVL", name: "Marvell",           sectors: [networking, asic, ai_hardware]}
+- {id: "MU",   name: "Micron",            sectors: [memory, hbm, ai_hardware]}
+- {id: "ANET", name: "Arista Networks",   sectors: [networking, ai_hardware]}
+- {id: "SMCI", name: "Super Micro",       sectors: [ai_server]}
+- {id: "DELL", name: "Dell",              sectors: [ai_server]}
+- {id: "AMAT", name: "Applied Materials", sectors: [semicap, ai_hardware]}
+- {id: "LRCX", name: "Lam Research",      sectors: [semicap]}
+- {id: "KLAC", name: "KLA",               sectors: [semicap]}
+- {id: "MSFT", name: "Microsoft",         sectors: [hyperscaler, cloud_capex]}
+- {id: "GOOGL", name: "Alphabet",         sectors: [hyperscaler, cloud_capex]}
+- {id: "META", name: "Meta",              sectors: [hyperscaler, cloud_capex]}
+- {id: "COST", name: "Costco",            sectors: [retail, consumer_staples]}
