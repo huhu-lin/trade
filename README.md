@@ -70,7 +70,21 @@ python -m trade.cli run --catalyst ai_capex --no-notify
 python -m trade.cli run --no-analyst          # 跳過 Claude 層（純確定性報告）
 ```
 
-報告輸出至 `reports/<ISO年-週>.md`（例如 `reports/2026-W22.md`）。
+報告輸出兩種格式：純文字 `reports/<ISO年-週>.md`（例如 `reports/2026-W22.md`），以及
+**互動式 HTML** `docs/<ISO年-週>.html`（同一份資料、不額外耗 API token），並自動更新
+`docs/index.html` 週報索引。HTML 為自包含單檔（系統字體＋純 CSS/SVG＋原生 JS，無 CDN、
+離線可開）：信心量表、雙引擎分數條、可展開個股卡片、供應鏈已查證 ✓／敘事假設 ⚠ 徽章、
+可排序篩選的觀察名單。
+
+### 透過 GitHub Pages 發佈
+
+互動報告寫入 `docs/` 並隨每週 run 一起 commit。一次性啟用：**Settings → Pages →
+Source: `Deploy from a branch` → `main` / `/docs`**。啟用後可分享網址：
+
+```
+https://<你的帳號>.github.io/trade/            # 週報索引
+https://<你的帳號>.github.io/trade/2026-W22    # 單週報告
+```
 
 ## 雲端排程（GitHub Actions）
 
@@ -97,11 +111,12 @@ src/trade/
   metrics/     fundamentals.py（指標+出處）· scoring.py（0–100 評分）         ← 引擎一
   industry/    supply_chain.py（圖+傳導+防呆）· demand_chain.py（證據）· catalyst_detector.py  ← 引擎二
   analysis/    data_packet.py（證據封包）· confidence.py（確定性信心）· claude_analyst.py（受限分析）
-  report/      render.py + templates/report.md.j2
+  report/      render.py + templates/（report.md.j2 · report.html.j2 · index.html.j2）
   notify/      notifier.py（Discord / Telegram）
   pipeline.py  串接全流程（雙引擎交集）
   cli.py       fetch / screen / chain / catalysts / run
-tests/         loader · scoring · demand_chain · confidence · pipeline
+tests/         loader · scoring · demand_chain · confidence · pipeline · render_html
+docs/          GitHub Pages 來源：互動式 HTML 週報 + index.html
 ```
 
 ## 測試

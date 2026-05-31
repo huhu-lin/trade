@@ -18,7 +18,7 @@ from trade.industry.demand_chain import analyse_chain, score_candidate
 from trade.industry.supply_chain import build_graph, get_catalyst, propagate
 from trade.metrics.fundamentals import compute_metrics
 from trade.metrics.scoring import score_metrics
-from trade.settings import REPORTS_DIR
+from trade.settings import DOCS_DIR, REPORTS_DIR
 
 
 def _cmd_fetch(args: argparse.Namespace) -> int:
@@ -130,12 +130,15 @@ def _cmd_catalysts(args: argparse.Namespace) -> int:
 def _cmd_run(args: argparse.Namespace) -> int:
     from trade.notify.notifier import notify, summarise
     from trade.pipeline import run_pipeline
-    from trade.report.render import write_report
+    from trade.report.render import write_html_report, write_index, write_report
 
     result = run_pipeline(catalyst=args.catalyst, max_hops=args.max_hops,
                           run_analyst=not args.no_analyst)
     out = write_report(result, REPORTS_DIR)
+    html_out = write_html_report(result, DOCS_DIR)
+    write_index(DOCS_DIR)
     print(f"# Report written -> {out}")
+    print(f"# Interactive HTML -> {html_out}")
     print(f"  catalyst={result.catalyst.id}  recommendations={len(result.recommendations)}  "
           f"watchlist={len(result.watchlist)}")
     for r in result.recommendations:

@@ -33,10 +33,13 @@ def _metric_label(key: str) -> str:
     return _METRIC_LABELS.get(key, key)
 
 
-def _env() -> Environment:
+def _env(*, html: bool) -> Environment:
+    # Markdown output must NOT autoescape (`&`, `<` are literal); HTML output must.
+    autoescape = select_autoescape(enabled_extensions=("html", "j2")) if html else \
+        select_autoescape(enabled_extensions=())
     env = Environment(
         loader=FileSystemLoader(str(_TEMPLATE_DIR)),
-        autoescape=select_autoescape(enabled_extensions=()),  # markdown, not HTML
+        autoescape=autoescape,
         trim_blocks=True,
         lstrip_blocks=True,
     )
@@ -44,14 +47,12 @@ def _env() -> Environment:
     return env
 
 
-def render_report(result) -> str:
-    """result is a trade.pipeline.PipelineResult. Returns the Markdown body."""
+def _template_context(result) -> dict:
     heat_view = [
         {"catalyst": h.catalyst, "heat": h.heat, "summary": _heat_summary(h)}
         for h in result.catalyst_heat
     ]
-    template = _env().get_template("report.md.j2")
-    return template.render(
+    return dict(
         period=result.period,
         generated_at=result.generated_at,
         catalyst=result.catalyst,
@@ -59,6 +60,18 @@ def render_report(result) -> str:
         watchlist=result.watchlist,
         catalyst_heat=heat_view,
     )
+
+
+def render_report(result) -> str:
+    """result is a trade.pipeline.PipelineResult. Returns the Markdown body."""
+    template = _env(html=False).get_template("report.md.j2")
+    return template.render(**_template_context(result))
+
+
+def render_html_report(result) -> str:
+    """Same data as render_report, rendered as a self-contained interactive HTML page."""
+    template = _env(html=True).get_template("report.html.j2")
+    return template.render(**_template_context(result))
 
 
 def _heat_summary(heat) -> str:
@@ -74,4 +87,25 @@ def write_report(result, reports_dir: Path) -> Path:
     reports_dir.mkdir(parents=True, exist_ok=True)
     out = reports_dir / f"{result.period}.md"
     out.write_text(render_report(result), encoding="utf-8")
+    return out
+
+
+def write_html_report(result, docs_dir: Path) -> Path:
+    """Write the interactive HTML report to docs/<period>.html (GitHub Pages source)."""
+    docs_dir.mkdir(parents=True, exist_ok=True)
+    out = docs_dir / f"{result.period}.html"
+    out.write_text(render_html_report(result), encoding="utf-8")
+    return out
+
+
+def write_index(docs_dir: Path) -> Path:
+    """(Re)build docs/index.html listing every weekly HTML report, newest first."""
+    docs_dir.mkdir(parents=True, exist_ok=True)
+    periods = sorted(
+        (p.stem for p in docs_dir.glob("*.html") if p.name != "index.html"),
+        reverse=True,
+    )
+    template = _env(html=True).get_template("index.html.j2")
+    out = docs_dir / "index.html"
+    out.write_text(template.render(periods=periods), encoding="utf-8")
     return out

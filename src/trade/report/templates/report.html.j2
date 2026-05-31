@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>研究報告 {{ period }} · 雙引擎價值投資</title>
+<style>
+  /* System CJK font stacks only — no webfont CDN, fully offline & zero-dependency. */
+  :root {
+    --font-sans: ui-sans-serif, system-ui, "PingFang TC", "Noto Sans TC", "Microsoft JhengHei", sans-serif;
+    --font-serif: "Songti TC", "Noto Serif TC", "Source Han Serif TC", Georgia, serif;
+    --font-mono: ui-monospace, "SF Mono", "JetBrains Mono", "Cascadia Code", monospace;
+
+    --bg: oklch(0.98 0.008 95);
+    --surface: oklch(1 0 0);
+    --surface-2: oklch(0.985 0.006 95);
+    --ink: oklch(0.27 0.02 260);
+    --muted: oklch(0.55 0.018 260);
+    --faint: oklch(0.72 0.015 260);
+    --line: oklch(0.91 0.008 260);
+    --accent: oklch(0.55 0.12 250);
+    --pos: oklch(0.56 0.13 150);
+    --neg: oklch(0.57 0.17 25);
+    --high: oklch(0.58 0.13 150);
+    --medium: oklch(0.70 0.13 80);
+    --low: oklch(0.60 0.05 260);
+    --verified: oklch(0.55 0.12 150);
+    --assumption: oklch(0.66 0.15 62);
+    --shadow: 0 1px 2px oklch(0.27 0.02 260 / 0.04), 0 8px 24px oklch(0.27 0.02 260 / 0.06);
+    --radius: 14px;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: oklch(0.19 0.012 260);
+      --surface: oklch(0.23 0.014 260);
+      --surface-2: oklch(0.21 0.012 260);
+      --ink: oklch(0.92 0.01 260);
+      --muted: oklch(0.72 0.015 260);
+      --faint: oklch(0.55 0.015 260);
+      --line: oklch(0.31 0.012 260);
+      --accent: oklch(0.72 0.11 250);
+      --pos: oklch(0.72 0.13 150);
+      --neg: oklch(0.70 0.15 25);
+      --high: oklch(0.72 0.13 150);
+      --medium: oklch(0.78 0.12 80);
+      --low: oklch(0.68 0.04 260);
+      --verified: oklch(0.72 0.12 150);
+      --assumption: oklch(0.76 0.13 62);
+      --shadow: 0 1px 2px oklch(0 0 0 / 0.2), 0 10px 30px oklch(0 0 0 / 0.28);
+    }
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    font-family: var(--font-sans);
+    color: var(--ink);
+    background-color: var(--bg);
+    background-image: radial-gradient(oklch(0.5 0.02 260 / 0.05) 1px, transparent 1px);
+    background-size: 22px 22px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  .wrap { max-width: 1060px; margin: 0 auto; padding: clamp(20px, 4vw, 56px); }
+
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  /* ---- Masthead ---- */
+  .masthead { padding-bottom: 28px; border-bottom: 1px solid var(--line); margin-bottom: 36px; }
+  .eyebrow {
+    font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--faint); margin: 0 0 10px;
+  }
+  h1 {
+    font-family: var(--font-serif); font-weight: 600;
+    font-size: clamp(28px, 5vw, 46px); line-height: 1.1; letter-spacing: -0.01em;
+    margin: 0 0 18px;
+  }
+  .meta { display: flex; flex-wrap: wrap; gap: 10px 18px; align-items: center;
+          font-size: 14px; color: var(--muted); }
+  .meta .dot { color: var(--faint); }
+  .pill {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: var(--surface); border: 1px solid var(--line); border-radius: 999px;
+    padding: 4px 12px; font-size: 13px; box-shadow: var(--shadow);
+  }
+  .pill b { color: var(--accent); }
+  .lede { margin: 26px 0 0; color: var(--muted); font-size: 15px; max-width: 62ch; }
+  .lede b { color: var(--ink); }
+
+  /* ---- Section headings ---- */
+  h2 {
+    font-family: var(--font-serif); font-weight: 600; font-size: 22px;
+    margin: 48px 0 16px; display: flex; align-items: baseline; gap: 10px;
+  }
+  h2 .count { font-family: var(--font-mono); font-size: 13px; color: var(--faint); font-weight: 400; }
+
+  /* ---- Heat bars ---- */
+  .heat-row { display: grid; grid-template-columns: minmax(140px, 1fr) 2fr auto;
+              gap: 14px; align-items: center; padding: 10px 0; border-bottom: 1px solid var(--line); }
+  .heat-row:last-child { border-bottom: 0; }
+  .heat-name { font-size: 14px; }
+  .heat-name code { font-family: var(--font-mono); font-size: 11px; color: var(--faint); }
+  .heat-track { height: 8px; border-radius: 999px; background: var(--surface-2);
+                border: 1px solid var(--line); overflow: hidden; }
+  .heat-fill { height: 100%; background: linear-gradient(90deg, var(--accent), oklch(0.7 0.12 200)); }
+  .heat-val { font-family: var(--font-mono); font-size: 13px; color: var(--muted); text-align: right; min-width: 48px; }
+  .heat-sum { grid-column: 1 / -1; font-size: 12px; color: var(--faint); margin-top: -2px; }
+
+  /* ---- Recommendation cards ---- */
+  .card {
+    background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
+    box-shadow: var(--shadow); margin: 16px 0; overflow: clip;
+    transition: border-color 200ms ease;
+  }
+  .card[open] { border-color: oklch(0.82 0.02 260); }
+  .card > summary {
+    list-style: none; cursor: pointer; padding: 18px 22px;
+    display: grid; grid-template-columns: auto 1fr auto; gap: 18px; align-items: center;
+  }
+  .card > summary::-webkit-details-marker { display: none; }
+  .rank { font-family: var(--font-serif); font-size: 26px; color: var(--faint); width: 34px; text-align: center; }
+  .who .name { font-size: 17px; font-weight: 600; }
+  .who .tick { font-family: var(--font-mono); font-size: 12px; color: var(--muted); margin-top: 2px; }
+  .who .bars { margin-top: 9px; display: grid; gap: 5px; max-width: 320px; }
+  .sbar { display: grid; grid-template-columns: 64px 1fr 42px; gap: 8px; align-items: center; font-size: 11px; color: var(--muted); }
+  .sbar .track { display: block; height: 6px; border-radius: 999px; background: var(--surface-2); border: 1px solid var(--line); overflow: hidden; }
+  .sbar .fill { display: block; height: 100%; }
+  .fill.fund { background: var(--accent); }
+  .fill.prop { background: oklch(0.62 0.12 190); }
+  .sbar .num { font-family: var(--font-mono); text-align: right; }
+
+  .conf { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+  .donut { width: 56px; height: 56px; transform: rotate(-90deg); }
+  .donut .bg { fill: none; stroke: var(--surface-2); stroke-width: 6; }
+  .donut .fg { fill: none; stroke-width: 6; stroke-linecap: round; transition: stroke-dashoffset 600ms ease; }
+  .donut-num { transform: rotate(90deg); font-family: var(--font-mono); font-size: 14px; font-weight: 600; fill: var(--ink); }
+  .tier { font-size: 11px; font-weight: 600; letter-spacing: 0.04em; padding: 2px 9px; border-radius: 999px; }
+  .tier.high { color: var(--high); background: oklch(0.56 0.13 150 / 0.12); }
+  .tier.medium { color: var(--medium); background: oklch(0.70 0.13 80 / 0.14); }
+  .tier.low { color: var(--low); background: oklch(0.60 0.05 260 / 0.14); }
+  .stroke-high { stroke: var(--high); }
+  .stroke-medium { stroke: var(--medium); }
+  .stroke-low { stroke: var(--low); }
+
+  .card .body { padding: 4px 22px 22px; border-top: 1px solid var(--line); }
+  .breakdown { font-size: 12.5px; color: var(--muted); font-family: var(--font-mono);
+               background: var(--surface-2); border: 1px solid var(--line); border-radius: 8px;
+               padding: 10px 12px; margin: 16px 0; }
+
+  .subhead { font-size: 12px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase;
+             color: var(--faint); margin: 22px 0 10px; }
+
+  /* ---- Chain path ---- */
+  .chain { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+  .node { font-family: var(--font-mono); font-size: 12px; padding: 4px 10px; border-radius: 8px;
+          background: var(--surface-2); border: 1px solid var(--line); }
+  .arrow { color: var(--faint); }
+  .links { margin: 12px 0 0; display: grid; gap: 6px; }
+  .link { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; font-size: 13px; }
+  .link code { font-family: var(--font-mono); font-size: 12px; color: var(--muted); }
+  .badge { font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 999px; white-space: nowrap; }
+  .badge.ok { color: var(--verified); background: oklch(0.55 0.12 150 / 0.12); }
+  .badge.warn { color: var(--assumption); background: oklch(0.66 0.15 62 / 0.14); }
+  .link .src { font-size: 11px; color: var(--faint); }
+
+  /* ---- Tables ---- */
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; margin: 4px 0; }
+  th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--line); }
+  th { font-size: 11px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase;
+       color: var(--faint); }
+  td.num, th.num { text-align: right; font-family: var(--font-mono); }
+  .val-pos { color: var(--pos); }
+  .val-neg { color: var(--neg); }
+  .src-cell { color: var(--faint); font-size: 12px; font-family: var(--font-mono); }
+  .subscore { display: inline-grid; grid-template-columns: 40px 28px; gap: 6px; align-items: center; }
+  .subscore .track { display: block; height: 5px; border-radius: 999px; background: var(--surface-2); border: 1px solid var(--line); overflow: hidden; }
+  .subscore .fill { display: block; height: 100%; background: var(--accent); }
+  .gaps { font-size: 12px; color: var(--faint); margin: 8px 0 0; }
+  .gaps b { color: var(--assumption); font-weight: 600; }
+
+  /* ---- Narrative ---- */
+  .narrative { margin: 18px 0 0; padding: 16px 18px; border-left: 3px solid var(--accent);
+               background: var(--surface-2); border-radius: 0 10px 10px 0;
+               white-space: pre-wrap; font-size: 14.5px; line-height: 1.75; }
+  .narrative .model { display: block; font-family: var(--font-mono); font-size: 11px;
+                      color: var(--faint); margin-bottom: 10px; white-space: normal; }
+  .disabled { margin: 18px 0 0; font-size: 13px; color: var(--faint); font-style: italic; }
+
+  /* ---- Watchlist ---- */
+  .toolbar { display: flex; gap: 10px; align-items: center; margin: 6px 0 12px; }
+  .toolbar input { font: inherit; font-size: 14px; padding: 8px 12px; border-radius: 10px;
+                   border: 1px solid var(--line); background: var(--surface); color: var(--ink);
+                   width: 240px; max-width: 100%; }
+  .toolbar input:focus { outline: 2px solid oklch(0.55 0.12 250 / 0.4); outline-offset: 1px; }
+  #watch th { cursor: pointer; user-select: none; }
+  #watch th[data-sort]:hover { color: var(--accent); }
+  #watch th .ind { font-size: 10px; opacity: 0.6; }
+  #watch tbody tr:hover { background: var(--surface-2); }
+  .empty { color: var(--faint); font-size: 14px; padding: 12px 0; }
+
+  /* ---- Glossary + footer ---- */
+  .glossary { margin-top: 40px; background: var(--surface); border: 1px solid var(--line);
+              border-radius: var(--radius); box-shadow: var(--shadow); }
+  .glossary > summary { cursor: pointer; padding: 16px 22px; font-family: var(--font-serif);
+                        font-size: 18px; font-weight: 600; }
+  .glossary .gbody { padding: 4px 22px 20px; border-top: 1px solid var(--line); font-size: 14px; }
+  .glossary h4 { margin: 18px 0 6px; font-size: 13px; letter-spacing: 0.04em; color: var(--accent); }
+  .glossary ul { margin: 0; padding-left: 18px; }
+  .glossary li { margin: 5px 0; color: var(--muted); }
+  .glossary li b { color: var(--ink); }
+
+  footer { margin-top: 44px; padding-top: 20px; border-top: 1px solid var(--line);
+           font-size: 12px; color: var(--faint); line-height: 1.7; }
+
+  /* ---- Subtle entrance ---- */
+  @media (prefers-reduced-motion: no-preference) {
+    .card, .heat-row { animation: rise 360ms ease both; }
+    @keyframes rise { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="masthead">
+    <p class="eyebrow">雙引擎價值投資研究</p>
+    <h1>中長期投資研究報告 · {{ period }}</h1>
+    <div class="meta">
+      <span>產生時間 {{ generated_at }}</span>
+      <span class="dot">·</span>
+      <span class="pill">催化劑 <b>{{ catalyst.name }}</b> <code>{{ catalyst.id }}</code></span>
+      <span class="pill">推薦 <b>{{ recommendations | length }}</b> 檔</span>
+      <span class="pill">觀察 <b>{{ watchlist | length }}</b> 檔</span>
+    </div>
+    <p class="lede">每檔推薦都是<b>雙引擎交集</b>：通過量化基本面門檻，<b>且</b>位於一條<i>已查證</i>的需求傳導鏈上、該節點有真實需求流動證據。信心分數由公式計算，分析文字只負責解釋、不得灌水。</p>
+  </header>
+
+  <section>
+    <h2>催化劑熱度 <span class="count">需求源動能</span></h2>
+    {% set hmax = (catalyst_heat | map(attribute='heat') | max) if catalyst_heat else 0 %}
+    {% for h in catalyst_heat %}
+    <div class="heat-row">
+      <div class="heat-name">{{ h.catalyst.name }} <code>{{ h.catalyst.id }}</code></div>
+      <div class="heat-track"><div class="heat-fill" style="width: {{ ((h.heat / hmax * 100) if hmax else 0) | round(1) }}%"></div></div>
+      <div class="heat-val">{{ "%.1f"|format(h.heat) }}</div>
+      <div class="heat-sum">{{ h.summary }}</div>
+    </div>
+    {% endfor %}
+  </section>
+
+  <section>
+    <h2>推薦標的 <span class="count">通過雙引擎</span></h2>
+    {% if not recommendations %}
+    <p class="empty">本期無標的同時通過兩引擎。</p>
+    {% endif %}
+    {% for r in recommendations %}
+    {% set p = r.packet %}
+    {% set circ = 138.23 %}
+    {% set conf = p.confidence or 0 %}
+    <details class="card" {% if loop.first %}open{% endif %}>
+      <summary>
+        <div class="rank">{{ loop.index }}</div>
+        <div class="who">
+          <div class="name">{{ p.name }}</div>
+          <div class="tick">{{ p.market | upper }}:{{ p.ticker }} · 離催化劑 {{ p.chain_hops }} 跳</div>
+          <div class="bars">
+            <div class="sbar">
+              <span>基本面</span>
+              <span class="track"><span class="fill fund" style="width: {{ p.fundamentals_score | round(0) }}%"></span></span>
+              <span class="num">{{ "%.0f"|format(p.fundamentals_score) }}</span>
+            </div>
+            <div class="sbar">
+              <span>傳導</span>
+              <span class="track"><span class="fill prop" style="width: {{ p.propagation_score | round(0) }}%"></span></span>
+              <span class="num">{{ "%.0f"|format(p.propagation_score) }}</span>
+            </div>
+          </div>
+        </div>
+        <div class="conf">
+          <svg class="donut" viewBox="0 0 50 50" aria-hidden="true">
+            <circle class="bg" cx="25" cy="25" r="22"></circle>
+            <circle class="fg stroke-{{ p.confidence_tier }}" cx="25" cy="25" r="22"
+                    stroke-dasharray="{{ circ }}"
+                    stroke-dashoffset="{{ (circ * (1 - conf / 100)) | round(2) }}"></circle>
+            <text class="donut-num" x="25" y="30" text-anchor="middle">{{ "%.0f"|format(conf) }}</text>
+          </svg>
+          <span class="tier {{ p.confidence_tier }}">{{ p.confidence_tier }}</span>
+        </div>
+      </summary>
+
+      <div class="body">
+        {% set cb = p.confidence_breakdown %}
+        <div class="breakdown">信心 {{ "%.1f"|format(conf) }} ＝ 基本面 {{ cb.fundamentals_score }} × {{ cb.weights.fundamentals }} ＋ 傳導 {{ cb.propagation_score }} × {{ cb.weights.propagation }}，資料完整度係數 {{ cb.completeness_factor }}（{{ cb.inputs_present }}/{{ cb.inputs_total }} 項有資料）</div>
+
+        <div class="subhead">需求傳導路徑</div>
+        <div class="chain">
+          {% for n in p.chain_path %}
+          <span class="node">{{ n }}</span>{% if not loop.last %}<span class="arrow">→</span>{% endif %}
+          {% endfor %}
+        </div>
+        <div class="links">
+          {% for ln in p.chain_links %}
+          <div class="link">
+            <code>{{ ln.from_id }} → {{ ln.to_id }}</code>
+            <span>{{ ln.relation }}</span>
+            {% if ln.verified %}
+            <span class="badge ok">✓ 已查證</span><span class="src">{{ ln.source }}</span>
+            {% else %}
+            <span class="badge warn">⚠ 敘事假設（未查證）</span>
+            {% endif %}
+          </div>
+          {% endfor %}
+        </div>
+
+        <div class="subhead">需求流動證據</div>
+        <table>
+          <thead><tr><th>指標</th><th class="num">數值</th><th>期間</th><th>來源</th></tr></thead>
+          <tbody>
+          {% for e in p.demand_evidence %}{% if e.value is not none %}
+            <tr>
+              <td>{{ e.metric | metric_label }}</td>
+              <td class="num {{ 'val-pos' if e.value >= 0 else 'val-neg' }}">{{ "%+.2f%%"|format(e.value * 100) }}</td>
+              <td>{{ e.period or "—" }}</td>
+              <td class="src-cell">{{ e.source }}</td>
+            </tr>
+          {% endif %}{% endfor %}
+          </tbody>
+        </table>
+        {% if p.demand_data_gaps %}<p class="gaps">資料缺口（明列、不估算）：<b>{% for g in p.demand_data_gaps %}{{ g | metric_label }}{{ "、" if not loop.last }}{% endfor %}</b></p>{% endif %}
+
+        <div class="subhead">基本面佐證</div>
+        <table>
+          <thead><tr><th>指標</th><th class="num">數值</th><th class="num">子分數</th></tr></thead>
+          <tbody>
+          {% for m in p.metrics %}{% if m.value is not none %}
+            <tr>
+              <td>{{ m.name | metric_label }}</td>
+              <td class="num">{{ "%.4f"|format(m.value) }}</td>
+              <td class="num">
+                {% if m.sub_score is not none %}
+                <span class="subscore"><span class="track"><span class="fill" style="width: {{ (m.sub_score * 100) | round(0) }}%"></span></span>{{ "%.2f"|format(m.sub_score) }}</span>
+                {% else %}—{% endif %}
+              </td>
+            </tr>
+          {% endif %}{% endfor %}
+          </tbody>
+        </table>
+        {% if p.fundamentals_missing %}<p class="gaps">缺漏指標（資料來源沒給，不估算）：<b>{% for g in p.fundamentals_missing %}{{ g | metric_label }}{{ "、" if not loop.last }}{% endfor %}</b></p>{% endif %}
+
+        {% if r.verdict.available %}
+        <div class="narrative"><span class="model">Claude 受限分析 · 模型 {{ r.verdict.model }}</span>{{ r.verdict.narrative }}</div>
+        {% else %}
+        <p class="disabled">Claude 分析未啟用（{{ r.verdict.note }}）。以上分數與證據均為確定性計算，可獨立判讀。</p>
+        {% endif %}
+      </div>
+    </details>
+    {% endfor %}
+  </section>
+
+  <section>
+    <h2>觀察名單 <span class="count">在鏈上但未通過雙引擎</span></h2>
+    {% if watchlist %}
+    <div class="toolbar">
+      <input id="watch-filter" type="search" placeholder="篩選標的名稱／代號…" aria-label="篩選觀察名單">
+    </div>
+    <table id="watch">
+      <thead>
+        <tr>
+          <th data-sort="text" data-col="0">標的 <span class="ind">⇅</span></th>
+          <th class="num" data-sort="num" data-col="1">基本面 <span class="ind">⇅</span></th>
+          <th class="num" data-sort="num" data-col="2">傳導 <span class="ind">⇅</span></th>
+          <th class="num" data-sort="num" data-col="3">信心 <span class="ind">⇅</span></th>
+          <th data-sort="text" data-col="4">未過原因</th>
+        </tr>
+      </thead>
+      <tbody>
+      {% for p in watchlist %}
+        <tr>
+          <td>{{ p.name }} <span class="src-cell">{{ p.market | upper }}:{{ p.ticker }}</span></td>
+          <td class="num">{{ "%.0f"|format(p.fundamentals_score) }}</td>
+          <td class="num">{{ "%.0f"|format(p.propagation_score) }}</td>
+          <td class="num">{{ "%.0f"|format(p.confidence or 0) }}</td>
+          <td>{{ p.reason }}</td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+    <p class="empty">本期觀察名單為空。</p>
+    {% endif %}
+  </section>
+
+  <details class="glossary">
+    <summary>名詞白話解釋</summary>
+    <div class="gbody">
+      <h4>三個分數</h4>
+      <ul>
+        <li><b>基本面分數</b>：這家公司「財報體質」好不好（賺錢能力、負債、現金流、估值貴不貴），0–100 分。</li>
+        <li><b>傳導分數</b>：這檔股票「離需求源頭多近、證據多硬」。離催化劑越近、每段供應鏈關係都有出處，分數越高。</li>
+        <li><b>信心分數</b>：上面兩個分數各佔一半，再乘上「資料完整度」。資料缺越多被打越低，整個是公式算的，分析文字不能灌水。</li>
+      </ul>
+      <h4>常見名詞</h4>
+      <ul>
+        <li><b>催化劑</b>：帶動一整條產業需求的源頭事件（例：AI 資料中心大舉投資）。</li>
+        <li><b>需求傳導鏈／幾跳</b>：需求像骨牌一節節傳下去。「0 跳」＝它自己就是源頭；「2 跳」＝隔了兩層才受惠。</li>
+        <li><b>已查證 vs 敘事假設</b>：每段供應鏈關係都要有出處才算「已查證」。沒出處的只能叫「敘事假設」，<b>就算財報滿分也不會被推薦</b>（本工具最核心的防臆測設計）。</li>
+        <li><b>資料完整度</b>：13 項該有的數據實際拿到幾項。例：12／13 ＝ 完整度係數約 0.97。</li>
+      </ul>
+      <h4>為什麼有些欄位「資料缺漏」</h4>
+      <ul>
+        <li>最常見的是<b>月營收年增率</b>：只有<b>台股</b>法規要求每月公布營收，<b>美股沒有</b>，所以美股這格永遠空白。</li>
+        <li>其他偶發：資料來源那年某個數字本身就沒給（例如淨利從缺，連帶 ROE、淨利年增率算不出來），或前一年虧損、年增率算出來沒意義。</li>
+        <li><b>重點</b>：缺的一律留白、明白標出來，<b>絕不自己猜一個數字填進去</b> —— 這是刻意的設計。</li>
+      </ul>
+    </div>
+  </details>
+
+  <footer>
+    本報告由自動化雙引擎研究工具產生。所有數據附帶出處；標記「敘事假設」的環節尚未經來源證實，不得視為事實。非投資建議。
+  </footer>
+
+</div>
+
+<script>
+  // Watchlist: client-side filter + column sort. Vanilla JS, no dependencies.
+  (function () {
+    var table = document.getElementById("watch");
+    if (!table) return;
+    var tbody = table.querySelector("tbody");
+    var filter = document.getElementById("watch-filter");
+
+    if (filter) {
+      filter.addEventListener("input", function () {
+        var q = this.value.trim().toLowerCase();
+        tbody.querySelectorAll("tr").forEach(function (tr) {
+          tr.style.display = tr.textContent.toLowerCase().indexOf(q) > -1 ? "" : "none";
+        });
+      });
+    }
+
+    table.querySelectorAll("th[data-sort]").forEach(function (th) {
+      var asc = true;
+      th.addEventListener("click", function () {
+        var col = +th.dataset.col, type = th.dataset.sort;
+        var rows = Array.prototype.slice.call(tbody.querySelectorAll("tr"));
+        rows.sort(function (a, b) {
+          var x = a.children[col].textContent.trim();
+          var y = b.children[col].textContent.trim();
+          if (type === "num") { x = parseFloat(x) || 0; y = parseFloat(y) || 0; return asc ? x - y : y - x; }
+          return asc ? x.localeCompare(y, "zh-Hant") : y.localeCompare(x, "zh-Hant");
+        });
+        asc = !asc;
+        rows.forEach(function (r) { tbody.appendChild(r); });
+      });
+    });
+  })();
+</script>
+</body>
+</html>
