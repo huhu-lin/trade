@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>雙引擎價值投資研究報告 · 週報索引</title>
+<style>
+  :root {
+    --font-sans: ui-sans-serif, system-ui, "PingFang TC", "Noto Sans TC", "Microsoft JhengHei", sans-serif;
+    --font-serif: "Songti TC", "Noto Serif TC", "Source Han Serif TC", Georgia, serif;
+    --font-mono: ui-monospace, "SF Mono", "JetBrains Mono", monospace;
+    --bg: oklch(0.98 0.008 95); --surface: oklch(1 0 0); --ink: oklch(0.27 0.02 260);
+    --muted: oklch(0.55 0.018 260); --faint: oklch(0.72 0.015 260);
+    --line: oklch(0.91 0.008 260); --accent: oklch(0.55 0.12 250);
+    --shadow: 0 1px 2px oklch(0.27 0.02 260 / 0.04), 0 8px 24px oklch(0.27 0.02 260 / 0.06);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: oklch(0.19 0.012 260); --surface: oklch(0.23 0.014 260); --ink: oklch(0.92 0.01 260);
+      --muted: oklch(0.72 0.015 260); --faint: oklch(0.55 0.015 260);
+      --line: oklch(0.31 0.012 260); --accent: oklch(0.72 0.11 250);
+      --shadow: 0 1px 2px oklch(0 0 0 / 0.2), 0 10px 30px oklch(0 0 0 / 0.28);
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; font-family: var(--font-sans); color: var(--ink);
+    background-color: var(--bg);
+    background-image: radial-gradient(oklch(0.5 0.02 260 / 0.05) 1px, transparent 1px);
+    background-size: 22px 22px; line-height: 1.65; -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 760px; margin: 0 auto; padding: clamp(24px, 6vw, 72px); }
+  .eyebrow { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.18em;
+             text-transform: uppercase; color: var(--faint); margin: 0 0 12px; }
+  h1 { font-family: var(--font-serif); font-weight: 600; font-size: clamp(28px, 5vw, 42px);
+       line-height: 1.1; margin: 0 0 14px; }
+  .sub { color: var(--muted); font-size: 15px; margin: 0 0 36px; max-width: 56ch; }
+  ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+  a.report {
+    display: flex; align-items: baseline; gap: 14px; text-decoration: none; color: var(--ink);
+    background: var(--surface); border: 1px solid var(--line); border-radius: 12px;
+    padding: 16px 20px; box-shadow: var(--shadow); transition: transform 160ms ease, border-color 160ms ease;
+  }
+  a.report:hover { transform: translateY(-2px); border-color: var(--accent); }
+  a.report .period { font-family: var(--font-serif); font-size: 20px; font-weight: 600; }
+  a.report .label { color: var(--faint); font-size: 13px; }
+  a.report .go { margin-left: auto; color: var(--accent); font-size: 14px; }
+  .empty { color: var(--faint); }
+  footer { margin-top: 48px; padding-top: 20px; border-top: 1px solid var(--line);
+           font-size: 12px; color: var(--faint); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <p class="eyebrow">雙引擎價值投資研究</p>
+  <h1>每週研究報告</h1>
+  <p class="sub">每檔推薦皆為「量化基本面」與「已查證需求傳導鏈」的雙引擎交集。所有數據附帶出處，未查證環節明確標記為敘事假設。</p>
+
+  <ul>
+    <li>
+      <a class="report" href="2026-W22.html">
+        <span class="period">2026-W22</span>
+        <span class="label">週報</span>
+        <span class="go">檢視 →</span>
+      </a>
+    </li>
+  </ul>
+
+  <footer>由自動化雙引擎研究工具產生。非投資建議。</footer>
+</div>
+</body>
+</html>
