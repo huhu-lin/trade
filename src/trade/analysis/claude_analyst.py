@@ -79,7 +79,6 @@ def analyse(packet: CandidatePacket, max_tokens: int = 1600) -> AnalystVerdict:
         resp = client.messages.create(
             model=ANALYST_MODEL,
             max_tokens=max_tokens,
-            temperature=0,  # deterministic explanation of a deterministic packet
             system=_SYSTEM_PROMPT,
             messages=[{
                 "role": "user",
