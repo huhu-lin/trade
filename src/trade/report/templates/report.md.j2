@@ -39,18 +39,18 @@
 | 指標 | 數值 | 期間 | 來源 |
 |---|---:|---|---|
 {% for e in p.demand_evidence -%}
-{% if e.value is not none %}| {{ e.metric }} | {{ "%+.2f%%"|format(e.value * 100) }} | {{ e.period or "—" }} | {{ e.source }} |
+{% if e.value is not none %}| {{ e.metric | metric_label }} | {{ "%+.2f%%"|format(e.value * 100) }} | {{ e.period or "—" }} | {{ e.source }} |
 {% endif %}{% endfor %}
-{% if p.demand_data_gaps %}> 資料缺口：{{ p.demand_data_gaps | join(", ") }}（明列、未估算）{% endif %}
+{% if p.demand_data_gaps %}> 資料缺口（明列、不估算）：{% for g in p.demand_data_gaps %}{{ g | metric_label }}{{ "、" if not loop.last }}{% endfor %}{% endif %}
 
 **基本面佐證**
 
 | 指標 | 數值 | 子分數 |
 |---|---:|---:|
 {% for m in p.metrics -%}
-{% if m.value is not none %}| {{ m.name }} | {{ "%.4f"|format(m.value) }} | {{ "%.2f"|format(m.sub_score) if m.sub_score is not none else "—" }} |
+{% if m.value is not none %}| {{ m.name | metric_label }} | {{ "%.4f"|format(m.value) }} | {{ "%.2f"|format(m.sub_score) if m.sub_score is not none else "—" }} |
 {% endif %}{% endfor %}
-{% if p.fundamentals_missing %}> 缺漏指標：{{ p.fundamentals_missing | join(", ") }}{% endif %}
+{% if p.fundamentals_missing %}> 缺漏指標（資料來源沒給，不估算）：{% for g in p.fundamentals_missing %}{{ g | metric_label }}{{ "、" if not loop.last }}{% endfor %}{% endif %}
 
 {% if r.verdict.available %}**Claude 受限分析**（模型：{{ r.verdict.model }}）
 
@@ -68,6 +68,26 @@
 {% for p in watchlist -%}
 | {{ p.name }} ({{ p.market | upper }}:{{ p.ticker }}) | {{ "%.0f"|format(p.fundamentals_score) }} | {{ "%.0f"|format(p.propagation_score) }} | {{ "%.0f"|format(p.confidence) }} | {{ p.reason }} |
 {% endfor %}
+
+---
+
+## 名詞白話解釋
+
+**三個分數**
+- **基本面分數**：這家公司「財報體質」好不好（賺錢能力、負債、現金流、估值貴不貴），0–100 分。
+- **傳導分數**：這檔股票「離需求源頭多近、證據多硬」。離催化劑越近、每一段供應鏈關係都有出處，分數越高。
+- **信心分數**：上面兩個分數各佔一半，再乘上「資料完整度」。資料缺越多，分數被打越低。整個是公式算的，分析文字不能灌水。
+
+**常見名詞**
+- **催化劑**：帶動一整條產業需求的源頭事件（例：AI 資料中心大舉投資）。
+- **需求傳導鏈／幾跳**：需求像骨牌一節節傳下去。「離催化劑 0 跳」＝它自己就是源頭；「2 跳」＝隔了兩層才受惠。
+- **已查證 vs 敘事假設**：每段供應鏈關係都要有出處才算「已查證」。沒出處的只能叫「敘事假設」，**就算財報滿分也不會被推薦**（這是本工具最核心的防臆測設計）。
+- **資料完整度**：13 項該有的數據實際拿到幾項。例：12／13 ＝ 完整度係數約 0.97。
+
+**為什麼有些欄位「資料缺漏」**
+- 最常見的是**月營收年增率**：只有**台股**法規要求每月公布營收，**美股沒有**月營收這種東西，所以美股這格永遠是空的（標 n/a outside TW）。
+- 其他偶發狀況：資料來源那年的某個數字本身就沒給（例如淨利從缺，連帶 ROE、淨利年增率算不出來），或前一年是虧損、年增率算出來沒意義。
+- **重點**：缺的一律留白、明白標出來，**絕不自己猜一個數字填進去** —— 這是刻意的設計。
 
 ---
 *本報告由自動化雙引擎研究工具產生。所有數據附帶出處；標記「敘事假設」的環節尚未經來源證實，不得視為事實。非投資建議。*
