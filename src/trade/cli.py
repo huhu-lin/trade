@@ -145,6 +145,14 @@ def _cmd_run(args: argparse.Namespace) -> int:
         p = r.packet
         print(f"  - {p.market}:{p.ticker:<8} {p.name[:16]:<16} confidence={p.confidence}")
 
+    try:
+        from trade.tracking.tracker import record_week, refresh_prices
+        record_week(result.recommendations, result.period)
+        refresh_prices(result.period)
+        print("  tracking updated -> tracking/recommendations.json")
+    except Exception as exc:
+        print(f"[tracking] non-fatal error: {exc}", file=sys.stderr)
+
     if not args.no_notify:
         sent = notify(summarise(result))
         print(f"  notified: {sent or 'none configured'}")
