@@ -71,6 +71,18 @@
 
 ---
 
+{% if tracking_rows %}
+## 歷史推薦追蹤績效
+
+| 推薦週 | 標的 | 進場價 | 最新價 | 報酬率 | 追蹤週數 |
+|---|---|---:|---:|---:|---:|
+{% for row in tracking_rows -%}
+| {{ row.period }} | {{ row.name }} ({{ row.market | upper }}:{{ row.ticker }}) | {% if row.entry_price is not none %}{{ "%.2f"|format(row.entry_price) }}{% else %}—{% endif %} | {% if row.latest_price is not none %}{{ "%.2f"|format(row.latest_price) }}{% else %}—{% endif %} | {% if row.return_pct is not none %}{{ "%+.1f%%"|format(row.return_pct) }}{% else %}—{% endif %} | {{ row.weeks_tracked }} |
+{% endfor %}
+> 進場價為首次推薦當週收盤報價；最新價為本週更新時報價。報酬率不含股息或分割。
+
+---
+{% endif %}
 ## 名詞白話解釋
 
 **三個分數**

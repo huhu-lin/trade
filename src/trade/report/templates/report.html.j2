@@ -394,6 +394,39 @@
     {% endif %}
   </section>
 
+  {% if tracking_rows %}
+  <section>
+    <h2>歷史推薦追蹤績效 <span class="count">{{ tracking_rows | length }} 筆</span></h2>
+    <table id="tracking">
+      <thead>
+        <tr>
+          <th>推薦週</th>
+          <th>標的</th>
+          <th class="num">進場價</th>
+          <th class="num">最新價</th>
+          <th class="num">報酬率</th>
+          <th class="num">追蹤週數</th>
+        </tr>
+      </thead>
+      <tbody>
+      {% for row in tracking_rows %}
+        <tr>
+          <td><span class="src-cell">{{ row.period }}</span></td>
+          <td>{{ row.name }} <span class="src-cell">{{ row.market | upper }}:{{ row.ticker }}</span></td>
+          <td class="num">{% if row.entry_price is not none %}{{ "%.2f"|format(row.entry_price) }}{% else %}—{% endif %}</td>
+          <td class="num">{% if row.latest_price is not none %}{{ "%.2f"|format(row.latest_price) }}{% else %}—{% endif %}</td>
+          <td class="num {% if row.return_pct is not none %}{{ 'val-pos' if row.return_pct >= 0 else 'val-neg' }}{% endif %}">
+            {% if row.return_pct is not none %}{{ "%+.1f%%"|format(row.return_pct) }}{% else %}—{% endif %}
+          </td>
+          <td class="num">{{ row.weeks_tracked }}</td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+    <p style="font-size:12px;color:var(--faint);margin-top:8px;">進場價為首次推薦當週報價；最新價為本週更新時報價。報酬率不含股息或分割。</p>
+  </section>
+  {% endif %}
+
   <details class="glossary">
     <summary>名詞白話解釋</summary>
     <div class="gbody">

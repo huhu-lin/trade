@@ -52,6 +52,12 @@ def _template_context(result) -> dict:
         {"catalyst": h.catalyst, "heat": h.heat, "summary": _heat_summary(h)}
         for h in result.catalyst_heat
     ]
+    tracking_rows: list[dict] = []
+    try:
+        from trade.tracking.tracker import load_performance
+        tracking_rows = load_performance()
+    except Exception:
+        pass
     return dict(
         period=result.period,
         generated_at=result.generated_at,
@@ -59,6 +65,7 @@ def _template_context(result) -> dict:
         recommendations=result.recommendations,
         watchlist=result.watchlist,
         catalyst_heat=heat_view,
+        tracking_rows=tracking_rows,
     )
 
 

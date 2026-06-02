@@ -22,6 +22,7 @@ CONFIG_DIR = ROOT / "config"
 CACHE_DIR = Path(os.getenv("TRADE_CACHE_DIR", ROOT / "data_cache"))
 REPORTS_DIR = ROOT / "reports"
 DOCS_DIR = ROOT / "docs"  # GitHub Pages source (Settings -> Pages -> main /docs)
+TRACKING_DIR = ROOT / "tracking"
 
 CACHE_DIR.mkdir(parents=True, exist_ok=True)
 REPORTS_DIR.mkdir(parents=True, exist_ok=True)
