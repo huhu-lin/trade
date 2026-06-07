@@ -1,0 +1,31 @@
+{
+  "computed_at": "2026-06-07",
+  "n_periods": 2,
+  "groups": {
+    "balance_sheet": {
+      "corr": 0.247,
+      "n": 20,
+      "verdict": "中等"
+    },
+    "cash_flow": {
+      "corr": -0.422,
+      "n": 20,
+      "verdict": "有效"
+    },
+    "growth": {
+      "corr": -0.179,
+      "n": 20,
+      "verdict": "偏弱"
+    },
+    "profitability": {
+      "corr": -0.076,
+      "n": 20,
+      "verdict": "偏弱"
+    },
+    "valuation": {
+      "corr": -0.067,
+      "n": 20,
+      "verdict": "偏弱"
+    }
+  }
+}
