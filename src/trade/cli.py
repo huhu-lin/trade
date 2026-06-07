@@ -146,9 +146,10 @@ def _cmd_run(args: argparse.Namespace) -> int:
         print(f"  - {p.market}:{p.ticker:<8} {p.name[:16]:<16} confidence={p.confidence}")
 
     try:
-        from trade.tracking.tracker import record_week, refresh_prices
+        from trade.tracking.tracker import compute_metric_accuracy, record_week, refresh_prices
         record_week(result.recommendations, result.period)
         refresh_prices(result.period)
+        compute_metric_accuracy()
         print("  tracking updated -> tracking/recommendations.json")
     except Exception as exc:
         print(f"[tracking] non-fatal error: {exc}", file=sys.stderr)
@@ -156,6 +157,42 @@ def _cmd_run(args: argparse.Namespace) -> int:
     if not args.no_notify:
         sent = notify(summarise(result))
         print(f"  notified: {sent or 'none configured'}")
+    return 0
+
+
+def _cmd_review(args: argparse.Namespace) -> int:
+    from trade.tracking.autopsy import run_autopsy
+    from trade.tracking.tracker import compute_metric_accuracy, load_performance
+
+    markets = ["us", "tw"] if args.market == "both" else [args.market]
+    all_perf = load_performance()
+
+    total_diagnoses = []
+    for m in markets:
+        market_perf = [r for r in all_perf if r.get("market") == m]
+        diagnoses = run_autopsy(market_perf, m)
+        total_diagnoses.extend(diagnoses)
+
+    if not total_diagnoses:
+        print("No picks with return < -5% found.")
+    else:
+        print(f"# 本週復盤 — {len(total_diagnoses)} 檔虧損標的\n")
+        for d in total_diagnoses:
+            bench = f"{d.benchmark_return:+.1f}%" if d.benchmark_return is not None else "n/a"
+            print(f"  {d.market.upper()}:{d.ticker:<8} return={d.return_pct:+.1f}%  "
+                  f"benchmark={bench}  verdict={d.verdict}")
+            print(f"           {d.one_liner}")
+        macro_n = sum(1 for d in total_diagnoses if d.verdict == "macro")
+        model_n = len(total_diagnoses) - macro_n
+        print(f"\n小結：{macro_n} 檔純屬大盤連動 ／ {model_n} 檔為模型錯判或基本面惡化")
+
+    if args.update_accuracy:
+        try:
+            result = compute_metric_accuracy(n_weeks=args.weeks)
+            print(f"\n[metric_accuracy] updated -> tracking/metric_accuracy.json "
+                  f"({result.get('n_periods', 0)} 個週期)")
+        except Exception as exc:
+            print(f"[metric_accuracy] 非致命錯誤: {exc}", file=sys.stderr)
     return 0
 
 
@@ -182,6 +219,14 @@ def build_parser() -> argparse.ArgumentParser:
 
     p_cat = sub.add_parser("catalysts", help="Rank configured catalysts by demand heat")
     p_cat.set_defaults(func=_cmd_catalysts)
+
+    p_review = sub.add_parser("review", help="Weekly autopsy: diagnose losing picks & update metric accuracy")
+    p_review.add_argument("--market", default="both", choices=["tw", "us", "both"])
+    p_review.add_argument("--update-accuracy", action="store_true",
+                          help="Recompute tracking/metric_accuracy.json")
+    p_review.add_argument("--weeks", type=int, default=8,
+                          help="Lookback window for metric accuracy (default: 8)")
+    p_review.set_defaults(func=_cmd_review)
 
     p_run = sub.add_parser("run", help="Full pipeline: screen -> chain -> analyse -> report -> notify")
     p_run.add_argument("--catalyst", default=None, help="catalyst id (default: hottest detected)")

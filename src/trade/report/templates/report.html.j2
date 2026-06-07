@@ -427,6 +427,76 @@
   </section>
   {% endif %}
 
+  {% if autopsy_rows %}
+  <section>
+    <h2>本週復盤 <span class="count">{{ autopsy_rows | length }} 檔虧損 &gt; 5%</span></h2>
+    {% set bench_label = autopsy_rows[0].benchmark_label %}
+    {% set bench_ret = autopsy_rows[0].benchmark_return %}
+    <p style="font-size:13px;color:var(--muted);margin-bottom:12px;">
+      同期基準報酬：<b>{{ bench_label }}</b>
+      {% if bench_ret is not none %}
+        <span class="{{ 'val-pos' if bench_ret >= 0 else 'val-neg' }}">{{ "%+.1f%%"|format(bench_ret) }}</span>
+      {% else %}
+        <span style="color:var(--faint)">資料取得失敗</span>
+      {% endif %}
+    </p>
+    <table>
+      <thead>
+        <tr>
+          <th>標的</th>
+          <th class="num">報酬率</th>
+          <th>診斷</th>
+          <th>說明</th>
+        </tr>
+      </thead>
+      <tbody>
+      {% for d in autopsy_rows %}
+        <tr>
+          <td><span class="src-cell">{{ d.market | upper }}:{{ d.ticker }}</span></td>
+          <td class="num val-neg">{{ "%+.1f%%"|format(d.return_pct) }}</td>
+          <td><span class="src-cell">{{ d.verdict }}</span></td>
+          <td style="font-size:13px;color:var(--muted)">{{ d.one_liner }}</td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+    {% set macro_n = autopsy_rows | selectattr("verdict", "eq", "macro") | list | length %}
+    {% set model_n = autopsy_rows | length - macro_n %}
+    <p style="font-size:12px;color:var(--faint);margin-top:8px;">
+      小結：{{ macro_n }} 檔純屬大盤連動 ／ {{ model_n }} 檔為模型錯判或基本面惡化
+    </p>
+  </section>
+  {% endif %}
+
+  {% if metric_accuracy and metric_accuracy.n_periods is defined and metric_accuracy.n_periods >= 4 %}
+  <section>
+    <h2>指標準確度 <span class="count">近 {{ metric_accuracy.n_periods }} 週</span></h2>
+    <table>
+      <thead>
+        <tr>
+          <th>指標群組</th>
+          <th class="num">與報酬相關係數</th>
+          <th class="num">樣本數</th>
+          <th>評估</th>
+        </tr>
+      </thead>
+      <tbody>
+      {% for group, stats in metric_accuracy.groups.items() %}
+        <tr>
+          <td>{{ group }}</td>
+          <td class="num {% if stats.corr is not none %}{{ 'val-pos' if stats.corr >= 0 else 'val-neg' }}{% endif %}">
+            {% if stats.corr is not none %}{{ "%.3f"|format(stats.corr) }}{% else %}—{% endif %}
+          </td>
+          <td class="num">{{ stats.n }}</td>
+          <td style="font-size:13px;color:var(--muted)">{{ stats.verdict }}</td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+    <p style="font-size:12px;color:var(--faint);margin-top:8px;">相關係數以歷史推薦的原始分數與實際報酬率計算，反映各指標群組的選股預測力。資料累積後自動更新。</p>
+  </section>
+  {% endif %}
+
   <details class="glossary">
     <summary>名詞白話解釋</summary>
     <div class="gbody">

@@ -196,6 +196,18 @@ def test_load_performance_handles_null_latest_price(tmp_path, monkeypatch):
     assert rows[0]["return_pct"] is None
 
 
+def _make_packet_with_scores(market: str, ticker: str, scores: dict) -> CandidatePacket:
+    p = _make_packet(market, ticker)
+    return p.model_copy(update={"fundamentals_by_group": scores})
+
+
+def _make_rec_with_scores(market: str, ticker: str, scores: dict) -> Recommendation:
+    return Recommendation(
+        packet=_make_packet_with_scores(market, ticker, scores),
+        verdict=AnalystVerdict("", "", available=False, note="test"),
+    )
+
+
 def test_load_performance_sort_order(tmp_path, monkeypatch):
     from trade.tracking import tracker
     monkeypatch.setattr(tracker, "_fetch_price_safe", lambda m, t: 100.0)
@@ -227,3 +239,119 @@ def test_load_performance_sort_order(tmp_path, monkeypatch):
     w22 = [r for r in rows if r["period"] == "2026-W22"]
     assert w22[0]["ticker"] == "AAPL"
     assert w22[1]["ticker"] == "MSFT"
+
+
+# ----- original_scores tests -----
+
+def test_record_week_stores_original_scores(tmp_path, monkeypatch):
+    from trade.tracking import tracker
+    monkeypatch.setattr(tracker, "_fetch_price_safe", lambda m, t: 100.0)
+    tf = tmp_path / "recommendations.json"
+
+    scores = {"growth": 72.5, "profitability": 61.0}
+    tracker.record_week([_make_rec_with_scores("us", "NVDA", scores)], "2026-W22", path=tf)
+
+    data = _load(tf)
+    assert data["entries"][0]["original_scores"] == scores
+
+
+def test_load_performance_includes_original_scores(tmp_path, monkeypatch):
+    from trade.tracking import tracker
+    monkeypatch.setattr(tracker, "_fetch_price_safe", lambda m, t: 100.0)
+    tf = tmp_path / "recommendations.json"
+
+    scores = {"growth": 72.5, "profitability": 61.0}
+    tracker.record_week([_make_rec_with_scores("us", "NVDA", scores)], "2026-W22", path=tf)
+
+    rows = tracker.load_performance(path=tf)
+    assert rows[0]["original_scores"] == scores
+
+
+def test_load_performance_original_scores_defaults_to_empty_for_old_entries(tmp_path, monkeypatch):
+    from trade.tracking import tracker
+    monkeypatch.setattr(tracker, "_fetch_price_safe", lambda m, t: 100.0)
+    tf = tmp_path / "recommendations.json"
+
+    # Write an entry without original_scores (simulating old format)
+    data = {
+        "entries": [{
+            "period": "2026-W20", "added_date": "2026-05-12",
+            "market": "us", "ticker": "AAPL", "name": "Apple",
+            "entry_price": 200.0,
+            "prices": [{"period": "2026-W20", "date": "2026-05-12", "price": 200.0}],
+        }]
+    }
+    tf.write_text(json.dumps(data), encoding="utf-8")
+
+    rows = tracker.load_performance(path=tf)
+    assert rows[0]["original_scores"] == {}
+
+
+# ----- compute_metric_accuracy tests -----
+
+def test_compute_metric_accuracy_requires_enough_data(tmp_path, monkeypatch):
+    from trade.tracking import tracker
+    monkeypatch.setattr(tracker, "_fetch_price_safe", lambda m, t: 100.0)
+    tf = tmp_path / "recommendations.json"
+    out = tmp_path / "metric_accuracy.json"
+
+    # Only 1 period of data — not enough for correlation
+    tracker.record_week([_make_rec_with_scores("us", "NVDA", {"growth": 70.0})], "2026-W22", path=tf)
+
+    result = tracker.compute_metric_accuracy(n_weeks=8, path=tf, out_path=out)
+    assert result["n_periods"] <= 1
+    # growth group should have n < 3 → verdict "資料不足"
+    assert result["groups"]["growth"]["verdict"] == "資料不足"
+
+
+def test_compute_metric_accuracy_correct_correlation_sign(tmp_path, monkeypatch):
+    from trade.tracking import tracker
+
+    # Build synthetic data: higher growth score → better return
+    tf = tmp_path / "recommendations.json"
+    out = tmp_path / "metric_accuracy.json"
+
+    entries = []
+    for i, (period, ticker, score, ret) in enumerate([
+        ("2026-W18", "A", 80.0, 12.0),
+        ("2026-W18", "B", 40.0, -8.0),
+        ("2026-W19", "C", 75.0, 9.0),
+        ("2026-W19", "D", 35.0, -6.0),
+        ("2026-W20", "E", 85.0, 15.0),
+        ("2026-W20", "F", 30.0, -10.0),
+    ]):
+        entries.append({
+            "period": period, "added_date": "2026-01-01",
+            "market": "us", "ticker": ticker, "name": ticker,
+            "entry_price": 100.0,
+            "prices": [
+                {"period": period, "date": "2026-01-01", "price": 100.0},
+                {"period": "2026-W23", "date": "2026-06-07", "price": round(100.0 * (1 + ret / 100), 2)},
+            ],
+            "original_scores": {"growth": score},
+        })
+
+    data = {"entries": entries}
+    tf.write_text(json.dumps(data), encoding="utf-8")
+
+    result = tracker.compute_metric_accuracy(n_weeks=8, path=tf, out_path=out)
+    growth = result["groups"].get("growth", {})
+    # Strong positive relationship expected
+    assert growth.get("corr") is not None
+    assert growth["corr"] > 0.5
+
+
+def test_compute_metric_accuracy_writes_json(tmp_path, monkeypatch):
+    from trade.tracking import tracker
+    monkeypatch.setattr(tracker, "_fetch_price_safe", lambda m, t: 100.0)
+    tf = tmp_path / "recommendations.json"
+    out = tmp_path / "metric_accuracy.json"
+
+    tracker.record_week([_make_rec("us", "NVDA")], "2026-W22", path=tf)
+    tracker.compute_metric_accuracy(path=tf, out_path=out)
+
+    assert out.exists()
+    content = json.loads(out.read_text(encoding="utf-8"))
+    assert "computed_at" in content
+    assert "groups" in content
+    assert "n_periods" in content

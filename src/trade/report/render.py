@@ -58,6 +58,40 @@ def _template_context(result) -> dict:
         tracking_rows = load_performance()
     except Exception:
         pass
+
+    autopsy_rows: list[dict] = []
+    try:
+        from trade.tracking.autopsy import run_autopsy
+        market = result.recommendations[0].packet.market if result.recommendations else "us"
+        diagnoses = run_autopsy(tracking_rows, market)
+        autopsy_rows = [
+            {
+                "ticker": d.ticker,
+                "market": d.market,
+                "period": d.period,
+                "return_pct": d.return_pct,
+                "benchmark_label": d.benchmark_label,
+                "benchmark_return": d.benchmark_return,
+                "macro_driven": d.macro_driven,
+                "fundamentals_deteriorated": d.fundamentals_deteriorated,
+                "verdict": d.verdict,
+                "one_liner": d.one_liner,
+            }
+            for d in diagnoses
+        ]
+    except Exception:
+        pass
+
+    metric_accuracy: dict = {}
+    try:
+        import json as _json
+        from trade.settings import TRACKING_DIR
+        ma_path = TRACKING_DIR / "metric_accuracy.json"
+        if ma_path.exists():
+            metric_accuracy = _json.loads(ma_path.read_text(encoding="utf-8"))
+    except Exception:
+        pass
+
     return dict(
         period=result.period,
         generated_at=result.generated_at,
@@ -66,6 +100,8 @@ def _template_context(result) -> dict:
         watchlist=result.watchlist,
         catalyst_heat=heat_view,
         tracking_rows=tracking_rows,
+        autopsy_rows=autopsy_rows,
+        metric_accuracy=metric_accuracy,
     )
 
 

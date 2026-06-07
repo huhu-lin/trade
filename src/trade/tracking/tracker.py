@@ -14,6 +14,7 @@ from pathlib import Path
 from trade.settings import TRACKING_DIR
 
 TRACKING_FILE = TRACKING_DIR / "recommendations.json"
+METRIC_ACCURACY_FILE = TRACKING_DIR / "metric_accuracy.json"
 
 
 # ----- Internal helpers -----
@@ -77,6 +78,7 @@ def record_week(
             "name": p.name,
             "entry_price": price,
             "prices": [{"period": period, "date": today, "price": price}],
+            "original_scores": dict(p.fundamentals_by_group),
         })
         existing.add(key)
 
@@ -133,6 +135,7 @@ def load_performance(path: Path = TRACKING_FILE) -> list[dict]:
             "latest_price": lp,
             "return_pct": rp,
             "weeks_tracked": len(entry["prices"]),
+            "original_scores": entry.get("original_scores", {}),
         })
 
     rows.sort(key=lambda r: (r["period"], 1 if r["return_pct"] is None else 0, -(r["return_pct"] or 0)), reverse=False)
@@ -146,3 +149,60 @@ def load_performance(path: Path = TRACKING_FILE) -> list[dict]:
         sorted_rows.extend(g)
 
     return sorted_rows
+
+
+def compute_metric_accuracy(
+    n_weeks: int = 8,
+    path: Path = TRACKING_FILE,
+    out_path: Path = METRIC_ACCURACY_FILE,
+) -> dict:
+    """Compute per-group correlation with return_pct over the last N weeks.
+
+    Writes result atomically to metric_accuracy.json.
+    Returns the result dict regardless of whether the write succeeds.
+    Requires numpy (transitive via pandas).
+    """
+    import numpy as np
+
+    rows = load_performance(path=path)
+    # Keep only rows with both return_pct and original_scores
+    valid = [r for r in rows if r["return_pct"] is not None and r["original_scores"]]
+    # Restrict to last n_weeks distinct periods
+    periods = sorted({r["period"] for r in valid}, reverse=True)[:n_weeks]
+    valid = [r for r in valid if r["period"] in periods]
+
+    all_groups = {"growth", "profitability", "balance_sheet", "cash_flow", "valuation"}
+    groups_result: dict[str, dict] = {}
+
+    for group in sorted(all_groups):
+        pairs = [
+            (r["original_scores"][group], r["return_pct"])
+            for r in valid
+            if group in r["original_scores"]
+        ]
+        if len(pairs) < 3:
+            groups_result[group] = {"corr": None, "n": len(pairs), "verdict": "資料不足"}
+            continue
+        scores, returns = zip(*pairs)
+        corr_matrix = np.corrcoef(scores, returns)
+        corr = float(corr_matrix[0, 1])
+        if abs(corr) >= 0.4:
+            verdict = "有效"
+        elif abs(corr) >= 0.2:
+            verdict = "中等"
+        elif corr < -0.2:
+            verdict = "反向訊號"
+        else:
+            verdict = "偏弱"
+        groups_result[group] = {"corr": round(corr, 3), "n": len(pairs), "verdict": verdict}
+
+    result = {
+        "computed_at": _iso_today(),
+        "n_periods": len(periods),
+        "groups": groups_result,
+    }
+    try:
+        _save_raw(result, out_path)
+    except Exception:
+        pass
+    return result

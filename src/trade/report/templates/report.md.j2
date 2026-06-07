@@ -83,6 +83,37 @@
 
 ---
 {% endif %}
+{% if autopsy_rows %}
+## 本週復盤（虧損 > 5% 標的診斷）
+
+{% set bench_label = autopsy_rows[0].benchmark_label %}
+{% set bench_ret = autopsy_rows[0].benchmark_return %}
+> 同期基準報酬：**{{ bench_label }}** {% if bench_ret is not none %}{{ "%+.1f%%"|format(bench_ret) }}{% else %}資料取得失敗{% endif %}
+
+| 標的 | 報酬率 | 診斷 | 說明 |
+|---|---:|---|---|
+{% for d in autopsy_rows -%}
+| {{ d.market | upper }}:{{ d.ticker }} | {{ "%+.1f%%"|format(d.return_pct) }} | {{ d.verdict }} | {{ d.one_liner }} |
+{% endfor %}
+
+{% set macro_n = autopsy_rows | selectattr("verdict", "eq", "macro") | list | length %}
+{% set model_n = autopsy_rows | length - macro_n %}
+> **小結**：{{ macro_n }} 檔純屬大盤連動 ／ {{ model_n }} 檔為模型錯判或基本面惡化
+
+---
+{% endif %}
+{% if metric_accuracy and metric_accuracy.n_periods is defined and metric_accuracy.n_periods >= 4 %}
+## 指標準確度（近 {{ metric_accuracy.n_periods }} 週）
+
+| 指標群組 | 與報酬相關係數 | 樣本數 | 評估 |
+|---|---:|---:|---|
+{% for group, stats in metric_accuracy.groups.items() -%}
+| {{ group }} | {% if stats.corr is not none %}{{ "%.3f"|format(stats.corr) }}{% else %}—{% endif %} | {{ stats.n }} | {{ stats.verdict }} |
+{% endfor %}
+> 相關係數以歷史推薦的原始分數與實際報酬率計算，反映各指標群組的選股預測力。資料累積後自動更新。
+
+---
+{% endif %}
 ## 名詞白話解釋
 
 **三個分數**
