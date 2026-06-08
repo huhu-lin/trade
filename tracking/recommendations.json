@@ -17,6 +17,11 @@
           "period": "2026-W23",
           "date": "2026-06-07",
           "price": 205.1
+        },
+        {
+          "period": "2026-W24",
+          "date": "2026-06-08",
+          "price": 205.1
         }
       ],
       "original_scores": {
@@ -44,6 +49,11 @@
           "period": "2026-W23",
           "date": "2026-06-07",
           "price": 2365.0
+        },
+        {
+          "period": "2026-W24",
+          "date": "2026-06-08",
+          "price": 2300.0
         }
       ],
       "original_scores": {
@@ -70,6 +80,11 @@
         {
           "period": "2026-W23",
           "date": "2026-06-07",
+          "price": 466.38
+        },
+        {
+          "period": "2026-W24",
+          "date": "2026-06-08",
           "price": 466.38
         }
       ],
@@ -98,6 +113,11 @@
           "period": "2026-W23",
           "date": "2026-06-07",
           "price": 864.01
+        },
+        {
+          "period": "2026-W24",
+          "date": "2026-06-08",
+          "price": 864.01
         }
       ],
       "original_scores": {
@@ -124,6 +144,11 @@
         {
           "period": "2026-W23",
           "date": "2026-06-07",
+          "price": 385.73
+        },
+        {
+          "period": "2026-W24",
+          "date": "2026-06-08",
           "price": 385.73
         }
       ],
@@ -152,6 +177,11 @@
           "period": "2026-W23",
           "date": "2026-06-07",
           "price": 2600.0
+        },
+        {
+          "period": "2026-W24",
+          "date": "2026-06-08",
+          "price": 2565.0
         }
       ],
       "original_scores": {
@@ -178,6 +208,11 @@
         {
           "period": "2026-W23",
           "date": "2026-06-07",
+          "price": 263.47
+        },
+        {
+          "period": "2026-W24",
+          "date": "2026-06-08",
           "price": 263.47
         }
       ],
@@ -206,6 +241,11 @@
           "period": "2026-W23",
           "date": "2026-06-07",
           "price": 303.28
+        },
+        {
+          "period": "2026-W24",
+          "date": "2026-06-08",
+          "price": 303.28
         }
       ],
       "original_scores": {
@@ -233,6 +273,11 @@
           "period": "2026-W23",
           "date": "2026-06-07",
           "price": 2300.0
+        },
+        {
+          "period": "2026-W24",
+          "date": "2026-06-08",
+          "price": 2245.0
         }
       ],
       "original_scores": {
@@ -260,6 +305,11 @@
           "period": "2026-W23",
           "date": "2026-06-07",
           "price": 453.01
+        },
+        {
+          "period": "2026-W24",
+          "date": "2026-06-08",
+          "price": 453.01
         }
       ],
       "original_scores": {
@@ -282,6 +332,11 @@
           "period": "2026-W23",
           "date": "2026-06-01",
           "price": 224.0988
+        },
+        {
+          "period": "2026-W24",
+          "date": "2026-06-08",
+          "price": 205.1
         }
       ],
       "original_scores": {
@@ -304,6 +359,11 @@
           "period": "2026-W23",
           "date": "2026-06-01",
           "price": 2355.0
+        },
+        {
+          "period": "2026-W24",
+          "date": "2026-06-08",
+          "price": 2300.0
         }
       ],
       "original_scores": {
@@ -326,6 +386,11 @@
           "period": "2026-W23",
           "date": "2026-06-01",
           "price": 510.13
+        },
+        {
+          "period": "2026-W24",
+          "date": "2026-06-08",
+          "price": 466.38
         }
       ],
       "original_scores": {
@@ -348,6 +413,11 @@
           "period": "2026-W23",
           "date": "2026-06-01",
           "price": 1035.5
+        },
+        {
+          "period": "2026-W24",
+          "date": "2026-06-08",
+          "price": 864.01
         }
       ],
       "original_scores": {
@@ -370,6 +440,11 @@
           "period": "2026-W23",
           "date": "2026-06-01",
           "price": 459.97
+        },
+        {
+          "period": "2026-W24",
+          "date": "2026-06-08",
+          "price": 385.73
         }
       ],
       "original_scores": {
@@ -392,6 +467,11 @@
           "period": "2026-W23",
           "date": "2026-06-01",
           "price": 2785.0
+        },
+        {
+          "period": "2026-W24",
+          "date": "2026-06-08",
+          "price": 2565.0
         }
       ],
       "original_scores": {
@@ -414,6 +494,11 @@
           "period": "2026-W23",
           "date": "2026-06-01",
           "price": 219.43
+        },
+        {
+          "period": "2026-W24",
+          "date": "2026-06-08",
+          "price": 263.47
         }
       ],
       "original_scores": {
@@ -436,6 +521,11 @@
           "period": "2026-W23",
           "date": "2026-06-01",
           "price": 317.12
+        },
+        {
+          "period": "2026-W24",
+          "date": "2026-06-08",
+          "price": 303.28
         }
       ],
       "original_scores": {
@@ -458,6 +548,11 @@
           "period": "2026-W23",
           "date": "2026-06-01",
           "price": 2420.0
+        },
+        {
+          "period": "2026-W24",
+          "date": "2026-06-08",
+          "price": 2245.0
         }
       ],
       "original_scores": {
@@ -480,6 +575,11 @@
           "period": "2026-W23",
           "date": "2026-06-01",
           "price": 458.17
+        },
+        {
+          "period": "2026-W24",
+          "date": "2026-06-08",
+          "price": 453.01
         }
       ],
       "original_scores": {
@@ -488,6 +588,226 @@
         "balance_sheet": 72.0,
         "cash_flow": 95.5,
         "valuation": 27.0
+      }
+    },
+    {
+      "period": "2026-W24",
+      "added_date": "2026-06-08",
+      "market": "us",
+      "ticker": "NVDA",
+      "name": "NVIDIA",
+      "entry_price": 205.1,
+      "prices": [
+        {
+          "period": "2026-W24",
+          "date": "2026-06-08",
+          "price": 205.1
+        }
+      ],
+      "original_scores": {
+        "growth": 100.0,
+        "profitability": 100.0,
+        "balance_sheet": 100.0,
+        "cash_flow": 75.39,
+        "valuation": 32.43
+      }
+    },
+    {
+      "period": "2026-W24",
+      "added_date": "2026-06-08",
+      "market": "tw",
+      "ticker": "2330",
+      "name": "台積電 TSMC",
+      "entry_price": 2300.0,
+      "prices": [
+        {
+          "period": "2026-W24",
+          "date": "2026-06-08",
+          "price": 2300.0
+        }
+      ],
+      "original_scores": {
+        "growth": 97.34,
+        "profitability": 100.0,
+        "balance_sheet": 97.67,
+        "cash_flow": 100.0,
+        "valuation": 28.02
+      }
+    },
+    {
+      "period": "2026-W24",
+      "added_date": "2026-06-08",
+      "market": "us",
+      "ticker": "AMD",
+      "name": "AMD",
+      "entry_price": 466.38,
+      "prices": [
+        {
+          "period": "2026-W24",
+          "date": "2026-06-08",
+          "price": 466.38
+        }
+      ],
+      "original_scores": {
+        "growth": 84.11,
+        "profitability": 50.28,
+        "balance_sheet": 0.0,
+        "cash_flow": 98.61,
+        "valuation": 14.76
+      }
+    },
+    {
+      "period": "2026-W24",
+      "added_date": "2026-06-08",
+      "market": "us",
+      "ticker": "MU",
+      "name": "Micron",
+      "entry_price": 864.01,
+      "prices": [
+        {
+          "period": "2026-W24",
+          "date": "2026-06-08",
+          "price": 864.01
+        }
+      ],
+      "original_scores": {
+        "growth": 66.78,
+        "profitability": 76.1,
+        "balance_sheet": 90.84,
+        "cash_flow": 61.16,
+        "valuation": 2.85
+      }
+    },
+    {
+      "period": "2026-W24",
+      "added_date": "2026-06-08",
+      "market": "us",
+      "ticker": "AVGO",
+      "name": "Broadcom",
+      "entry_price": 385.73,
+      "prices": [
+        {
+          "period": "2026-W24",
+          "date": "2026-06-08",
+          "price": 385.73
+        }
+      ],
+      "original_scores": {
+        "growth": 100.0,
+        "profitability": 100.0,
+        "balance_sheet": 55.03,
+        "cash_flow": 100.0,
+        "valuation": 24.56
+      }
+    },
+    {
+      "period": "2026-W24",
+      "added_date": "2026-06-08",
+      "market": "tw",
+      "ticker": "3017",
+      "name": "奇鋐 AVC",
+      "entry_price": 2565.0,
+      "prices": [
+        {
+          "period": "2026-W24",
+          "date": "2026-06-08",
+          "price": 2565.0
+        }
+      ],
+      "original_scores": {
+        "growth": 100.0,
+        "profitability": 72.82,
+        "balance_sheet": 23.15,
+        "cash_flow": 100.0,
+        "valuation": 53.21
+      }
+    },
+    {
+      "period": "2026-W24",
+      "added_date": "2026-06-08",
+      "market": "us",
+      "ticker": "MRVL",
+      "name": "Marvell",
+      "entry_price": 263.47,
+      "prices": [
+        {
+          "period": "2026-W24",
+          "date": "2026-06-08",
+          "price": 263.47
+        }
+      ],
+      "original_scores": {
+        "growth": 57.25,
+        "profitability": 77.63,
+        "balance_sheet": 88.41,
+        "cash_flow": 53.72,
+        "valuation": 10.1
+      }
+    },
+    {
+      "period": "2026-W24",
+      "added_date": "2026-06-08",
+      "market": "us",
+      "ticker": "LRCX",
+      "name": "Lam Research",
+      "entry_price": 303.28,
+      "prices": [
+        {
+          "period": "2026-W24",
+          "date": "2026-06-08",
+          "price": 303.28
+        }
+      ],
+      "original_scores": {
+        "growth": 55.71,
+        "profitability": 98.92,
+        "balance_sheet": 52.4,
+        "cash_flow": 96.58,
+        "valuation": 23.79
+      }
+    },
+    {
+      "period": "2026-W24",
+      "added_date": "2026-06-08",
+      "market": "tw",
+      "ticker": "2308",
+      "name": "台達電 Delta",
+      "entry_price": 2245.0,
+      "prices": [
+        {
+          "period": "2026-W24",
+          "date": "2026-06-08",
+          "price": 2245.0
+        }
+      ],
+      "original_scores": {
+        "growth": 82.53,
+        "profitability": 66.86,
+        "balance_sheet": 61.74,
+        "cash_flow": 73.77,
+        "valuation": 15.08
+      }
+    },
+    {
+      "period": "2026-W24",
+      "added_date": "2026-06-08",
+      "market": "us",
+      "ticker": "AMAT",
+      "name": "Applied Materials",
+      "entry_price": 453.01,
+      "prices": [
+        {
+          "period": "2026-W24",
+          "date": "2026-06-08",
+          "price": 453.01
+        }
+      ],
+      "original_scores": {
+        "growth": 17.47,
+        "profitability": 98.9,
+        "balance_sheet": 72.48,
+        "cash_flow": 95.51,
+        "valuation": 26.4
       }
     }
   ]
