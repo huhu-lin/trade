@@ -1,0 +1,3061 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>研究報告 2026-W28 · 雙引擎價值投資</title>
+<style>
+  /* System CJK font stacks only — no webfont CDN, fully offline & zero-dependency. */
+  :root {
+    --font-sans: ui-sans-serif, system-ui, "PingFang TC", "Noto Sans TC", "Microsoft JhengHei", sans-serif;
+    --font-serif: "Songti TC", "Noto Serif TC", "Source Han Serif TC", Georgia, serif;
+    --font-mono: ui-monospace, "SF Mono", "JetBrains Mono", "Cascadia Code", monospace;
+
+    --bg: oklch(0.98 0.008 95);
+    --surface: oklch(1 0 0);
+    --surface-2: oklch(0.985 0.006 95);
+    --ink: oklch(0.27 0.02 260);
+    --muted: oklch(0.55 0.018 260);
+    --faint: oklch(0.72 0.015 260);
+    --line: oklch(0.91 0.008 260);
+    --accent: oklch(0.55 0.12 250);
+    --pos: oklch(0.56 0.13 150);
+    --neg: oklch(0.57 0.17 25);
+    --high: oklch(0.58 0.13 150);
+    --medium: oklch(0.70 0.13 80);
+    --low: oklch(0.60 0.05 260);
+    --verified: oklch(0.55 0.12 150);
+    --assumption: oklch(0.66 0.15 62);
+    --shadow: 0 1px 2px oklch(0.27 0.02 260 / 0.04), 0 8px 24px oklch(0.27 0.02 260 / 0.06);
+    --radius: 14px;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: oklch(0.19 0.012 260);
+      --surface: oklch(0.23 0.014 260);
+      --surface-2: oklch(0.21 0.012 260);
+      --ink: oklch(0.92 0.01 260);
+      --muted: oklch(0.72 0.015 260);
+      --faint: oklch(0.55 0.015 260);
+      --line: oklch(0.31 0.012 260);
+      --accent: oklch(0.72 0.11 250);
+      --pos: oklch(0.72 0.13 150);
+      --neg: oklch(0.70 0.15 25);
+      --high: oklch(0.72 0.13 150);
+      --medium: oklch(0.78 0.12 80);
+      --low: oklch(0.68 0.04 260);
+      --verified: oklch(0.72 0.12 150);
+      --assumption: oklch(0.76 0.13 62);
+      --shadow: 0 1px 2px oklch(0 0 0 / 0.2), 0 10px 30px oklch(0 0 0 / 0.28);
+    }
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    font-family: var(--font-sans);
+    color: var(--ink);
+    background-color: var(--bg);
+    background-image: radial-gradient(oklch(0.5 0.02 260 / 0.05) 1px, transparent 1px);
+    background-size: 22px 22px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  .wrap { max-width: 1060px; margin: 0 auto; padding: clamp(20px, 4vw, 56px); }
+
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  /* ---- Masthead ---- */
+  .masthead { padding-bottom: 28px; border-bottom: 1px solid var(--line); margin-bottom: 36px; }
+  .eyebrow {
+    font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--faint); margin: 0 0 10px;
+  }
+  h1 {
+    font-family: var(--font-serif); font-weight: 600;
+    font-size: clamp(28px, 5vw, 46px); line-height: 1.1; letter-spacing: -0.01em;
+    margin: 0 0 18px;
+  }
+  .meta { display: flex; flex-wrap: wrap; gap: 10px 18px; align-items: center;
+          font-size: 14px; color: var(--muted); }
+  .meta .dot { color: var(--faint); }
+  .pill {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: var(--surface); border: 1px solid var(--line); border-radius: 999px;
+    padding: 4px 12px; font-size: 13px; box-shadow: var(--shadow);
+  }
+  .pill b { color: var(--accent); }
+  .lede { margin: 26px 0 0; color: var(--muted); font-size: 15px; max-width: 62ch; }
+  .lede b { color: var(--ink); }
+
+  /* ---- Section headings ---- */
+  h2 {
+    font-family: var(--font-serif); font-weight: 600; font-size: 22px;
+    margin: 48px 0 16px; display: flex; align-items: baseline; gap: 10px;
+  }
+  h2 .count { font-family: var(--font-mono); font-size: 13px; color: var(--faint); font-weight: 400; }
+
+  /* ---- Heat bars ---- */
+  .heat-row { display: grid; grid-template-columns: minmax(140px, 1fr) 2fr auto;
+              gap: 14px; align-items: center; padding: 10px 0; border-bottom: 1px solid var(--line); }
+  .heat-row:last-child { border-bottom: 0; }
+  .heat-name { font-size: 14px; }
+  .heat-name code { font-family: var(--font-mono); font-size: 11px; color: var(--faint); }
+  .heat-track { height: 8px; border-radius: 999px; background: var(--surface-2);
+                border: 1px solid var(--line); overflow: hidden; }
+  .heat-fill { height: 100%; background: linear-gradient(90deg, var(--accent), oklch(0.7 0.12 200)); }
+  .heat-val { font-family: var(--font-mono); font-size: 13px; color: var(--muted); text-align: right; min-width: 48px; }
+  .heat-sum { grid-column: 1 / -1; font-size: 12px; color: var(--faint); margin-top: -2px; }
+
+  /* ---- Recommendation cards ---- */
+  .card {
+    background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
+    box-shadow: var(--shadow); margin: 16px 0; overflow: clip;
+    transition: border-color 200ms ease;
+  }
+  .card[open] { border-color: oklch(0.82 0.02 260); }
+  .card > summary {
+    list-style: none; cursor: pointer; padding: 18px 22px;
+    display: grid; grid-template-columns: auto 1fr auto; gap: 18px; align-items: center;
+  }
+  .card > summary::-webkit-details-marker { display: none; }
+  .rank { font-family: var(--font-serif); font-size: 26px; color: var(--faint); width: 34px; text-align: center; }
+  .who .name { font-size: 17px; font-weight: 600; }
+  .who .tick { font-family: var(--font-mono); font-size: 12px; color: var(--muted); margin-top: 2px; }
+  .who .bars { margin-top: 9px; display: grid; gap: 5px; max-width: 320px; }
+  .sbar { display: grid; grid-template-columns: 64px 1fr 42px; gap: 8px; align-items: center; font-size: 11px; color: var(--muted); }
+  .sbar .track { display: block; height: 6px; border-radius: 999px; background: var(--surface-2); border: 1px solid var(--line); overflow: hidden; }
+  .sbar .fill { display: block; height: 100%; }
+  .fill.fund { background: var(--accent); }
+  .fill.prop { background: oklch(0.62 0.12 190); }
+  .sbar .num { font-family: var(--font-mono); text-align: right; }
+
+  .conf { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+  .donut { width: 56px; height: 56px; transform: rotate(-90deg); }
+  .donut .bg { fill: none; stroke: var(--surface-2); stroke-width: 6; }
+  .donut .fg { fill: none; stroke-width: 6; stroke-linecap: round; transition: stroke-dashoffset 600ms ease; }
+  .donut-num { transform: rotate(90deg); font-family: var(--font-mono); font-size: 14px; font-weight: 600; fill: var(--ink); }
+  .tier { font-size: 11px; font-weight: 600; letter-spacing: 0.04em; padding: 2px 9px; border-radius: 999px; }
+  .tier.high { color: var(--high); background: oklch(0.56 0.13 150 / 0.12); }
+  .tier.medium { color: var(--medium); background: oklch(0.70 0.13 80 / 0.14); }
+  .tier.low { color: var(--low); background: oklch(0.60 0.05 260 / 0.14); }
+  .stroke-high { stroke: var(--high); }
+  .stroke-medium { stroke: var(--medium); }
+  .stroke-low { stroke: var(--low); }
+
+  .card .body { padding: 4px 22px 22px; border-top: 1px solid var(--line); }
+  .breakdown { font-size: 12.5px; color: var(--muted); font-family: var(--font-mono);
+               background: var(--surface-2); border: 1px solid var(--line); border-radius: 8px;
+               padding: 10px 12px; margin: 16px 0; }
+
+  .subhead { font-size: 12px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase;
+             color: var(--faint); margin: 22px 0 10px; }
+
+  /* ---- Chain path ---- */
+  .chain { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+  .node { font-family: var(--font-mono); font-size: 12px; padding: 4px 10px; border-radius: 8px;
+          background: var(--surface-2); border: 1px solid var(--line); }
+  .arrow { color: var(--faint); }
+  .links { margin: 12px 0 0; display: grid; gap: 6px; }
+  .link { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; font-size: 13px; }
+  .link code { font-family: var(--font-mono); font-size: 12px; color: var(--muted); }
+  .badge { font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 999px; white-space: nowrap; }
+  .badge.ok { color: var(--verified); background: oklch(0.55 0.12 150 / 0.12); }
+  .badge.warn { color: var(--assumption); background: oklch(0.66 0.15 62 / 0.14); }
+  .link .src { font-size: 11px; color: var(--faint); }
+
+  /* ---- Tables ---- */
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; margin: 4px 0; }
+  th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--line); }
+  th { font-size: 11px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase;
+       color: var(--faint); }
+  td.num, th.num { text-align: right; font-family: var(--font-mono); }
+  .val-pos { color: var(--pos); }
+  .val-neg { color: var(--neg); }
+  .src-cell { color: var(--faint); font-size: 12px; font-family: var(--font-mono); }
+  .subscore { display: inline-grid; grid-template-columns: 40px 28px; gap: 6px; align-items: center; }
+  .subscore .track { display: block; height: 5px; border-radius: 999px; background: var(--surface-2); border: 1px solid var(--line); overflow: hidden; }
+  .subscore .fill { display: block; height: 100%; background: var(--accent); }
+  .gaps { font-size: 12px; color: var(--faint); margin: 8px 0 0; }
+  .gaps b { color: var(--assumption); font-weight: 600; }
+
+  /* ---- Narrative ---- */
+  .narrative { margin: 18px 0 0; padding: 16px 18px; border-left: 3px solid var(--accent);
+               background: var(--surface-2); border-radius: 0 10px 10px 0;
+               white-space: pre-wrap; font-size: 14.5px; line-height: 1.75; }
+  .narrative .model { display: block; font-family: var(--font-mono); font-size: 11px;
+                      color: var(--faint); margin-bottom: 10px; white-space: normal; }
+  .disabled { margin: 18px 0 0; font-size: 13px; color: var(--faint); font-style: italic; }
+
+  /* ---- Watchlist ---- */
+  .toolbar { display: flex; gap: 10px; align-items: center; margin: 6px 0 12px; }
+  .toolbar input { font: inherit; font-size: 14px; padding: 8px 12px; border-radius: 10px;
+                   border: 1px solid var(--line); background: var(--surface); color: var(--ink);
+                   width: 240px; max-width: 100%; }
+  .toolbar input:focus { outline: 2px solid oklch(0.55 0.12 250 / 0.4); outline-offset: 1px; }
+  #watch th { cursor: pointer; user-select: none; }
+  #watch th[data-sort]:hover { color: var(--accent); }
+  #watch th .ind { font-size: 10px; opacity: 0.6; }
+  #watch tbody tr:hover { background: var(--surface-2); }
+  .empty { color: var(--faint); font-size: 14px; padding: 12px 0; }
+
+  /* ---- Glossary + footer ---- */
+  .glossary { margin-top: 40px; background: var(--surface); border: 1px solid var(--line);
+              border-radius: var(--radius); box-shadow: var(--shadow); }
+  .glossary > summary { cursor: pointer; padding: 16px 22px; font-family: var(--font-serif);
+                        font-size: 18px; font-weight: 600; }
+  .glossary .gbody { padding: 4px 22px 20px; border-top: 1px solid var(--line); font-size: 14px; }
+  .glossary h4 { margin: 18px 0 6px; font-size: 13px; letter-spacing: 0.04em; color: var(--accent); }
+  .glossary ul { margin: 0; padding-left: 18px; }
+  .glossary li { margin: 5px 0; color: var(--muted); }
+  .glossary li b { color: var(--ink); }
+
+  footer { margin-top: 44px; padding-top: 20px; border-top: 1px solid var(--line);
+           font-size: 12px; color: var(--faint); line-height: 1.7; }
+
+  /* ---- Subtle entrance ---- */
+  @media (prefers-reduced-motion: no-preference) {
+    .card, .heat-row { animation: rise 360ms ease both; }
+    @keyframes rise { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="masthead">
+    <p class="eyebrow">雙引擎價值投資研究</p>
+    <h1>中長期投資研究報告 · 2026-W28</h1>
+    <div class="meta">
+      <span>產生時間 2026-07-06 05:01</span>
+      <span class="dot">·</span>
+      <span class="pill">催化劑 <b>AI 資料中心 capex 爆發</b> <code>ai_capex</code></span>
+      <span class="pill">推薦 <b>10</b> 檔</span>
+      <span class="pill">觀察 <b>8</b> 檔</span>
+    </div>
+    <p class="lede">每檔推薦都是<b>雙引擎交集</b>：通過量化基本面門檻，<b>且</b>位於一條<i>已查證</i>的需求傳導鏈上、該節點有真實需求流動證據。信心分數由公式計算，分析文字只負責解釋、不得灌水。</p>
+  </header>
+
+  <section>
+    <h2>催化劑熱度 <span class="count">需求源動能</span></h2>
+    <div class="heat-row">
+      <div class="heat-name">AI 資料中心 capex 爆發 <code>ai_capex</code></div>
+      <div class="heat-track"><div class="heat-fill" style="width: 100.0%"></div></div>
+      <div class="heat-val">90.9</div>
+      <div class="heat-sum">us:MSFT: revenue +15%, capex +45% ｜ us:GOOGL: revenue +15%, capex +74% ｜ us:META: revenue +22%, capex +87% ｜ us:NVDA: revenue +65%, capex +87% ｜ us:AMD: revenue +34%, capex +53%</div>
+    </div>
+  </section>
+
+  <section>
+    <h2>推薦標的 <span class="count">通過雙引擎</span></h2>
+    <details class="card" open>
+      <summary>
+        <div class="rank">1</div>
+        <div class="who">
+          <div class="name">NVIDIA</div>
+          <div class="tick">US:NVDA · 離催化劑 0 跳</div>
+          <div class="bars">
+            <div class="sbar">
+              <span>基本面</span>
+              <span class="track"><span class="fill fund" style="width: 88.0%"></span></span>
+              <span class="num">88</span>
+            </div>
+            <div class="sbar">
+              <span>傳導</span>
+              <span class="track"><span class="fill prop" style="width: 100.0%"></span></span>
+              <span class="num">100</span>
+            </div>
+          </div>
+        </div>
+        <div class="conf">
+          <svg class="donut" viewBox="0 0 50 50" aria-hidden="true">
+            <circle class="bg" cx="25" cy="25" r="22"></circle>
+            <circle class="fg stroke-high" cx="25" cy="25" r="22"
+                    stroke-dasharray="138.23"
+                    stroke-dashoffset="11.96"></circle>
+            <text class="donut-num" x="25" y="30" text-anchor="middle">91</text>
+          </svg>
+          <span class="tier high">high</span>
+        </div>
+      </summary>
+
+      <div class="body">
+        <div class="breakdown">信心 91.3 ＝ 基本面 88.49 × 0.5 ＋ 傳導 100.0 × 0.5，資料完整度係數 0.9692（12/13 項有資料）</div>
+
+        <div class="subhead">需求傳導路徑</div>
+        <div class="chain">
+          <span class="node">us:NVDA</span>        </div>
+        <div class="links">
+        </div>
+
+        <div class="subhead">需求流動證據</div>
+        <table>
+          <thead><tr><th>指標</th><th class="num">數值</th><th>期間</th><th>來源</th></tr></thead>
+          <tbody>
+            <tr>
+              <td>營收年增率</td>
+              <td class="num val-pos">+65.47%</td>
+              <td>FY2025-&gt;FY2026</td>
+              <td class="src-cell">edgar:revenue</td>
+            </tr>
+            <tr>
+              <td>資本支出年增率（擴產投資）</td>
+              <td class="num val-pos">+86.71%</td>
+              <td>FY2025-&gt;FY2026</td>
+              <td class="src-cell">edgar:capex</td>
+            </tr>
+            <tr>
+              <td>應收帳款年增率（接單能見度）</td>
+              <td class="num val-pos">+66.77%</td>
+              <td>FY2025-&gt;FY2026</td>
+              <td class="src-cell">edgar:receivables</td>
+            </tr>
+          </tbody>
+        </table>
+<p class="gaps">資料缺口（明列、不估算）：<b>月營收年增率（台股獨有，需求領先訊號）</b></p>
+        <div class="subhead">基本面佐證</div>
+        <table>
+          <thead><tr><th>指標</th><th class="num">數值</th><th class="num">子分數</th></tr></thead>
+          <tbody>
+            <tr>
+              <td>毛利率</td>
+              <td class="num">0.7107</td>
+              <td class="num">
+                <span class="subscore"><span class="track"><span class="fill" style="width: 100.0%"></span></span>1.00</span>
+              </td>
+            </tr>
+            <tr>
+              <td>營業利益率</td>
+              <td class="num">0.6038</td>
+              <td class="num">
+                <span class="subscore"><span class="track"><span class="fill" style="width: 100.0%"></span></span>1.00</span>
+              </td>
+            </tr>
+            <tr>
+              <td>股東權益報酬率（ROE，賺錢效率）</td>
+              <td class="num">0.7633</td>
+              <td class="num">
+                <span class="subscore"><span class="track"><span class="fill" style="width: 100.0%"></span></span>1.00</span>
+              </td>
+            </tr>
+            <tr>
+              <td>負債比率（越低越穩健）</td>
+              <td class="num">0.2394</td>
+              <td class="num">
+                <span class="subscore"><span class="track"><span class="fill" style="width: 100.0%"></span></span>1.00</span>
+              </td>
+            </tr>
+            <tr>
+              <td>現金流／淨利（盈餘品質）</td>
+              <td class="num">0.8555</td>
+              <td class="num">
+                <span class="subscore"><span class="track"><span class="fill" style="width: 51.0%"></span></span>0.51</span>
+              </td>
+            </tr>
+            <tr>
+              <td>近三年營收年複成長</td>
+              <td class="num">1.0005</td>
+              <td class="num">
+                <span class="subscore"><span class="track"><span class="fill" style="width: 100.0%"></span></span>1.00</span>
+              </td>
+            </tr>
+            <tr>
+              <td>淨利年增率</td>
+              <td class="num">0.6475</td>
+              <td class="num">
+                <span class="subscore"><span class="track"><span class="fill" style="width: 100.0%"></span></span>1.00</span>
+              </td>
+            </tr>
+            <tr>
+              <td>自由現金流利潤率</td>
+              <td class="num">0.4477</td>
+              <td class="num">
+                <span class="subscore"><span class="track"><span class="fill" style="width: 100.0%"></span></span>1.00</span>
+              </td>
+            </tr>
+            <tr>
+              <td>自由現金流殖利率（估值，越高越便宜）</td>
+              <td class="num">0.0205</td>
+              <td class="num">
+                <span class="subscore"><span class="track"><span class="fill" style="width: 34.0%"></span></span>0.34</span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="narrative"><span class="model">Claude 受限分析 · 模型 claude-sonnet-4-6</span>## 結論：值得進一步研究——NVIDIA 直接受惠 AI 資料中心資本支出爆發，基本面幾乎全面滿分，但估值明顯偏貴，是最大隱憂。
+
+---
+
+## 需求傳導路徑
+
+**催化劑起點：AI 資料中心資本支出（capex）爆發**
+
+微軟、Google、Meta 在 FY2024–2025 的年報（10-K）與法說會中，相繼揭示創紀錄的資料中心資本支出計畫（出處：MSFT/GOOGL/META FY24-25 10-K &amp; earnings calls）。這些科技巨頭砸重金蓋 AI 算力基礎設施，直接帶動對 GPU 晶片的龐大採購需求。
+
+**傳導鏈：0 跳，直接受惠**
+
+本封包的傳導鏈節點只有一個：`us:NVDA`，中間沒有任何中間商或供應鏈轉折（傳導鏈為空，跳數 = 0）。這代表 NVIDIA 就是需求的**直接承接者**，不需要透過其他廠商中繼。這也是傳導分數拿到滿分 100 分的原因——需求從科技巨頭的採購訂單，直線流入 NVIDIA 的營收。
+
+此路徑**並非敘事假設**（封包明確標示 `narrative_assumption: false`），亦即這段供需關係已有數據出處支撐，並非單純推論。
+
+**需求已有三項數據印證：**
+
+1. **營收年增率 +65.47%**（FY2025→FY2026，出處：edgar:revenue）——超過六成的年增幅，直接反映 AI 訂單爆量。
+2. **資本支出年增率 +86.71%**（FY2025→FY2026，出處：edgar:capex）——NVIDIA 自身也在大幅擴充產能，顯示管理層對未來需求高度有信心（「擴產 = 預見需求」）。
+3. **應收帳款年增率 +66.77%**（FY2025→FY2026，出處：edgar:receivables）——應收帳款（客戶還沒付款的訂單金額）同步暴增，可視為訂單能見度的間接佐證。
+
+&gt; ⚠️ **資料缺漏：月營收年增率** 因 NVIDIA 為美股，美股公司不需每月公告營收（台股才有月營收制度），故此項無法取得（出處：finmind:monthly_revenue，值為空）。這是制度性缺漏，非公司問題。
+
+---
+
+## 基本面佐證
+
+以下三項最關鍵指標，顯示 NVIDIA 財務體質極為強健：
+
+### 1. 毛利率：**71.07%**（FY2026，出處：edgar 毛利潤／營收）
+毛利率就是「賣出產品後，扣掉直接成本還剩多少比例」。七成以上的毛利率在半導體產業屬於頂尖水準，代表 NVIDIA 的產品幾乎沒有替代品，定價能力極強。單項子分數：滿分。
+
+### 2. 股東權益報酬率（ROE）：**76.33%**（FY2026，出處：edgar 淨利／股東權益）
+ROE 是「公司幫股東賺錢的效率」，76% 意味著每 100 元的股東資金，一年能創造約 76 元的獲利，遠遠超出多數產業。單項子分數：滿分。
+
+### 3. 自由現金流利潤率（FCF 利潤率）：**44.77%**（FY2026，出處：edgar 營業現金流、資本支出、營收）
+自由現金流就是「真正可以自由運用的現金」，近四成五的利潤率代表 NVIDIA 幾乎每賺 100 元營收，就有 45 元化為真實現金，而非只是帳面數字。單項子分數：滿分。
+
+**整體基本面分組評分：** 成長性、獲利能力、資產負債表、均為滿分；現金流品質 75.4 分（略低，原因詳見風險節）；**估值面僅 34.1 分**，是唯一明顯拖分的項目。
+
+---
+
+## 風險與資料缺口
+
+### ⚠️ 風險一：估值明顯偏貴（最大隱憂）
+- 本益比（股價÷每股獲利）：**29.84 倍**（出處：市值與獲利資料）
+- 股價淨值比（股價÷每股帳面價值）：**24.14 倍**——股價是帳面資產的二十幾倍
+- EV/EBITDA（企業總價值÷稅息折舊攤銷前獲利）：**28.24 倍**
+
+以上三項指標均顯示市場已將大量未來成長「預先定價」進去。若 AI 資本支出成長趨緩、或競爭格局改變，估值可能大幅壓縮，這也是估值面單項子分數只有 34.1 分的原因。
+
+### ⚠️ 風險二：自由現金流品質稍低</div>
+      </div>
+    </details>
+    <details class="card" >
+      <summary>
+        <div class="rank">2</div>
+        <div class="who">
+          <div class="name">台積電 TSMC</div>
+          <div class="tick">TW:2330 · 離催化劑 1 跳</div>
+          <div class="bars">
+            <div class="sbar">
+              <span>基本面</span>
+              <span class="track"><span class="fill fund" style="width: 92.0%"></span></span>
+              <span class="num">92</span>
+            </div>
+            <div class="sbar">
+              <span>傳導</span>
+              <span class="track"><span class="fill prop" style="width: 39.0%"></span></span>
+              <span class="num">39</span>
+            </div>
+          </div>
+        </div>
+        <div class="conf">
+          <svg class="donut" viewBox="0 0 50 50" aria-hidden="true">
+            <circle class="bg" cx="25" cy="25" r="22"></circle>
+            <circle class="fg stroke-medium" cx="25" cy="25" r="22"
+                    stroke-dasharray="138.23"
+                    stroke-dashoffset="47.68"></circle>
+            <text class="donut-num" x="25" y="30" text-anchor="middle">66</text>
+          </svg>
+          <span class="tier medium">medium</span>
+        </div>
+      </summary>
+
+      <div class="body">
+        <div class="breakdown">信心 65.5 ＝ 基本面 91.59 × 0.5 ＋ 傳導 39.43 × 0.5，資料完整度係數 1.0（13/13 項有資料）</div>
+
+        <div class="subhead">需求傳導路徑</div>
+        <div class="chain">
+          <span class="node">us:NVDA</span><span class="arrow">→</span>          <span class="node">tw:2330</span>        </div>
+        <div class="links">
+          <div class="link">
+            <code>us:NVDA → tw:2330</code>
+            <span>GPU 由台積電先進製程代工</span>
+            <span class="badge ok">✓ 已查證</span><span class="src">TSMC earnings: HPC/AI is primary growth driver; NVDA is a major customer</span>
+          </div>
+        </div>
+
+        <div class="subhead">需求流動證據</div>
+        <table>
+          <thead><tr><th>指標</th><th class="num">數值</th><th>期間</th><th>來源</th></tr></thead>
+          <tbody>
+            <tr>
+              <td>月營收年增率（台股獨有，需求領先訊號）</td>
+              <td class="num val-pos">+30.09%</td>
+              <td>2026-06</td>
+              <td class="src-cell">finmind:monthly_revenue</td>
+            </tr>
+            <tr>
+              <td>營收年增率</td>
+              <td class="num val-pos">+31.61%</td>
+              <td>FY2024-&gt;FY2025</td>
+              <td class="src-cell">finmind:revenue</td>
+            </tr>
+            <tr>
+              <td>資本支出年增率（擴產投資）</td>
+              <td class="num val-pos">+33.10%</td>
+              <td>FY2024-&gt;FY2025</td>
+              <td class="src-cell">finmind:capex</td>
+            </tr>
+            <tr>
+              <td>應收帳款年增率（接單能見度）</td>
+              <td class="num val-pos">+3.09%</td>
+              <td>FY2024-&gt;FY2025</td>
+              <td class="src-cell">finmind:receivables</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="subhead">基本面佐證</div>
+        <table>
+          <thead><tr><th>指標</th><th class="num">數值</th><th class="num">子分數</th></tr></thead>
+          <tbody>
+            <tr>
+              <td>毛利率</td>
+              <td class="num">0.5989</td>
+              <td class="num">
+                <span class="subscore"><span class="track"><span class="fill" style="width: 100.0%"></span></span>1.00</span>
+              </td>
+            </tr>
+            <tr>
+              <td>營業利益率</td>
+              <td class="num">0.5083</td>
+              <td class="num">
+                <span class="subscore"><span class="track"><span class="fill" style="width: 100.0%"></span></span>1.00</span>
+              </td>
+            </tr>
+            <tr>
+              <td>股東權益報酬率（ROE，賺錢效率）</td>
+              <td class="num">0.3141</td>
+              <td class="num">
+                <span class="subscore"><span class="track"><span class="fill" style="width: 100.0%"></span></span>1.00</span>
+              </td>
+            </tr>
+            <tr>
+              <td>負債比率（越低越穩健）</td>
+              <td class="num">0.3116</td>
+              <td class="num">
+                <span class="subscore"><span class="track"><span class="fill" style="width: 98.0%"></span></span>0.98</span>
+              </td>
+            </tr>
+            <tr>
+              <td>現金流／淨利（盈餘品質）</td>
+              <td class="num">1.3262</td>
+              <td class="num">
+                <span class="subscore"><span class="track"><span class="fill" style="width: 100.0%"></span></span>1.00</span>
+              </td>
+            </tr>
+            <tr>
+              <td>近三年營收年複成長</td>
+              <td class="num">0.1894</td>
+              <td class="num">
+                <span class="subscore"><span class="track"><span class="fill" style="width: 95.0%"></span></span>0.95</span>
+              </td>
+            </tr>
+            <tr>
+              <td>淨利年增率</td>
+              <td class="num">0.4631</td>
+              <td class="num">
+                <span class="subscore"><span class="track"><span class="fill" style="width: 100.0%"></span></span>1.00</span>
+              </td>
+            </tr>
+            <tr>
+              <td>自由現金流利潤率</td>
+              <td class="num">0.2632</td>
+              <td class="num">
+                <span class="subscore"><span class="track"><span class="fill" style="width: 100.0%"></span></span>1.00</span>
+              </td>
+            </tr>
+            <tr>
+              <td>自由現金流殖利率（估值，越高越便宜）</td>
+              <td class="num">0.0156</td>
+              <td class="num">
+                <span class="subscore"><span class="track"><span class="fill" style="width: 26.0%"></span></span>0.26</span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="narrative"><span class="model">Claude 受限分析 · 模型 claude-sonnet-4-6</span>## 結論：值得進一步研究——基本面極為強健，需求傳導路徑清晰且已獲證實，唯一顯著疑慮是估值偏高，需留意進場價格風險
+
+---
+
+## 需求傳導路徑
+
+本次催化劑是「AI 資料中心資本支出爆發」，出處來自微軟、Google、Meta 在 FY24–25 年報（10-K）及法說會中揭露的破紀錄資料中心擴建計畫。
+
+**傳導鏈只有一個節點，但關係直接、已獲查證：**
+
+&gt; **英偉達（NVDA）→ 台積電（2330）**
+&gt; 
+&gt; 關係：英偉達的 GPU（圖形處理器，也是 AI 運算的核心晶片）由台積電以先進製程代為生產。
+&gt; 出處：TSMC 法說會揭露「HPC（高效能運算）／AI 是主要成長動能，英偉達是重要客戶」。
+&gt; **此環節已有直接出處確認，並非推測。**
+
+傳導邏輯整理如下：
+
+1. 微軟、Google、Meta 砸大錢蓋資料中心
+2. → 大量採購英偉達 GPU
+3. → 英偉達委託台積電代工生產這些 GPU
+
+換言之，AI 軍備競賽的需求，透過英偉達這個單一跳板，直接流進台積電的訂單。
+
+---
+
+## 基本面佐證
+
+以下三項數據最能說明台積電的競爭地位：
+
+**① 獲利能力：毛利率近六成**
+- 毛利率（每賣 100 元能留多少錢在扣掉製造成本後）：**59.89%**（FY2025，來源：gross_profit 及 revenue）
+- 營業利益率（進一步扣掉管銷研發後的獲利率）：**50.83%**（FY2025，來源：operating_income 及 revenue）
+- 這兩個數字的單項子分數均為滿分（1.0），代表在評分模型中屬於頂尖水準。
+
+**② 成長動能：獲利年增近五成**
+- 稅後純益年增率：**+46.31%**（FY2024→FY2025，來源：finmind:revenue 計算自 net_income）
+- 3 年營收年複合成長率（CAGR，即平均每年成長多少）：**+18.94%**（FY2022→FY2025，來源：revenue）
+- 最新一期月營收年增率（台股特有的每月公布數字，是市場領先指標）：**+30.09%**（2026 年 6 月，來源：finmind:monthly_revenue）
+
+**③ 現金流品質：帳面獲利有真金白銀支撐**
+- 營業現金流對淨利比（大於 1 代表賺到的錢都有真實現金入帳）：**1.33 倍**（FY2025，來源：operating_cash_flow 及 net_income），單項子分數滿分。
+- 自由現金流利潤率（扣掉大量建廠投資後仍能保留的現金比例）：**26.32%**（FY2025，來源：operating_cash_flow、capex、revenue），單項子分數滿分。
+
+**資料缺漏：** 封包顯示所有 13 項輸入資料均已齊備（資料完整度 = 1.0），本次分析無任何缺漏項目。
+
+---
+
+## 風險與資料缺口
+
+**① 估值偏高，是最大顯性風險**
+- 本益比（股價除以每股獲利，反映市場願意給幾倍的價格）：**33.70 倍**（來源：valuation）
+- 股價淨值比（股價相對帳面資產的溢價倍數）：**10.92 倍**（來源：valuation）
+- 企業價值／EBITDA（另一種衡量整體估值貴不貴的指標）：**21.41 倍**（來源：valuation）
+- 自由現金流殖利率（用市值反推能拿回多少現金，越低代表越貴）：只有 **1.56%**（FY2025，來源：market_cap），估值組的單項子分數僅 **0.26**，是所有指標中唯一明顯拖後腿的項目，也讓整體估值組得分只有 **25.98 分**，遠低於其他組別。
+- **結論：基本面越好、股價也越貴，現價已充分甚至過度反映樂觀預期，下行時估值收縮的風險不可忽視。**
+
+**② 傳導鏈跳數少、但集中度風險存在**
+- 傳導路徑只有一跳（英偉達 → 台積電），邏輯乾淨，但也意味若英偉達訂單出現任何變化（例如客戶轉向自研晶片、地緣政治管制等），衝擊會直接反映在台積電。
+
+**③ 需求代理指標中有一項訊號較弱**
+- 應收帳款年增率（用來觀察訂單能見度）：**+3.09%**（FY2024→FY2025，來源：finm</div>
+      </div>
+    </details>
+    <details class="card" >
+      <summary>
+        <div class="rank">3</div>
+        <div class="who">
+          <div class="name">AMD</div>
+          <div class="tick">US:AMD · 離催化劑 0 跳</div>
+          <div class="bars">
+            <div class="sbar">
+              <span>基本面</span>
+              <span class="track"><span class="fill fund" style="width: 67.0%"></span></span>
+              <span class="num">67</span>
+            </div>
+            <div class="sbar">
+              <span>傳導</span>
+              <span class="track"><span class="fill prop" style="width: 70.0%"></span></span>
+              <span class="num">70</span>
+            </div>
+          </div>
+        </div>
+        <div class="conf">
+          <svg class="donut" viewBox="0 0 50 50" aria-hidden="true">
+            <circle class="bg" cx="25" cy="25" r="22"></circle>
+            <circle class="fg stroke-medium" cx="25" cy="25" r="22"
+                    stroke-dasharray="138.23"
+                    stroke-dashoffset="49.22"></circle>
+            <text class="donut-num" x="25" y="30" text-anchor="middle">64</text>
+          </svg>
+          <span class="tier medium">medium</span>
+        </div>
+      </summary>
+
+      <div class="body">
+        <div class="breakdown">信心 64.4 ＝ 基本面 67.25 × 0.5 ＋ 傳導 69.98 × 0.5，資料完整度係數 0.9385（11/13 項有資料）</div>
+
+        <div class="subhead">需求傳導路徑</div>
+        <div class="chain">
+          <span class="node">us:AMD</span>        </div>
+        <div class="links">
+        </div>
+
+        <div class="subhead">需求流動證據</div>
+        <table>
+          <thead><tr><th>指標</th><th class="num">數值</th><th>期間</th><th>來源</th></tr></thead>
+          <tbody>
+            <tr>
+              <td>營收年增率</td>
+              <td class="num val-pos">+34.34%</td>
+              <td>FY2024-&gt;FY2025</td>
+              <td class="src-cell">edgar:revenue</td>
+            </tr>
+            <tr>
+              <td>資本支出年增率（擴產投資）</td>
+              <td class="num val-pos">+53.14%</td>
+              <td>FY2024-&gt;FY2025</td>
+              <td class="src-cell">edgar:capex</td>
+            </tr>
+            <tr>
+              <td>應收帳款年增率（接單能見度）</td>
+              <td class="num val-pos">+1.99%</td>
+              <td>FY2024-&gt;FY2025</td>
+              <td class="src-cell">edgar:receivables</td>
+            </tr>
+          </tbody>
+        </table>
+<p class="gaps">資料缺口（明列、不估算）：<b>月營收年增率（台股獨有，需求領先訊號）</b></p>
+        <div class="subhead">基本面佐證</div>
+        <table>
+          <thead><tr><th>指標</th><th class="num">數值</th><th class="num">子分數</th></tr></thead>
+          <tbody>
+            <tr>
+              <td>毛利率</td>
+              <td class="num">0.4952</td>
+              <td class="num">
+                <span class="subscore"><span class="track"><span class="fill" style="width: 99.0%"></span></span>0.99</span>
+              </td>
+            </tr>
+            <tr>
+              <td>營業利益率</td>
+              <td class="num">0.1066</td>
+              <td class="num">
+                <span class="subscore"><span class="track"><span class="fill" style="width: 43.0%"></span></span>0.43</span>
+              </td>
+            </tr>
+            <tr>
+              <td>股東權益報酬率（ROE，賺錢效率）</td>
+              <td class="num">0.0688</td>
+              <td class="num">
+                <span class="subscore"><span class="track"><span class="fill" style="width: 9.0%"></span></span>0.09</span>
+              </td>
+            </tr>
+            <tr>
+              <td>現金流／淨利（盈餘品質）</td>
+              <td class="num">1.7783</td>
+              <td class="num">
+                <span class="subscore"><span class="track"><span class="fill" style="width: 100.0%"></span></span>1.00</span>
+              </td>
+            </tr>
+            <tr>
+              <td>近三年營收年複成長</td>
+              <td class="num">0.1364</td>
+              <td class="num">
+                <span class="subscore"><span class="track"><span class="fill" style="width: 68.0%"></span></span>0.68</span>
+              </td>
+            </tr>
+            <tr>
+              <td>淨利年增率</td>
+              <td class="num">1.6417</td>
+              <td class="num">
+                <span class="subscore"><span class="track"><span class="fill" style="width: 100.0%"></span></span>1.00</span>
+              </td>
+            </tr>
+            <tr>
+              <td>自由現金流利潤率</td>
+              <td class="num">0.1944</td>
+              <td class="num">
+                <span class="subscore"><span class="track"><span class="fill" style="width: 97.0%"></span></span>0.97</span>
+              </td>
+            </tr>
+            <tr>
+              <td>自由現金流殖利率（估值，越高越便宜）</td>
+              <td class="num">0.0080</td>
+              <td class="num">
+                <span class="subscore"><span class="track"><span class="fill" style="width: 13.0%"></span></span>0.13</span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+<p class="gaps">缺漏指標（資料來源沒給，不估算）：<b>負債比率（越低越穩健）</b></p>
+        <div class="narrative"><span class="model">Claude 受限分析 · 模型 claude-sonnet-4-6</span>## 結論：值得進一步研究，但估值偏高是最大隱憂
+
+AMD 直接受惠於 AI 資料中心資本支出爆發的催化劑，營收與獲利成長強勁，現金流品質優異；然而本益比高達 172 倍、估值壓力極大，加上資產負債資料缺漏，投資人須謹慎評估風險回報比。
+
+---
+
+## 需求傳導路徑
+
+**傳導鏈：AI 資料中心 capex 爆發 → AMD（直接受益）**
+
+本次封包顯示 AMD 的傳導鏈長度為 **0 跳**，意即 AMD 就是催化劑的直接受益方，中間沒有任何中間環節。
+
+- **催化劑來源**：微軟、Google、Meta 在 FY2024–2025 的年報（10-K）及法說會中，均揭露創歷史新高的資料中心資本支出計畫（來源：MSFT/GOOGL/META FY24-25 10-K &amp; earnings calls）。這些科技巨頭大規模採購 AI 運算晶片，AMD 作為 GPU 及 AI 加速器供應商，訂單需求直接上升。
+
+- **需求落地證據一｜營收年增率**：AMD 營收年增 +34.34%（FY2024→FY2025，來源：edgar:revenue），印證終端需求確實轉化為實際營收成長。
+
+- **需求落地證據二｜資本支出年增率**：AMD 自身的資本支出年增 +53.14%（FY2024→FY2025，來源：edgar:capex）。封包備註指出「擴建產能＝對未來需求的預期」，顯示管理層對後續訂單能見度有信心。
+
+- **需求落地證據三｜應收帳款年增率**：應收帳款年增 +1.99%（FY2024→FY2025，來源：edgar:receivables），作為「訂單能見度代理指標」，此數字強度偏低（強度值 0.099），意味短期訂單累積的信號並不明顯，需搭配其他指標綜合判斷。
+
+- **月營收年增率**：此項資料缺漏（來源：finmind:monthly_revenue），原因是月營收披露制度僅適用於台灣上市公司，美國上市公司不適用，故無法取得。
+
+&gt; **此段無敘事假設**：封包標記本檔並非依賴敘事假設（narrative_assumption = false），上述每個傳導環節均有對應數據或官方文件佐證。
+
+---
+
+## 基本面佐證
+
+**① 獲利成長爆發（最關鍵）**
+稅後純益（淨利）年增 +164.17%（FY2024 淨利 16.41 億美元 → FY2025 淨利 43.35 億美元，來源：edgar:net_income）。獲利成長幅度遠超營收增幅，代表規模效益正在發揮。此項單項子分數為滿分（1.0）。
+
+**② 現金流品質極佳**
+「營業現金流對淨利比」（衡量帳面獲利有多少真正變成現金的指標）達 **1.78 倍**（FY2025 營業現金流 77.09 億美元 ÷ 淨利 43.35 億美元，來源：edgar:operating_cash_flow、edgar:net_income）。數值大於 1 代表實際收到的現金比帳面獲利更多，盈餘品質健康，此項單項子分數同為滿分（1.0）。
+
+自由現金流率（扣除資本支出後，每一塊錢營收能留下多少現金）達 **19.44%**（FY2025，來源：edgar:operating_cash_flow、edgar:capex、edgar:revenue），單項子分數 0.97，表現相當強。
+
+**③ 資料缺漏：負債比率**
+負債比率（衡量公司資產中有多少是靠借債撐起來的）**資料缺漏**：封包顯示 FY2025 總負債數值為 null，雖然總資產有 769.26 億美元（來源：edgar:assets），但無法計算負債比，因此資產負債表這個分組得分為 **0 分**，此為本次分析的重要資料缺口。
+
+---
+
+## 風險與資料缺口
+
+**1. 估值極度偏高**
+- 本益比（股價相對每股獲利的倍數）：**172.6 倍**（來源：市場報價）
+- 股價淨值比（股價相對每股帳面價值的倍數）：**13.09 倍**
+- 企業價值／EBITDA（整體企業價值相對稅前折舊前盈餘的倍數）：**112.5 倍**
+
+以上三個指標均顯示市場已預先反映極樂觀的成長預期。若未來幾季成長稍有不如預期，股價回調風險極大。估值單項子分數僅 **0.133**，是所有指標中最低的，這也是整體基本面評分（67.25 分）被大幅拖累的主因。
+
+**2. 負債比率資料缺漏**
+如前述，</div>
+      </div>
+    </details>
+    <details class="card" >
+      <summary>
+        <div class="rank">4</div>
+        <div class="who">
+          <div class="name">Micron</div>
+          <div class="tick">US:MU · 離催化劑 1 跳</div>
+          <div class="bars">
+            <div class="sbar">
+              <span>基本面</span>
+              <span class="track"><span class="fill fund" style="width: 66.0%"></span></span>
+              <span class="num">66</span>
+            </div>
+            <div class="sbar">
+              <span>傳導</span>
+              <span class="track"><span class="fill prop" style="width: 50.0%"></span></span>
+              <span class="num">50</span>
+            </div>
+          </div>
+        </div>
+        <div class="conf">
+          <svg class="donut" viewBox="0 0 50 50" aria-hidden="true">
+            <circle class="bg" cx="25" cy="25" r="22"></circle>
+            <circle class="fg stroke-medium" cx="25" cy="25" r="22"
+                    stroke-dasharray="138.23"
+                    stroke-dashoffset="60.77"></circle>
+            <text class="donut-num" x="25" y="30" text-anchor="middle">56</text>
+          </svg>
+          <span class="tier medium">medium</span>
+        </div>
+      </summary>
+
+      <div class="body">
+        <div class="breakdown">信心 56.0 ＝ 基本面 65.64 × 0.5 ＋ 傳導 50.0 × 0.5，資料完整度係數 0.9692（12/13 項有資料）</div>
+
+        <div class="subhead">需求傳導路徑</div>
+        <div class="chain">
+          <span class="node">us:NVDA</span><span class="arrow">→</span>          <span class="node">us:MU</span>        </div>
+        <div class="links">
+          <div class="link">
+            <code>us:NVDA → us:MU</code>
+            <span>GPU 模組需 HBM 高頻寬記憶體</span>
+            <span class="badge ok">✓ 已查證</span><span class="src">Micron earnings: HBM capacity sold out through next year</span>
+          </div>
+        </div>
+
+        <div class="subhead">需求流動證據</div>
+        <table>
+          <thead><tr><th>指標</th><th class="num">數值</th><th>期間</th><th>來源</th></tr></thead>
+          <tbody>
+            <tr>
+              <td>營收年增率</td>
+              <td class="num val-pos">+48.85%</td>
+              <td>FY2024-&gt;FY2025</td>
+              <td class="src-cell">edgar:revenue</td>
+            </tr>
+            <tr>
+              <td>資本支出年增率（擴產投資）</td>
+              <td class="num val-pos">+89.09%</td>
+              <td>FY2024-&gt;FY2025</td>
+              <td class="src-cell">edgar:capex</td>
+            </tr>
+            <tr>
+              <td>應收帳款年增率（接單能見度）</td>
+              <td class="num val-pos">+32.18%</td>
+              <td>FY2024-&gt;FY2025</td>
+              <td class="src-cell">edgar:receivables</td>
+            </tr>
+          </tbody>
+        </table>
+<p class="gaps">資料缺口（明列、不估算）：<b>月營收年增率（台股獨有，需求領先訊號）</b></p>
+        <div class="subhead">基本面佐證</div>
+        <table>
+          <thead><tr><th>指標</th><th class="num">數值</th><th class="num">子分數</th></tr></thead>
+          <tbody>
+            <tr>
+              <td>毛利率</td>
+              <td class="num">0.3979</td>
+              <td class="num">
+                <span class="subscore"><span class="track"><span class="fill" style="width: 74.0%"></span></span>0.74</span>
+              </td>
+            </tr>
+            <tr>
+              <td>營業利益率</td>
+              <td class="num">0.2614</td>
+              <td class="num">
+                <span class="subscore"><span class="track"><span class="fill" style="width: 100.0%"></span></span>1.00</span>
+              </td>
+            </tr>
+            <tr>
+              <td>股東權益報酬率（ROE，賺錢效率）</td>
+              <td class="num">0.1576</td>
+              <td class="num">
+                <span class="subscore"><span class="track"><span class="fill" style="width: 54.0%"></span></span>0.54</span>
+              </td>
+            </tr>
+            <tr>
+              <td>負債比率（越低越穩健）</td>
+              <td class="num">0.3458</td>
+              <td class="num">
+                <span class="subscore"><span class="track"><span class="fill" style="width: 91.0%"></span></span>0.91</span>
+              </td>
+            </tr>
+            <tr>
+              <td>現金流／淨利（盈餘品質）</td>
+              <td class="num">2.0523</td>
+              <td class="num">
+                <span class="subscore"><span class="track"><span class="fill" style="width: 100.0%"></span></span>1.00</span>
+              </td>
+            </tr>
+            <tr>
+              <td>近三年營收年複成長</td>
+              <td class="num">0.0671</td>
+              <td class="num">
+                <span class="subscore"><span class="track"><span class="fill" style="width: 34.0%"></span></span>0.34</span>
+              </td>
+            </tr>
+            <tr>
+              <td>淨利年增率</td>
+              <td class="num">9.9756</td>
+              <td class="num">
+                <span class="subscore"><span class="track"><span class="fill" style="width: 100.0%"></span></span>1.00</span>
+              </td>
+            </tr>
+            <tr>
+              <td>自由現金流利潤率</td>
+              <td class="num">0.0446</td>
+              <td class="num">
+                <span class="subscore"><span class="track"><span class="fill" style="width: 22.0%"></span></span>0.22</span>
+              </td>
+            </tr>
+            <tr>
+              <td>自由現金流殖利率（估值，越高越便宜）</td>
+              <td class="num">0.0015</td>
+              <td class="num">
+                <span class="subscore"><span class="track"><span class="fill" style="width: 3.0%"></span></span>0.03</span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="narrative"><span class="model">Claude 受限分析 · 模型 claude-sonnet-4-6</span>## 結論：值得進一步研究，但估值偏高是最大隱憂
+
+Micron（MU）站在 AI 資料中心資本支出爆發的正中心——其 HBM（高頻寬記憶體，一種專為 AI 晶片設計的超快速記憶體）已被 NVDA 生態系綁定，且財務面大幅改善；唯估值指標幾乎全面偏貴，自由現金流（公司賺到的錢扣掉投資後剩下的現金）也因大規模擴廠而被壓薄，需要留意週期反轉風險。
+
+---
+
+## 需求傳導路徑
+
+**催化劑起點：AI 資料中心資本支出爆發**
+來源為 MSFT／GOOGL／META 的 FY24-25 年報（10-K）及法說會，三大科技巨頭均揭示創紀錄的資料中心投資計畫。這是整條鏈的需求源頭。
+
+**第一節（也是唯一一節）：NVDA → MU**
+- 關係：「GPU 模組需 HBM 高頻寬記憶體」
+- 意思是：NVDA 的 AI 加速晶片（GPU）在組裝時必須搭配 HBM，而 Micron 是主要 HBM 供應商之一。
+- 出處：Micron 法說會揭露「HBM 產能已賣完至明年」（Micron earnings: HBM capacity sold out through next year），此關係已被**查證**（verified: true）。
+- 白話：科技巨頭砸錢蓋資料中心 → 採購大量 NVDA GPU → NVDA 需要大量 HBM → Micron 直接受益。
+
+整條傳導鏈只有一跳（chain_hops: 1），路徑短、邏輯直接，且此環節並**非**敘事假設（narrative_assumption: false），供應鏈關係有出處支撐。
+
+---
+
+## 基本面佐證
+
+**① 獲利爆發式回升——最具說服力的訊號**
+稅後純益年增率（今年賺了多少、比去年多多少）高達 **+897.56%**（FY2024→FY2025，來源：edgar:net_income），從 2024 年的 7.78 億美元跳升至 2025 年的 85.39 億美元。這背後是 HBM 需求帶動的產品結構升級，而非只是景氣回溫。單項子分數滿分（1.0），是整份評分中最亮眼的指標。
+
+**② 營運現金流品質極佳——帳面獲利不是假的**
+營業現金流對淨利比（衡量公司實際收到的現金是否撐得起帳面獲利，比值越高越健康）達 **2.05 倍**（FY2025，來源：edgar:operating\_cash\_flow、edgar:net\_income），意思是公司每賺 1 元帳面利潤，實際就有超過 2 元現金進帳，獲利品質相當紮實，單項子分數同樣滿分（1.0）。
+
+**③ 資本支出大幅擴張——預支未來需求**
+資本支出（擴廠投資）年增率達 **+89.09%**（FY2024→FY2025，來源：edgar:capex），絕對金額達 158.57 億美元。這反映管理層對未來需求極有把握，願意大舉押注產能。需求端印證資料也顯示：
+- 營收年增 **+48.85%**（FY2024→FY2025，來源：edgar:revenue）
+- 應收帳款年增 **+32.18%**（FY2024→FY2025，來源：edgar:receivables），可視為訂單能見度提升的間接訊號。
+
+**⚠️ 缺漏項：月營收年增率**
+封包中月營收年增率（monthly\_revenue\_yoy）值為**資料缺漏**——原因是月營收申報制度為台灣上市公司專屬，美股 Micron 不適用（出處：finmind:monthly\_revenue，標注 n/a outside TW）。這使得我們無法像觀察台灣半導體股那樣即時追蹤每月訂單動態。
+
+---
+
+## 風險與資料缺口
+
+**1. 估值偏貴，幾乎是最大風險**
+估值分組的子分數僅 **2.52 分**（滿分 100），是五大分組中最低。具體數字：
+- 股價淨值比（股價是帳面資產的幾倍）：**15.19 倍**，顯著偏高。
+- 企業價值／息稅折舊攤銷前利潤（EV/EBITDA，衡量整間公司含負債的合理性）：**15.86 倍**。
+- 本益比（股價是每股盈利的幾倍）：**22.08 倍**——表面看不算誇張，但這是在獲利已暴增近 10 倍後的數字，若半導體週期反轉，獲利基期一旦變高，本益比會迅速惡化。
+
+**2. 自由現金流被大規模擴廠吃掉**
+自由現金流利潤率（賺</div>
+      </div>
+    </details>
+    <details class="card" >
+      <summary>
+        <div class="rank">5</div>
+        <div class="who">
+          <div class="name">Broadcom</div>
+          <div class="tick">US:AVGO · 離催化劑 1 跳</div>
+          <div class="bars">
+            <div class="sbar">
+              <span>基本面</span>
+              <span class="track"><span class="fill fund" style="width: 86.0%"></span></span>
+              <span class="num">86</span>
+            </div>
+            <div class="sbar">
+              <span>傳導</span>
+              <span class="track"><span class="fill prop" style="width: 40.0%"></span></span>
+              <span class="num">40</span>
+            </div>
+          </div>
+        </div>
+        <div class="conf">
+          <svg class="donut" viewBox="0 0 50 50" aria-hidden="true">
+            <circle class="bg" cx="25" cy="25" r="22"></circle>
+            <circle class="fg stroke-medium" cx="25" cy="25" r="22"
+                    stroke-dasharray="138.23"
+                    stroke-dashoffset="61.83"></circle>
+            <text class="donut-num" x="25" y="30" text-anchor="middle">55</text>
+          </svg>
+          <span class="tier medium">medium</span>
+        </div>
+      </summary>
+
+      <div class="body">
+        <div class="breakdown">信心 55.3 ＝ 基本面 85.87 × 0.5 ＋ 傳導 40.19 × 0.5，資料完整度係數 0.8769（9/13 項有資料）</div>
+
+        <div class="subhead">需求傳導路徑</div>
+        <div class="chain">
+          <span class="node">us:NVDA</span><span class="arrow">→</span>          <span class="node">us:AVGO</span>        </div>
+        <div class="links">
+          <div class="link">
+            <code>us:NVDA → us:AVGO</code>
+            <span>AI 叢集需高速網通/自研 ASIC 配套</span>
+            <span class="badge ok">✓ 已查證</span><span class="src">Broadcom earnings: AI networking + custom accelerator ramp</span>
+          </div>
+        </div>
+
+        <div class="subhead">需求流動證據</div>
+        <table>
+          <thead><tr><th>指標</th><th class="num">數值</th><th>期間</th><th>來源</th></tr></thead>
+          <tbody>
+            <tr>
+              <td>營收年增率</td>
+              <td class="num val-pos">+23.87%</td>
+              <td>FY2024-&gt;FY2025</td>
+              <td class="src-cell">edgar:revenue</td>
+            </tr>
+            <tr>
+              <td>資本支出年增率（擴產投資）</td>
+              <td class="num val-pos">+13.69%</td>
+              <td>FY2024-&gt;FY2025</td>
+              <td class="src-cell">edgar:capex</td>
+            </tr>
+            <tr>
+              <td>應收帳款年增率（接單能見度）</td>
+              <td class="num val-pos">+61.80%</td>
+              <td>FY2024-&gt;FY2025</td>
+              <td class="src-cell">edgar:receivables</td>
+            </tr>
+          </tbody>
+        </table>
+<p class="gaps">資料缺口（明列、不估算）：<b>月營收年增率（台股獨有，需求領先訊號）</b></p>
+        <div class="subhead">基本面佐證</div>
+        <table>
+          <thead><tr><th>指標</th><th class="num">數值</th><th class="num">子分數</th></tr></thead>
+          <tbody>
+            <tr>
+              <td>毛利率</td>
+              <td class="num">0.6777</td>
+              <td class="num">
+                <span class="subscore"><span class="track"><span class="fill" style="width: 100.0%"></span></span>1.00</span>
+              </td>
+            </tr>
+            <tr>
+              <td>營業利益率</td>
+              <td class="num">0.3989</td>
+              <td class="num">
+                <span class="subscore"><span class="track"><span class="fill" style="width: 100.0%"></span></span>1.00</span>
+              </td>
+            </tr>
+            <tr>
+              <td>負債比率（越低越穩健）</td>
+              <td class="num">0.5249</td>
+              <td class="num">
+                <span class="subscore"><span class="track"><span class="fill" style="width: 55.0%"></span></span>0.55</span>
+              </td>
+            </tr>
+            <tr>
+              <td>近三年營收年複成長</td>
+              <td class="num">0.2438</td>
+              <td class="num">
+                <span class="subscore"><span class="track"><span class="fill" style="width: 100.0%"></span></span>1.00</span>
+              </td>
+            </tr>
+            <tr>
+              <td>自由現金流利潤率</td>
+              <td class="num">0.4213</td>
+              <td class="num">
+                <span class="subscore"><span class="track"><span class="fill" style="width: 100.0%"></span></span>1.00</span>
+              </td>
+            </tr>
+            <tr>
+              <td>自由現金流殖利率（估值，越高越便宜）</td>
+              <td class="num">0.0157</td>
+              <td class="num">
+                <span class="subscore"><span class="track"><span class="fill" style="width: 26.0%"></span></span>0.26</span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+<p class="gaps">缺漏指標（資料來源沒給，不估算）：<b>淨利年增率、股東權益報酬率（ROE，賺錢效率）、現金流／淨利（盈餘品質）</b></p>
+        <div class="narrative"><span class="model">Claude 受限分析 · 模型 claude-sonnet-4-6</span>## 結論：值得進一步研究，但估值昂貴是最大顧慮——基本面體質極強、需求傳導鏈有直接出處佐證，唯本益比與市淨率偏高，加上數筆關鍵財務資料缺漏，建議等待更好的買入時機或持續追蹤。
+
+---
+
+## 需求傳導路徑
+
+這次分析的出發點是「AI 資料中心資本支出爆發」這個催化劑，來源是微軟、Google、Meta 在 FY24-25 年報與法說會中揭露的創紀錄資料中心支出計畫。
+
+**整條傳導鏈只有一個節點，共一跳：**
+
+&gt; **NVIDIA（us:NVDA）→ Broadcom（us:AVGO）**
+&gt;
+&gt; 關係說明：AI 叢集（也就是用來訓練和推論 AI 模型的大型伺服器群）在建置時，除了 GPU 之外，還需要高速網路互連元件，以及客製化 AI 加速晶片（也稱 ASIC，是針對特定應用設計的專用晶片）。Broadcom 正是這兩塊的重要供應商。
+&gt;
+&gt; **出處：Broadcom earnings: AI networking + custom accelerator ramp（已核實，verified: true）**
+
+這段關係已由 Broadcom 自家法說會揭露，**不是推測，是有直接出處的已驗證節點**。沒有任何環節被標記為敘事假設（narrative_assumption: false）。
+
+---
+
+## 基本面佐證
+
+以下挑出三項最關鍵的指標：
+
+### 1. 營收三年年複合成長率（revenue_cagr_3y）：約 +24.4%
+- FY2022 營收為 332 億美元，FY2025 成長至 639 億美元（出處：edgar:revenue）
+- 單項子分數滿分（1.0），代表這個成長速度在評分系統裡屬於頂級。
+
+### 2. 自由現金流利潤率（fcf_margin）：約 42.1%
+- FY2025 營運現金流 275 億美元，資本支出僅 6.23 億美元，自由現金流（也就是賺到的錢扣掉花在廠房設備上的錢）約佔營收的 42%（出處：edgar:operating_cash_flow、edgar:capex、edgar:revenue）
+- 這代表 Broadcom 每賣出 100 元的產品，有 42 元可以自由運用，是極高水準。
+- 單項子分數滿分（1.0）。
+
+### 3. 毛利率（gross_margin）：約 67.8%
+- FY2025 毛利 433 億美元，除以營收 639 億美元（出處：edgar:gross_profit、edgar:revenue）
+- 單項子分數滿分（1.0），顯示產品定價能力強勁。
+
+### 需求面佐證補充
+
+- **營收年增率**：FY2024→FY2025 年增約 +23.9%（出處：edgar:revenue），強度評分 0.955，接近滿分。
+- **應收帳款年增率**：FY2024→FY2025 年增約 +61.8%（出處：edgar:receivables），這是「訂單能見度」的代理指標，顯示客戶下單明顯增加，強度評分滿分（1.0）。
+
+### ⚠️ 資料缺漏項目（共三項）
+
+以下三個財務指標目前**資料缺漏**，主要原因是封包中 FY2025 的淨利數值尚未取得：
+
+| 指標 | 白話說明 | 缺漏原因 |
+|------|----------|----------|
+| 每股盈餘年增率（earnings_growth_yoy） | 今年比去年多賺多少 | FY2025 淨利數值為 null |
+| 股東權益報酬率（roe） | 用股東的錢賺了多少回報 | FY2025 淨利與股東權益均為 null |
+| 現金流品質比（ocf_to_net_income） | 帳面獲利有多少轉成真實現金 | FY2025 淨利數值為 null |
+
+因此，目前**無法評估這三項指標**，它們在整體評分中以缺漏處理，不估算。
+
+---
+
+## 風險與資料缺口
+
+### 1. 估值明顯偏貴
+- 本益比（股價相對每股盈利的倍數）：約 **59.9 倍**
+- 市淨率（股價相對每股帳面資產的倍數）：約 **19.6 倍**
+- 企業價值 / EBITDA（稅前息前折舊攤銷前利潤倍數，用來衡量整體企業貴不貴）：約 **41.8 倍**
+- 自由現金流殖利率（Free Cash Flow Yield，用自由現金流除以市值，數字越低代表越貴）僅約 **1.57%**，單項子分數僅 0.26，是整體評分中最弱的一環。
+- **估值面的單項子分數只有 26.16 分（滿分 100）**，是五大分組中最低的，拖累了整體基本面分數。
+
+### 2. 資料完</div>
+      </div>
+    </details>
+    <details class="card" >
+      <summary>
+        <div class="rank">6</div>
+        <div class="who">
+          <div class="name">奇鋐 AVC</div>
+          <div class="tick">TW:3017 · 離催化劑 2 跳</div>
+          <div class="bars">
+            <div class="sbar">
+              <span>基本面</span>
+              <span class="track"><span class="fill fund" style="width: 75.0%"></span></span>
+              <span class="num">75</span>
+            </div>
+            <div class="sbar">
+              <span>傳導</span>
+              <span class="track"><span class="fill prop" style="width: 33.0%"></span></span>
+              <span class="num">33</span>
+            </div>
+          </div>
+        </div>
+        <div class="conf">
+          <svg class="donut" viewBox="0 0 50 50" aria-hidden="true">
+            <circle class="bg" cx="25" cy="25" r="22"></circle>
+            <circle class="fg stroke-medium" cx="25" cy="25" r="22"
+                    stroke-dasharray="138.23"
+                    stroke-dashoffset="63.12"></circle>
+            <text class="donut-num" x="25" y="30" text-anchor="middle">54</text>
+          </svg>
+          <span class="tier medium">medium</span>
+        </div>
+      </summary>
+
+      <div class="body">
+        <div class="breakdown">信心 54.3 ＝ 基本面 75.36 × 0.5 ＋ 傳導 33.33 × 0.5，資料完整度係數 1.0（13/13 項有資料）</div>
+
+        <div class="subhead">需求傳導路徑</div>
+        <div class="chain">
+          <span class="node">us:NVDA</span><span class="arrow">→</span>          <span class="node">tw:2382</span><span class="arrow">→</span>          <span class="node">tw:3017</span>        </div>
+        <div class="links">
+          <div class="link">
+            <code>us:NVDA → tw:2382</code>
+            <span>廣達代工 AI 伺服器</span>
+            <span class="badge ok">✓ 已查證</span><span class="src">Quanta earnings: AI server shipments</span>
+          </div>
+          <div class="link">
+            <code>tw:2382 → tw:3017</code>
+            <span>高功耗 GPU 機櫃需散熱方案</span>
+            <span class="badge ok">✓ 已查證</span><span class="src">AVC earnings commentary on thermal demand</span>
+          </div>
+        </div>
+
+        <div class="subhead">需求流動證據</div>
+        <table>
+          <thead><tr><th>指標</th><th class="num">數值</th><th>期間</th><th>來源</th></tr></thead>
+          <tbody>
+            <tr>
+              <td>月營收年增率（台股獨有，需求領先訊號）</td>
+              <td class="num val-pos">+60.64%</td>
+              <td>2026-06</td>
+              <td class="src-cell">finmind:monthly_revenue</td>
+            </tr>
+            <tr>
+              <td>營收年增率</td>
+              <td class="num val-pos">+94.59%</td>
+              <td>FY2024-&gt;FY2025</td>
+              <td class="src-cell">finmind:revenue</td>
+            </tr>
+            <tr>
+              <td>資本支出年增率（擴產投資）</td>
+              <td class="num val-pos">+60.07%</td>
+              <td>FY2024-&gt;FY2025</td>
+              <td class="src-cell">finmind:capex</td>
+            </tr>
+            <tr>
+              <td>應收帳款年增率（接單能見度）</td>
+              <td class="num val-pos">+64.41%</td>
+              <td>FY2024-&gt;FY2025</td>
+              <td class="src-cell">finmind:receivables</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="subhead">基本面佐證</div>
+        <table>
+          <thead><tr><th>指標</th><th class="num">數值</th><th class="num">子分數</th></tr></thead>
+          <tbody>
+            <tr>
+              <td>毛利率</td>
+              <td class="num">0.2581</td>
+              <td class="num">
+                <span class="subscore"><span class="track"><span class="fill" style="width: 40.0%"></span></span>0.40</span>
+              </td>
+            </tr>
+            <tr>
+              <td>營業利益率</td>
+              <td class="num">0.1973</td>
+              <td class="num">
+                <span class="subscore"><span class="track"><span class="fill" style="width: 79.0%"></span></span>0.79</span>
+              </td>
+            </tr>
+            <tr>
+              <td>股東權益報酬率（ROE，賺錢效率）</td>
+              <td class="num">0.4143</td>
+              <td class="num">
+                <span class="subscore"><span class="track"><span class="fill" style="width: 100.0%"></span></span>1.00</span>
+              </td>
+            </tr>
+            <tr>
+              <td>負債比率（越低越穩健）</td>
+              <td class="num">0.6842</td>
+              <td class="num">
+                <span class="subscore"><span class="track"><span class="fill" style="width: 23.0%"></span></span>0.23</span>
+              </td>
+            </tr>
+            <tr>
+              <td>現金流／淨利（盈餘品質）</td>
+              <td class="num">1.8813</td>
+              <td class="num">
+                <span class="subscore"><span class="track"><span class="fill" style="width: 100.0%"></span></span>1.00</span>
+              </td>
+            </tr>
+            <tr>
+              <td>近三年營收年複成長</td>
+              <td class="num">0.3559</td>
+              <td class="num">
+                <span class="subscore"><span class="track"><span class="fill" style="width: 100.0%"></span></span>1.00</span>
+              </td>
+            </tr>
+            <tr>
+              <td>淨利年增率</td>
+              <td class="num">1.2790</td>
+              <td class="num">
+                <span class="subscore"><span class="track"><span class="fill" style="width: 100.0%"></span></span>1.00</span>
+              </td>
+            </tr>
+            <tr>
+              <td>自由現金流利潤率</td>
+              <td class="num">0.2302</td>
+              <td class="num">
+                <span class="subscore"><span class="track"><span class="fill" style="width: 100.0%"></span></span>1.00</span>
+              </td>
+            </tr>
+            <tr>
+              <td>自由現金流殖利率（估值，越高越便宜）</td>
+              <td class="num">0.0303</td>
+              <td class="num">
+                <span class="subscore"><span class="track"><span class="fill" style="width: 50.0%"></span></span>0.50</span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="narrative"><span class="model">Claude 受限分析 · 模型 claude-sonnet-4-6</span>## 結論：值得進一步研究，但估值偏貴是最大隱憂
+
+奇鋐（3017）站在「AI 資料中心散熱」這條需求鏈的末端，基本面成長力道強勁、現金流品質優異，供應鏈傳導關係也都有實際查證。唯一讓人猶豫的是股價已反映相當多的好消息，本益比、股價淨值比均處高位，安全邊際有限。
+
+---
+
+## 需求傳導路徑
+
+這條需求鏈從美國科技巨頭的資本支出出發，一步步傳到台灣的散熱廠：
+
+**第一節：催化劑 → 輝達（NVDA）**
+微軟、Google、Meta 在 FY24–25 年報及法說會中揭露創歷史新高的資料中心建置預算（來源：MSFT/GOOGL/META FY24-25 10-K &amp; earnings calls）。龐大的伺服器需求首先流向輝達（us:NVDA），讓其 GPU 出貨量大增。
+
+**第二節：輝達 → 廣達（tw:2382）**
+廣達電腦（tw:2382）負責代工組裝 AI 伺服器，直接承接輝達 GPU 的下游整機訂單。此關係已經查證，來源為廣達法說會中揭露的 AI 伺服器出貨數據（來源：Quanta earnings: AI server shipments）。
+
+**第三節：廣達 → 奇鋐（tw:3017）**
+高功耗 GPU 機櫃在運作時會產生極大熱量，廣達組裝的 AI 伺服器需要專業散熱解決方案，奇鋐因此切入提供散熱模組。此關係已經查證，來源為奇鋐法說會中對熱管理需求的說明（來源：AVC earnings commentary on thermal demand）。
+
+&gt; ✅ 整條傳導鏈共兩個節點跳轉（NVDA → 廣達 → 奇鋐），**兩段關係均已有出處查證，並非推測**。
+
+---
+
+## 基本面佐證
+
+以下三項指標最能說明奇鋐目前的體質：
+
+### 1. 成長力道：年營收年增率 +94.59%
+稅後淨利（即公司最終賺到的錢）從 FY2024 的約 91.9 億元台幣，跳升至 FY2025 的約 209.5 億元台幣，**獲利年增率高達 +127.90%**（FY2024→FY2025，來源：finmind:revenue 及公司財報淨利數字）。年營收同期也幾乎翻倍，**營收年增 +94.59%**（FY2024→FY2025，來源：finmind:revenue）。三年營收複合年增率（CAGR，即平均每年的成長速度）達 **+35.59%**（FY2022→FY2025，來源：公司財報 revenue 欄位），顯示這不是一年曇花一現的爆發，而是持續加速。
+
+### 2. 現金流品質：營業現金流是淨利的 1.88 倍
+「帳面賺的錢有沒有真的收到現金」是判斷獲利品質的關鍵。奇鋐 FY2025 的**營業現金流對淨利比率達 1.88 倍**（來源：finmind:operating_cash_flow、net_income），代表每賺 1 元盈餘，實際流入的現金接近 2 元，獲利品質極高。自由現金流利潤率（扣掉資本支出後，實際剩下多少現金佔營收比例）也達 **23.02%**（FY2025，來源：finmind:operating_cash_flow、capex、revenue）。
+
+### 3. 最新月營收信號：單月年增 +60.64%
+台灣上市公司每月公告的月營收是難得的「即時訂單能見度」指標。奇鋐 2026 年 6 月的**月營收年增率達 +60.64%**（2026-06，來源：finmind:monthly_revenue），顯示需求動能進入 2026 年後仍未衰退。
+
+**資料缺漏：** 本次封包**所有 13 項財務輸入值均已取得，無缺漏項目**（資料完整度為 100%）。
+
+---
+
+## 風險與資料缺口
+
+### ⚠️ 估值偏貴，安全邊際不足
+- **本益比（股價除以每股盈餘，衡量貴不貴）45.17 倍**，已反映相當程度的成長預期
+- **股價淨值比（股價對帳面資產的倍數）23.49 倍**，遠高於一般製造業水準
+- **自由現金流殖利率（自由現金流除以市值，愈高代表愈划算）僅 3.03%**（FY2025，來源：finmind:operating_cash_flow、capex、market_cap），意味著市場已給了很高的溢價
+- EV/EBITDA（企業整體價值對稅前折舊前獲利之比，另一個評估貴不貴的工具）達 **27.</div>
+      </div>
+    </details>
+    <details class="card" >
+      <summary>
+        <div class="rank">7</div>
+        <div class="who">
+          <div class="name">Marvell</div>
+          <div class="tick">US:MRVL · 離催化劑 1 跳</div>
+          <div class="bars">
+            <div class="sbar">
+              <span>基本面</span>
+              <span class="track"><span class="fill fund" style="width: 63.0%"></span></span>
+              <span class="num">63</span>
+            </div>
+            <div class="sbar">
+              <span>傳導</span>
+              <span class="track"><span class="fill prop" style="width: 47.0%"></span></span>
+              <span class="num">47</span>
+            </div>
+          </div>
+        </div>
+        <div class="conf">
+          <svg class="donut" viewBox="0 0 50 50" aria-hidden="true">
+            <circle class="bg" cx="25" cy="25" r="22"></circle>
+            <circle class="fg stroke-medium" cx="25" cy="25" r="22"
+                    stroke-dasharray="138.23"
+                    stroke-dashoffset="67.15"></circle>
+            <text class="donut-num" x="25" y="30" text-anchor="middle">51</text>
+          </svg>
+          <span class="tier medium">medium</span>
+        </div>
+      </summary>
+
+      <div class="body">
+        <div class="breakdown">信心 51.4 ＝ 基本面 62.69 × 0.5 ＋ 傳導 46.9 × 0.5，資料完整度係數 0.9385（11/13 項有資料）</div>
+
+        <div class="subhead">需求傳導路徑</div>
+        <div class="chain">
+          <span class="node">us:NVDA</span><span class="arrow">→</span>          <span class="node">us:MRVL</span>        </div>
+        <div class="links">
+          <div class="link">
+            <code>us:NVDA → us:MRVL</code>
+            <span>資料中心互連與光通訊晶片</span>
+            <span class="badge ok">✓ 已查證</span><span class="src">Marvell earnings: data-center/AI revenue growth</span>
+          </div>
+        </div>
+
+        <div class="subhead">需求流動證據</div>
+        <table>
+          <thead><tr><th>指標</th><th class="num">數值</th><th>期間</th><th>來源</th></tr></thead>
+          <tbody>
+            <tr>
+              <td>營收年增率</td>
+              <td class="num val-pos">+42.09%</td>
+              <td>FY2025-&gt;FY2026</td>
+              <td class="src-cell">edgar:revenue</td>
+            </tr>
+            <tr>
+              <td>資本支出年增率（擴產投資）</td>
+              <td class="num val-pos">+24.42%</td>
+              <td>FY2025-&gt;FY2026</td>
+              <td class="src-cell">edgar:capex</td>
+            </tr>
+            <tr>
+              <td>應收帳款年增率（接單能見度）</td>
+              <td class="num val-pos">+112.62%</td>
+              <td>FY2025-&gt;FY2026</td>
+              <td class="src-cell">edgar:receivables</td>
+            </tr>
+          </tbody>
+        </table>
+<p class="gaps">資料缺口（明列、不估算）：<b>月營收年增率（台股獨有，需求領先訊號）</b></p>
+        <div class="subhead">基本面佐證</div>
+        <table>
+          <thead><tr><th>指標</th><th class="num">數值</th><th class="num">子分數</th></tr></thead>
+          <tbody>
+            <tr>
+              <td>毛利率</td>
+              <td class="num">0.5102</td>
+              <td class="num">
+                <span class="subscore"><span class="track"><span class="fill" style="width: 100.0%"></span></span>1.00</span>
+              </td>
+            </tr>
+            <tr>
+              <td>營業利益率</td>
+              <td class="num">0.1614</td>
+              <td class="num">
+                <span class="subscore"><span class="track"><span class="fill" style="width: 65.0%"></span></span>0.65</span>
+              </td>
+            </tr>
+            <tr>
+              <td>股東權益報酬率（ROE，賺錢效率）</td>
+              <td class="num">0.1866</td>
+              <td class="num">
+                <span class="subscore"><span class="track"><span class="fill" style="width: 68.0%"></span></span>0.68</span>
+              </td>
+            </tr>
+            <tr>
+              <td>負債比率（越低越穩健）</td>
+              <td class="num">0.3579</td>
+              <td class="num">
+                <span class="subscore"><span class="track"><span class="fill" style="width: 88.0%"></span></span>0.88</span>
+              </td>
+            </tr>
+            <tr>
+              <td>現金流／淨利（盈餘品質）</td>
+              <td class="num">0.6556</td>
+              <td class="num">
+                <span class="subscore"><span class="track"><span class="fill" style="width: 22.0%"></span></span>0.22</span>
+              </td>
+            </tr>
+            <tr>
+              <td>近三年營收年複成長</td>
+              <td class="num">0.1145</td>
+              <td class="num">
+                <span class="subscore"><span class="track"><span class="fill" style="width: 57.0%"></span></span>0.57</span>
+              </td>
+            </tr>
+            <tr>
+              <td>自由現金流利潤率</td>
+              <td class="num">0.1704</td>
+              <td class="num">
+                <span class="subscore"><span class="track"><span class="fill" style="width: 85.0%"></span></span>0.85</span>
+              </td>
+            </tr>
+            <tr>
+              <td>自由現金流殖利率（估值，越高越便宜）</td>
+              <td class="num">0.0065</td>
+              <td class="num">
+                <span class="subscore"><span class="track"><span class="fill" style="width: 11.0%"></span></span>0.11</span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+<p class="gaps">缺漏指標（資料來源沒給，不估算）：<b>淨利年增率</b></p>
+        <div class="narrative"><span class="model">Claude 受限分析 · 模型 claude-sonnet-4-6</span>## 結論：值得進一步研究，但估值已相當昂貴，需等待更好的買點
+
+Marvell 是 AI 資料中心供應鏈中的直接受益者，需求傳導有出處支撐、財務體質健康，但目前股價反映了極高的成長預期，安全邊際薄，宜列入觀察清單並等待回檔。
+
+---
+
+## 需求傳導路徑
+
+這條傳導鏈只有一個跳點，路徑短、清晰：
+
+**催化劑起點：AI 資料中心資本支出爆發**
+微軟、Google、Meta 在其 FY24–25 年報（10-K）及法說會中，揭露了創紀錄的資料中心建設預算。這是整條鏈的需求源頭，出處為：MSFT/GOOGL/META FY24-25 10-K &amp; earnings calls。
+
+**第一節（也是唯一一節）：英偉達 → Marvell**
+- **關係**：資料中心互連與光通訊晶片
+- **白話說明**：當英偉達（NVDA）的 GPU 伺服器在資料中心大量部署時，伺服器與伺服器之間需要高速互連網路；Marvell 提供的正是讓這些 GPU 叢集「彼此溝通」的互連晶片與光通訊相關晶片。
+- **驗證狀態**：✅ 已查證，出處為 Marvell 法說會：data-center/AI revenue growth（`Marvell earnings: data-center/AI revenue growth`）
+- **佐證數據**：Marvell 的營收年增率達 **+42.09%（FY2025→FY2026，出處：edgar:revenue）**，與 AI 資本支出爆發的時間點吻合，顯示需求確實傳導到這裡。
+
+此封包的傳導路徑**沒有被標為敘事假設**（`narrative_assumption: false`），表示這段供應鏈關係已有資料來源支撐，並非純推測。
+
+---
+
+## 基本面佐證
+
+**① 毛利率（衡量賣產品賺多少基本利潤）：51.02%（FY2026，出處：edgar:gross_profit &amp; edgar:revenue）**
+毛利率超過五成，意味著 Marvell 每賣出 100 元的晶片，至少有 51 元可以用來支付研發與管理費用，代表產品有一定的定價能力。在半導體設計公司中，這個水準屬於中上，單項子分數拿到滿分。
+
+**② 自由現金流利潤率（公司真正賺到、可自由運用的現金占營收比）：17.04%（FY2026，出處：edgar:operating_cash_flow &amp; edgar:capex &amp; edgar:revenue）**
+以 17.5 億美元的營業現金流，扣除 3.54 億美元的資本支出，換算出來約佔年營收的 17%，代表公司確實能把帳面獲利轉化為真實現金，財務品質尚可。
+
+**③ 負債比率（公司資產中有多少是靠借債來的）：35.79%（FY2026，出處：edgar:liabilities &amp; edgar:assets）**
+負債占總資產約三成六，槓桿不高，財務結構穩健，這也是整份評分中「資產負債表」面向拿到最高分（88.41分）的主要原因。
+
+**⚠️ 缺漏項：每年盈餘成長率（earnings_growth_yoy）**
+FY2025 的淨利為**虧損** -8.85 億美元（出處：edgar:net_income），FY2026 則轉為獲利 26.7 億美元（出處：edgar:net_income）。由虧轉盈時，年增率在數學上無法計算（負數基期），因此此項指標**資料缺漏，系統無法給分**。這不代表公司狀況差，而是單純的計算限制。
+
+---
+
+## 風險與資料缺口
+
+**1. 估值極度昂貴**
+- 本益比（股價除以每股盈餘，衡量你為「每一元獲利」付多少錢）：**84.00 倍**
+- 股價淨值比（股價相對於帳面資產的倍數）：**11.79 倍**
+- 企業價值/EBITDA（另一種整體估值倍數）：**79.65 倍**
+- 自由現金流殖利率（自由現金流除以市值，越高越便宜）：**僅 0.65%**
+
+這四個估值指標齊聲說同一件事：市場已經把 Marvell 未來好幾年的高速成長全部「提前定價」了。一旦成長略低於預期，股價有大幅修正的風險。估值面向的單項子分數僅 **10.85 分**（滿分100），是所有面向中最低。
+
+**2. 月營收數據缺漏**
+封包中的月營收年增率（`monthly_revenue_yoy`）**資料缺漏**。原因是台灣以外的美股公司並沒有每月公布營收的義務（出處標示 `n/a outside TW`），因此無法用更即時的月度數據追蹤需求變化，</div>
+      </div>
+    </details>
+    <details class="card" >
+      <summary>
+        <div class="rank">8</div>
+        <div class="who">
+          <div class="name">Lam Research</div>
+          <div class="tick">US:LRCX · 離催化劑 2 跳</div>
+          <div class="bars">
+            <div class="sbar">
+              <span>基本面</span>
+              <span class="track"><span class="fill fund" style="width: 73.0%"></span></span>
+              <span class="num">73</span>
+            </div>
+            <div class="sbar">
+              <span>傳導</span>
+              <span class="track"><span class="fill prop" style="width: 33.0%"></span></span>
+              <span class="num">33</span>
+            </div>
+          </div>
+        </div>
+        <div class="conf">
+          <svg class="donut" viewBox="0 0 50 50" aria-hidden="true">
+            <circle class="bg" cx="25" cy="25" r="22"></circle>
+            <circle class="fg stroke-medium" cx="25" cy="25" r="22"
+                    stroke-dasharray="138.23"
+                    stroke-dashoffset="67.5"></circle>
+            <text class="donut-num" x="25" y="30" text-anchor="middle">51</text>
+          </svg>
+          <span class="tier medium">medium</span>
+        </div>
+      </summary>
+
+      <div class="body">
+        <div class="breakdown">信心 51.2 ＝ 基本面 72.83 × 0.5 ＋ 傳導 32.75 × 0.5，資料完整度係數 0.9692（12/13 項有資料）</div>
+
+        <div class="subhead">需求傳導路徑</div>
+        <div class="chain">
+          <span class="node">us:NVDA</span><span class="arrow">→</span>          <span class="node">tw:2330</span><span class="arrow">→</span>          <span class="node">us:LRCX</span>        </div>
+        <div class="links">
+          <div class="link">
+            <code>us:NVDA → tw:2330</code>
+            <span>GPU 由台積電先進製程代工</span>
+            <span class="badge ok">✓ 已查證</span><span class="src">TSMC earnings: HPC/AI is primary growth driver; NVDA is a major customer</span>
+          </div>
+          <div class="link">
+            <code>tw:2330 → us:LRCX</code>
+            <span>蝕刻/沉積設備採購</span>
+            <span class="badge ok">✓ 已查證</span><span class="src">Lam Research earnings disclosures</span>
+          </div>
+        </div>
+
+        <div class="subhead">需求流動證據</div>
+        <table>
+          <thead><tr><th>指標</th><th class="num">數值</th><th>期間</th><th>來源</th></tr></thead>
+          <tbody>
+            <tr>
+              <td>營收年增率</td>
+              <td class="num val-pos">+23.68%</td>
+              <td>FY2024-&gt;FY2025</td>
+              <td class="src-cell">edgar:revenue</td>
+            </tr>
+            <tr>
+              <td>資本支出年增率（擴產投資）</td>
+              <td class="num val-pos">+91.39%</td>
+              <td>FY2024-&gt;FY2025</td>
+              <td class="src-cell">edgar:capex</td>
+            </tr>
+            <tr>
+              <td>應收帳款年增率（接單能見度）</td>
+              <td class="num val-pos">+34.09%</td>
+              <td>FY2024-&gt;FY2025</td>
+              <td class="src-cell">edgar:receivables</td>
+            </tr>
+          </tbody>
+        </table>
+<p class="gaps">資料缺口（明列、不估算）：<b>月營收年增率（台股獨有，需求領先訊號）</b></p>
+        <div class="subhead">基本面佐證</div>
+        <table>
+          <thead><tr><th>指標</th><th class="num">數值</th><th class="num">子分數</th></tr></thead>
+          <tbody>
+            <tr>
+              <td>毛利率</td>
+              <td class="num">0.4871</td>
+              <td class="num">
+                <span class="subscore"><span class="track"><span class="fill" style="width: 97.0%"></span></span>0.97</span>
+              </td>
+            </tr>
+            <tr>
+              <td>營業利益率</td>
+              <td class="num">0.3201</td>
+              <td class="num">
+                <span class="subscore"><span class="track"><span class="fill" style="width: 100.0%"></span></span>1.00</span>
+              </td>
+            </tr>
+            <tr>
+              <td>股東權益報酬率（ROE，賺錢效率）</td>
+              <td class="num">0.5433</td>
+              <td class="num">
+                <span class="subscore"><span class="track"><span class="fill" style="width: 100.0%"></span></span>1.00</span>
+              </td>
+            </tr>
+            <tr>
+              <td>負債比率（越低越穩健）</td>
+              <td class="num">0.5380</td>
+              <td class="num">
+                <span class="subscore"><span class="track"><span class="fill" style="width: 52.0%"></span></span>0.52</span>
+              </td>
+            </tr>
+            <tr>
+              <td>現金流／淨利（盈餘品質）</td>
+              <td class="num">1.1521</td>
+              <td class="num">
+                <span class="subscore"><span class="track"><span class="fill" style="width: 93.0%"></span></span>0.93</span>
+              </td>
+            </tr>
+            <tr>
+              <td>近三年營收年複成長</td>
+              <td class="num">0.0229</td>
+              <td class="num">
+                <span class="subscore"><span class="track"><span class="fill" style="width: 11.0%"></span></span>0.11</span>
+              </td>
+            </tr>
+            <tr>
+              <td>淨利年增率</td>
+              <td class="num">0.3998</td>
+              <td class="num">
+                <span class="subscore"><span class="track"><span class="fill" style="width: 100.0%"></span></span>1.00</span>
+              </td>
+            </tr>
+            <tr>
+              <td>自由現金流利潤率</td>
+              <td class="num">0.2937</td>
+              <td class="num">
+                <span class="subscore"><span class="track"><span class="fill" style="width: 100.0%"></span></span>1.00</span>
+              </td>
+            </tr>
+            <tr>
+              <td>自由現金流殖利率（估值，越高越便宜）</td>
+              <td class="num">0.0123</td>
+              <td class="num">
+                <span class="subscore"><span class="track"><span class="fill" style="width: 21.0%"></span></span>0.21</span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="narrative"><span class="model">Claude 受限分析 · 模型 claude-sonnet-4-6</span>## 結論：值得進一步研究，但估值偏貴是最大隱憂
+
+Lam Research（LRCX）的獲利能力與現金流品質都屬一流，且在 AI 資本支出浪潮中，從英偉達（NVDA）→台積電→設備採購的供應鏈傳導路徑有明確出處支持。不過，本股目前股價對應的估值指標顯示市場已給出相當高的溢價，加上信心評分（51.17 分，中等）整體仍屬中段，投資人宜進一步確認估值是否已反映過多樂觀預期。
+
+---
+
+## 需求傳導路徑
+
+**觸媒起點**：微軟、Google、Meta 在 FY2024–2025 財報及法說會中公開揭露破紀錄的資料中心資本支出計畫（來源：MSFT/GOOGL/META FY24-25 10-K &amp; earnings calls）。
+
+### 第一節：AI 算力需求 → 英偉達 GPU → 台積電先進製程代工
+
+資料中心要大量採購 GPU（圖形處理器，也是 AI 運算核心），英偉達是最主要供應商。英偉達的 GPU 需要台積電（tw:2330）以最先進製程生產。  
+**供應鏈關係**：GPU 由台積電先進製程代工  
+**出處**：台積電法說會揭露，HPC（高效能運算）與 AI 是其主要成長動能，英偉達為重要客戶（TSMC earnings: HPC/AI is primary growth driver; NVDA is a major customer）  
+✅ **此環節已獲出處證實**
+
+### 第二節：台積電擴產 → 向 Lam Research 採購蝕刻／沉積設備
+
+台積電要擴大先進製程產能，就必須採購半導體製程設備。蝕刻設備（把電路圖案「刻」進晶圓）和薄膜沉積設備（在晶圓上鋪材料層），正是 Lam Research 的核心產品。  
+**供應鏈關係**：蝕刻／沉積設備採購  
+**出處**：Lam Research 法說會揭露（Lam Research earnings disclosures）  
+✅ **此環節已獲出處證實**
+
+&gt; 整條傳導鏈：**AI 資本支出爆發 → 英偉達 GPU 需求暴增 → 台積電先進製程訂單滿載、持續擴產 → Lam Research 設備訂單增加**。本封包標示此路徑並非敘事假設（narrative_assumption: false），兩個傳導節點均有來源佐證。
+
+---
+
+## 基本面佐證
+
+### 1. 獲利能力：毛利率與營業利益率
+
+- **毛利率**（毛利占營收比例）約 **48.7%**（FY2025，來源：edgar:gross_profit / edgar:revenue）。近半的毛利率顯示每賣出一元設備，公司能留下將近一半做後續運營。單項子分數高達 96.8 分。
+- **營業利益率**約 **32.0%**（FY2025，來源：edgar:operating_income / edgar:revenue），單項子分數滿分 100 分，屬業界頂尖水準。
+
+### 2. 獲利成長：稅後純益年增率
+
+- **稅後純益年增率**約 **+40.0%**（FY2024→FY2025，來源：edgar:net_income）。純益從約 38.3 億美元跳升至約 53.6 億美元，年增逾四成，單項子分數滿分。
+
+### 3. 自由現金流利潤率與品質
+
+- **自由現金流利潤率**（扣除資本支出後的現金流占營收比）約 **29.4%**（FY2025，來源：edgar:operating_cash_flow / edgar:capex / edgar:revenue），單項子分數滿分。
+- **營業現金流對純益比**約 **1.15**（FY2025，來源：edgar:operating_cash_flow / edgar:net_income）——大於 1 代表帳面獲利有真實現金流支撐，獲利品質良好。
+
+### ⚠️ 資料缺漏項
+
+- **月營收年增率**：資料缺漏。原因是美股上市公司不像台股有月營收申報制度，無法從 finmind:monthly_revenue 取得此數據（封包明示 &#34;n/a outside TW&#34;）。
+
+---
+
+## 風險與資料缺口
+
+### 1. 估值偏貴，是最大紅燈
+
+| 指標 | 數值 |
+|---|---|
+| 本益比（股價 ÷ 每股盈餘）| 66.2 倍 |
+| 股價淨值比（股價 ÷ 每股帳面價值）| 41.5 倍 |
+| EV/EBITDA（企業價值 ÷ 稅前息前折舊攤銷前獲利）| 55.9 倍 |
+| 自由現金流殖利率（自由現金流 ÷ 市值）| 僅約 1.23% |
+
+估值組別單項子分數只有 **20.53 分**（滿分 100），是本股基本面最</div>
+      </div>
+    </details>
+    <details class="card" >
+      <summary>
+        <div class="rank">9</div>
+        <div class="who">
+          <div class="name">台達電 Delta</div>
+          <div class="tick">TW:2308 · 離催化劑 2 跳</div>
+          <div class="bars">
+            <div class="sbar">
+              <span>基本面</span>
+              <span class="track"><span class="fill fund" style="width: 66.0%"></span></span>
+              <span class="num">66</span>
+            </div>
+            <div class="sbar">
+              <span>傳導</span>
+              <span class="track"><span class="fill prop" style="width: 33.0%"></span></span>
+              <span class="num">33</span>
+            </div>
+          </div>
+        </div>
+        <div class="conf">
+          <svg class="donut" viewBox="0 0 50 50" aria-hidden="true">
+            <circle class="bg" cx="25" cy="25" r="22"></circle>
+            <circle class="fg stroke-medium" cx="25" cy="25" r="22"
+                    stroke-dasharray="138.23"
+                    stroke-dashoffset="69.31"></circle>
+            <text class="donut-num" x="25" y="30" text-anchor="middle">50</text>
+          </svg>
+          <span class="tier medium">medium</span>
+        </div>
+      </summary>
+
+      <div class="body">
+        <div class="breakdown">信心 49.9 ＝ 基本面 66.39 × 0.5 ＋ 傳導 33.33 × 0.5，資料完整度係數 1.0（13/13 項有資料）</div>
+
+        <div class="subhead">需求傳導路徑</div>
+        <div class="chain">
+          <span class="node">us:NVDA</span><span class="arrow">→</span>          <span class="node">tw:2317</span><span class="arrow">→</span>          <span class="node">tw:2308</span>        </div>
+        <div class="links">
+          <div class="link">
+            <code>us:NVDA → tw:2317</code>
+            <span>鴻海組裝 AI 伺服器/GB 機櫃</span>
+            <span class="badge ok">✓ 已查證</span><span class="src">Hon Hai earnings: AI server is key growth driver</span>
+          </div>
+          <div class="link">
+            <code>tw:2317 → tw:2308</code>
+            <span>AI 伺服器需高功率電源</span>
+            <span class="badge ok">✓ 已查證</span><span class="src">Delta earnings: AI power/PSU demand</span>
+          </div>
+        </div>
+
+        <div class="subhead">需求流動證據</div>
+        <table>
+          <thead><tr><th>指標</th><th class="num">數值</th><th>期間</th><th>來源</th></tr></thead>
+          <tbody>
+            <tr>
+              <td>月營收年增率（台股獨有，需求領先訊號）</td>
+              <td class="num val-pos">+43.65%</td>
+              <td>2026-06</td>
+              <td class="src-cell">finmind:monthly_revenue</td>
+            </tr>
+            <tr>
+              <td>營收年增率</td>
+              <td class="num val-pos">+31.76%</td>
+              <td>FY2024-&gt;FY2025</td>
+              <td class="src-cell">finmind:revenue</td>
+            </tr>
+            <tr>
+              <td>資本支出年增率（擴產投資）</td>
+              <td class="num val-pos">+36.77%</td>
+              <td>FY2024-&gt;FY2025</td>
+              <td class="src-cell">finmind:capex</td>
+            </tr>
+            <tr>
+              <td>應收帳款年增率（接單能見度）</td>
+              <td class="num val-pos">+36.29%</td>
+              <td>FY2024-&gt;FY2025</td>
+              <td class="src-cell">finmind:receivables</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="subhead">基本面佐證</div>
+        <table>
+          <thead><tr><th>指標</th><th class="num">數值</th><th class="num">子分數</th></tr></thead>
+          <tbody>
+            <tr>
+              <td>毛利率</td>
+              <td class="num">0.3427</td>
+              <td class="num">
+                <span class="subscore"><span class="track"><span class="fill" style="width: 61.0%"></span></span>0.61</span>
+              </td>
+            </tr>
+            <tr>
+              <td>營業利益率</td>
+              <td class="num">0.1513</td>
+              <td class="num">
+                <span class="subscore"><span class="track"><span class="fill" style="width: 61.0%"></span></span>0.61</span>
+              </td>
+            </tr>
+            <tr>
+              <td>股東權益報酬率（ROE，賺錢效率）</td>
+              <td class="num">0.2088</td>
+              <td class="num">
+                <span class="subscore"><span class="track"><span class="fill" style="width: 79.0%"></span></span>0.79</span>
+              </td>
+            </tr>
+            <tr>
+              <td>負債比率（越低越穩健）</td>
+              <td class="num">0.4913</td>
+              <td class="num">
+                <span class="subscore"><span class="track"><span class="fill" style="width: 62.0%"></span></span>0.62</span>
+              </td>
+            </tr>
+            <tr>
+              <td>現金流／淨利（盈餘品質）</td>
+              <td class="num">1.4495</td>
+              <td class="num">
+                <span class="subscore"><span class="track"><span class="fill" style="width: 100.0%"></span></span>1.00</span>
+              </td>
+            </tr>
+            <tr>
+              <td>近三年營收年複成長</td>
+              <td class="num">0.1301</td>
+              <td class="num">
+                <span class="subscore"><span class="track"><span class="fill" style="width: 65.0%"></span></span>0.65</span>
+              </td>
+            </tr>
+            <tr>
+              <td>淨利年增率</td>
+              <td class="num">0.6820</td>
+              <td class="num">
+                <span class="subscore"><span class="track"><span class="fill" style="width: 100.0%"></span></span>1.00</span>
+              </td>
+            </tr>
+            <tr>
+              <td>自由現金流利潤率</td>
+              <td class="num">0.0951</td>
+              <td class="num">
+                <span class="subscore"><span class="track"><span class="fill" style="width: 48.0%"></span></span>0.48</span>
+              </td>
+            </tr>
+            <tr>
+              <td>自由現金流殖利率（估值，越高越便宜）</td>
+              <td class="num">0.0101</td>
+              <td class="num">
+                <span class="subscore"><span class="track"><span class="fill" style="width: 17.0%"></span></span>0.17</span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="narrative"><span class="model">Claude 受限分析 · 模型 claude-sonnet-4-6</span>## 結論：值得進一步研究，但估值已明顯偏貴，需密切追蹤 AI 電源需求能否持續支撐高本益比
+
+---
+
+## 需求傳導路徑
+
+這檔股票的需求來自 **AI 資料中心資本支出爆發**這個催化劑（出處：MSFT／GOOGL／META FY24-25 財報與法說會，記錄了破紀錄的資料中心擴建計畫）。
+
+需求如何一步步傳到台達電？沿以下三個節點走：
+
+```
+NVIDIA（us:NVDA）→ 鴻海（tw:2317）→ 台達電（tw:2308）
+```
+
+**第一節：NVIDIA → 鴻海**
+- 關係：鴻海負責組裝 AI 伺服器與 GB 機櫃（這裡指 NVIDIA GB 系列的整機組裝業務）。
+- 白話說：NVIDIA 設計好 AI 晶片與系統規格，鴻海是把零件組成完整伺服器的代工廠。
+- 出處：鴻海法說會（Hon Hai earnings），明確表示 AI 伺服器是鴻海的關鍵成長動能，**此環節已查證**。
+
+**第二節：鴻海 → 台達電**
+- 關係：AI 伺服器需要高功率電源供應器（PSU），台達電是主要供應商。
+- 白話說：AI 伺服器耗電量遠高於一般伺服器，每一台機櫃都需要高規格電源模組，這正是台達電的核心產品。
+- 出處：台達電法說會（Delta earnings），直接提到 AI 電源與 PSU 需求帶動業績，**此環節已查證**。
+
+整條傳導鏈共兩個跳點，兩段關係均有出處佐證，**並非敘事假設**（封包標示 narrative_assumption = false）。
+
+---
+
+## 基本面佐證
+
+以下引用三項最關鍵指標，數字單位為新台幣：
+
+**1. 獲利年增率（earnings_growth_yoy）：+68.2%**
+- 稅後淨利從 2024 年的 403.9 億元，成長到 2025 年的 679.4 億元（FY2024→FY2025，出處：finmind:revenue 相關財報數據）。
+- 單項子分數拿到滿分，說明這項成長力道在評分系統中屬頂級表現。
+
+**2. 營業現金流對淨利比（ocf_to_net_income）：1.45 倍**
+- 營業現金流 984.7 億元 vs. 淨利 679.4 億元（FY2025，出處：finmind 財報）。
+- 白話說：公司帳上賺的錢，現金真的有進來，而且還多於帳面獲利，代表**獲利品質很紮實**，這項子分數也是滿分。
+
+**3. 月營收年增率：+43.7%（2026年6月，出處：finmind:monthly_revenue）**
+- 這是台股特有的月營收數據（美股沒有這項揭露），是觀察需求最即時的信號。
+- 近四成的月營收成長，顯示 AI 電源需求在 2026 年仍持續放量，而非一次性爆發。
+
+**資料完整度說明：**
+封包顯示所有 13 項輸入數據均齊備（inputs_present = 13／13），資料完整度係數為 1.0，**無缺漏項目需要特別說明**。
+
+---
+
+## 風險與資料缺口
+
+**最大風險：估值明顯偏貴**
+
+| 估值指標 | 數值 |
+|---|---|
+| 股價 | NT$2,010 |
+| 本益比（trailing P/E，即以過去實際獲利計算的股價倍數） | 87.3 倍 |
+| 股價淨值比（P/B，股價相對每股帳面資產的溢價） | 17.4 倍 |
+| EV/EBITDA（企業總價值相對稅前息前折舊前利潤的倍數） | 42.4 倍 |
+| 自由現金流殖利率（FCF yield，即自由現金流佔市值比例） | 僅 1.0% |
+
+本益比 87 倍意味著市場已把未來多年的高成長全部定價進去了。自由現金流殖利率只有 1%，代表若以當前股價買入，每年「實際拿回來的現金回報」非常低。這是整份評分中**最弱的一環**（估值子分數僅 16.84／100）。
+
+**傳導鏈風險：**
+- 傳導鏈共跳兩節，鏈條愈長、中途斷裂的機率愈高。雖然兩節均已查證，但鴻海的組裝訂單量、台達電的 PSU 佔鴻海採購比例等**細部供應份額**，封包中並無具體數字，無法確認台達電能拿到多大比例的訂單成長。
+- 傳導分數（propagation score）為 33.33 分，拉低整體信心，反映兩跳的鏈條長度帶來</div>
+      </div>
+    </details>
+    <details class="card" >
+      <summary>
+        <div class="rank">10</div>
+        <div class="who">
+          <div class="name">Applied Materials</div>
+          <div class="tick">US:AMAT · 離催化劑 2 跳</div>
+          <div class="bars">
+            <div class="sbar">
+              <span>基本面</span>
+              <span class="track"><span class="fill fund" style="width: 66.0%"></span></span>
+              <span class="num">66</span>
+            </div>
+            <div class="sbar">
+              <span>傳導</span>
+              <span class="track"><span class="fill prop" style="width: 13.0%"></span></span>
+              <span class="num">13</span>
+            </div>
+          </div>
+        </div>
+        <div class="conf">
+          <svg class="donut" viewBox="0 0 50 50" aria-hidden="true">
+            <circle class="bg" cx="25" cy="25" r="22"></circle>
+            <circle class="fg stroke-low" cx="25" cy="25" r="22"
+                    stroke-dasharray="138.23"
+                    stroke-dashoffset="85.27"></circle>
+            <text class="donut-num" x="25" y="30" text-anchor="middle">38</text>
+          </svg>
+          <span class="tier low">low</span>
+        </div>
+      </summary>
+
+      <div class="body">
+        <div class="breakdown">信心 38.3 ＝ 基本面 65.99 × 0.5 ＋ 傳導 13.06 × 0.5，資料完整度係數 0.9692（12/13 項有資料）</div>
+
+        <div class="subhead">需求傳導路徑</div>
+        <div class="chain">
+          <span class="node">us:NVDA</span><span class="arrow">→</span>          <span class="node">tw:2330</span><span class="arrow">→</span>          <span class="node">us:AMAT</span>        </div>
+        <div class="links">
+          <div class="link">
+            <code>us:NVDA → tw:2330</code>
+            <span>GPU 由台積電先進製程代工</span>
+            <span class="badge ok">✓ 已查證</span><span class="src">TSMC earnings: HPC/AI is primary growth driver; NVDA is a major customer</span>
+          </div>
+          <div class="link">
+            <code>tw:2330 → us:AMAT</code>
+            <span>擴產帶動半導體設備採購</span>
+            <span class="badge ok">✓ 已查證</span><span class="src">Applied Materials earnings: leading-edge foundry capex</span>
+          </div>
+        </div>
+
+        <div class="subhead">需求流動證據</div>
+        <table>
+          <thead><tr><th>指標</th><th class="num">數值</th><th>期間</th><th>來源</th></tr></thead>
+          <tbody>
+            <tr>
+              <td>營收年增率</td>
+              <td class="num val-pos">+4.39%</td>
+              <td>FY2024-&gt;FY2025</td>
+              <td class="src-cell">edgar:revenue</td>
+            </tr>
+            <tr>
+              <td>資本支出年增率（擴產投資）</td>
+              <td class="num val-pos">+89.92%</td>
+              <td>FY2024-&gt;FY2025</td>
+              <td class="src-cell">edgar:capex</td>
+            </tr>
+            <tr>
+              <td>應收帳款年增率（接單能見度）</td>
+              <td class="num val-neg">-0.94%</td>
+              <td>FY2024-&gt;FY2025</td>
+              <td class="src-cell">edgar:receivables</td>
+            </tr>
+          </tbody>
+        </table>
+<p class="gaps">資料缺口（明列、不估算）：<b>月營收年增率（台股獨有，需求領先訊號）</b></p>
+        <div class="subhead">基本面佐證</div>
+        <table>
+          <thead><tr><th>指標</th><th class="num">數值</th><th class="num">子分數</th></tr></thead>
+          <tbody>
+            <tr>
+              <td>毛利率</td>
+              <td class="num">0.4867</td>
+              <td class="num">
+                <span class="subscore"><span class="track"><span class="fill" style="width: 97.0%"></span></span>0.97</span>
+              </td>
+            </tr>
+            <tr>
+              <td>營業利益率</td>
+              <td class="num">0.2922</td>
+              <td class="num">
+                <span class="subscore"><span class="track"><span class="fill" style="width: 100.0%"></span></span>1.00</span>
+              </td>
+            </tr>
+            <tr>
+              <td>股東權益報酬率（ROE，賺錢效率）</td>
+              <td class="num">0.3428</td>
+              <td class="num">
+                <span class="subscore"><span class="track"><span class="fill" style="width: 100.0%"></span></span>1.00</span>
+              </td>
+            </tr>
+            <tr>
+              <td>負債比率（越低越穩健）</td>
+              <td class="num">0.4376</td>
+              <td class="num">
+                <span class="subscore"><span class="track"><span class="fill" style="width: 72.0%"></span></span>0.72</span>
+              </td>
+            </tr>
+            <tr>
+              <td>現金流／淨利（盈餘品質）</td>
+              <td class="num">1.1372</td>
+              <td class="num">
+                <span class="subscore"><span class="track"><span class="fill" style="width: 91.0%"></span></span>0.91</span>
+              </td>
+            </tr>
+            <tr>
+              <td>近三年營收年複成長</td>
+              <td class="num">0.0323</td>
+              <td class="num">
+                <span class="subscore"><span class="track"><span class="fill" style="width: 16.0%"></span></span>0.16</span>
+              </td>
+            </tr>
+            <tr>
+              <td>淨利年增率</td>
+              <td class="num">-0.0249</td>
+              <td class="num">
+                <span class="subscore"><span class="track"><span class="fill" style="width: 19.0%"></span></span>0.19</span>
+              </td>
+            </tr>
+            <tr>
+              <td>自由現金流利潤率</td>
+              <td class="num">0.2009</td>
+              <td class="num">
+                <span class="subscore"><span class="track"><span class="fill" style="width: 100.0%"></span></span>1.00</span>
+              </td>
+            </tr>
+            <tr>
+              <td>自由現金流殖利率（估值，越高越便宜）</td>
+              <td class="num">0.0119</td>
+              <td class="num">
+                <span class="subscore"><span class="track"><span class="fill" style="width: 20.0%"></span></span>0.20</span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="narrative"><span class="model">Claude 受限分析 · 模型 claude-sonnet-4-6</span>## 結論：觀察——基本面獲利能力極強，但成長動能放緩加上估值明顯偏高，整體信心分數偏低，建議持續追蹤而非立即進場
+
+---
+
+## 需求傳導路徑
+
+這檔股票的需求邏輯，沿著一條「AI 燒算力 → 晶片代工 → 設備採購」的三節傳導鏈走：
+
+**起點：AI 資本支出爆發（催化劑）**
+微軟、Google、Meta 在 FY24–25 的財報與法說會上，均揭露創歷史新高的資料中心資本支出計畫（來源：MSFT/GOOGL/META FY24-25 10-K &amp; earnings calls）。這代表建置 AI 運算基礎設施的錢正在大量湧入。
+
+**第一節：NVDA → 台積電（tw:2330）**
+關係：「GPU 由台積電先進製程代工」。NVIDIA 的 AI 繪圖處理器必須交由台積電用最先進的製程生產，台積電的法說會也明確指出高效能運算（HPC）與 AI 是其主要成長驅動力，NVIDIA 是重要客戶（來源：TSMC earnings: HPC/AI is primary growth driver; NVDA is a major customer）。此節點已有出處驗證（verified: true）。
+
+**第二節：台積電（tw:2330）→ Applied Materials（us:AMAT）**
+關係：「擴產帶動半導體設備採購」。台積電為了接更多 AI 晶片訂單而持續擴建產線，就必須大量採購半導體製造設備，而 Applied Materials 正是全球最大的半導體設備供應商之一。Applied Materials 自身的法說會也確認，先進製程晶圓廠（leading-edge foundry）的資本支出是其業績的重要來源（來源：Applied Materials earnings: leading-edge foundry capex）。此節點已有出處驗證（verified: true）。
+
+整條鏈路「AI 需求 → NVDA 訂單 → 台積電擴產 → 採購 AMAT 設備」均經查證，**並非純粹敘事假設**（narrative_assumption: false）。
+
+---
+
+## 基本面佐證
+
+**1. 獲利能力：接近滿分**
+- 毛利率（毛利÷營收）約 **48.67%**（FY2025，來源：edgar 毛利 137.93 億、營收 283.68 億），單項子分數 0.967，幾近滿分。
+- 營業利益率（營業利益÷營收）約 **29.22%**（FY2025，來源：edgar 營業利益 82.89 億、營收 283.68 億），單項子分數 **1.0，滿分**。
+- 股東權益報酬率（賺的錢相對股東出資有多少）約 **34.28%**（FY2025，來源：edgar 淨利 69.98 億、股東權益 204.15 億），單項子分數同樣 **1.0，滿分**。
+- 這三項顯示 AMAT 是一家獲利品質非常高的公司，賺錢效率出色。
+
+**2. 現金流品質：優異**
+- 自由現金流利潤率（自由現金流÷營收）約 **20.09%**（FY2025，來源：edgar 營業現金流 79.58 億、資本支出 22.60 億、營收 283.68 億），單項子分數 **1.0，滿分**。
+- 營業現金流對淨利比率（看帳面盈餘是否有真實現金支撐）約 **1.14 倍**（FY2025，來源：edgar），高於 1 代表帳面利潤確實有現金收進來，盈餘品質良好。
+
+**3. 成長動能：明顯偏弱，是最大隱憂**
+- 三年營收複合成長率（每年平均長多少）僅約 **+3.23%**（FY2022→FY2025，來源：edgar 營收從 257.85 億成長到 283.68 億），單項子分數僅 0.162，遠低於理想水準。
+- 年度盈餘年增率（今年比去年多賺多少）為 **-2.49%**（FY2024→FY2025，來源：edgar 淨利從 71.77 億微降至 69.98 億），是小幅衰退，單項子分數僅 0.188。
+- 營收年增率約 **+4.39%**（FY2024→FY2025，來源：edgar:revenue），成長幅度有限。
+
+**缺漏項目說明：**
+月營收年增率（monthly_revenue_yoy）資料缺漏——因為這是美股，美國上市公司無須每月公告營收（不像台股），所以這筆數字無從取得（來源標籤：finmind:monthly_revenue，值為空）。
+
+---
+
+## 風險與資料缺口
+
+**1. 估值明顯偏高——最大警示**
+- 本益比（股價÷每股盈餘，衡量「買一元獲利要付多少錢」）約 **56.84 倍**，在製造業設備股中屬於相當高的水位。
+- 股價淨值比（股價</div>
+      </div>
+    </details>
+  </section>
+
+  <section>
+    <h2>觀察名單 <span class="count">在鏈上但未通過雙引擎</span></h2>
+    <div class="toolbar">
+      <input id="watch-filter" type="search" placeholder="篩選標的名稱／代號…" aria-label="篩選觀察名單">
+    </div>
+    <table id="watch">
+      <thead>
+        <tr>
+          <th data-sort="text" data-col="0">標的 <span class="ind">⇅</span></th>
+          <th class="num" data-sort="num" data-col="1">基本面 <span class="ind">⇅</span></th>
+          <th class="num" data-sort="num" data-col="2">傳導 <span class="ind">⇅</span></th>
+          <th class="num" data-sort="num" data-col="3">信心 <span class="ind">⇅</span></th>
+          <th data-sort="text" data-col="4">未過原因</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>緯穎 Wiwynn <span class="src-cell">TW:6669</span></td>
+          <td class="num">43</td>
+          <td class="num">49</td>
+          <td class="num">46</td>
+          <td>基本面未過門檻</td>
+        </tr>
+        <tr>
+          <td>廣達 Quanta <span class="src-cell">TW:2382</span></td>
+          <td class="num">34</td>
+          <td class="num">43</td>
+          <td class="num">38</td>
+          <td>基本面未過門檻</td>
+        </tr>
+        <tr>
+          <td>鴻海 Hon Hai <span class="src-cell">TW:2317</span></td>
+          <td class="num">36</td>
+          <td class="num">36</td>
+          <td class="num">36</td>
+          <td>基本面未過門檻</td>
+        </tr>
+        <tr>
+          <td>世芯-KY Alchip <span class="src-cell">TW:3661</span></td>
+          <td class="num">69</td>
+          <td class="num">0</td>
+          <td class="num">34</td>
+          <td>傳導鏈含未查證環節（敘事假設）</td>
+        </tr>
+        <tr>
+          <td>Super Micro <span class="src-cell">US:SMCI</span></td>
+          <td class="num">52</td>
+          <td class="num">18</td>
+          <td class="num">34</td>
+          <td>基本面未過門檻</td>
+        </tr>
+        <tr>
+          <td>南電 Nan Ya PCB <span class="src-cell">TW:8046</span></td>
+          <td class="num">40</td>
+          <td class="num">25</td>
+          <td class="num">33</td>
+          <td>基本面未過門檻</td>
+        </tr>
+        <tr>
+          <td>日月光投控 ASE <span class="src-cell">TW:3711</span></td>
+          <td class="num">35</td>
+          <td class="num">24</td>
+          <td class="num">29</td>
+          <td>基本面未過門檻</td>
+        </tr>
+        <tr>
+          <td>欣興 Unimicron <span class="src-cell">TW:3037</span></td>
+          <td class="num">33</td>
+          <td class="num">20</td>
+          <td class="num">27</td>
+          <td>基本面未過門檻</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2>歷史推薦追蹤績效 <span class="count">60 筆</span></h2>
+    <table id="tracking">
+      <thead>
+        <tr>
+          <th>推薦週</th>
+          <th>標的</th>
+          <th class="num">進場價</th>
+          <th class="num">最新價</th>
+          <th class="num">報酬率</th>
+          <th class="num">追蹤週數</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="src-cell">2026-W27</span></td>
+          <td>NVIDIA <span class="src-cell">US:NVDA</span></td>
+          <td class="num">192.53</td>
+          <td class="num">192.53</td>
+          <td class="num val-pos">
++0.0%          </td>
+          <td class="num">1</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">2026-W27</span></td>
+          <td>台積電 TSMC <span class="src-cell">TW:2330</span></td>
+          <td class="num">2375.00</td>
+          <td class="num">2375.00</td>
+          <td class="num val-pos">
++0.0%          </td>
+          <td class="num">1</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">2026-W27</span></td>
+          <td>AMD <span class="src-cell">US:AMD</span></td>
+          <td class="num">521.58</td>
+          <td class="num">521.58</td>
+          <td class="num val-pos">
++0.0%          </td>
+          <td class="num">1</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">2026-W27</span></td>
+          <td>Micron <span class="src-cell">US:MU</span></td>
+          <td class="num">1132.33</td>
+          <td class="num">1132.33</td>
+          <td class="num val-pos">
++0.0%          </td>
+          <td class="num">1</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">2026-W27</span></td>
+          <td>Broadcom <span class="src-cell">US:AVGO</span></td>
+          <td class="num">365.02</td>
+          <td class="num">365.02</td>
+          <td class="num val-pos">
++0.0%          </td>
+          <td class="num">1</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">2026-W27</span></td>
+          <td>奇鋐 AVC <span class="src-cell">TW:3017</span></td>
+          <td class="num">2290.00</td>
+          <td class="num">2290.00</td>
+          <td class="num val-pos">
++0.0%          </td>
+          <td class="num">1</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">2026-W27</span></td>
+          <td>Marvell <span class="src-cell">US:MRVL</span></td>
+          <td class="num">266.77</td>
+          <td class="num">266.77</td>
+          <td class="num val-pos">
++0.0%          </td>
+          <td class="num">1</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">2026-W27</span></td>
+          <td>Lam Research <span class="src-cell">US:LRCX</span></td>
+          <td class="num">379.09</td>
+          <td class="num">379.09</td>
+          <td class="num val-pos">
++0.0%          </td>
+          <td class="num">1</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">2026-W27</span></td>
+          <td>台達電 Delta <span class="src-cell">TW:2308</span></td>
+          <td class="num">1915.00</td>
+          <td class="num">1915.00</td>
+          <td class="num val-pos">
++0.0%          </td>
+          <td class="num">1</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">2026-W27</span></td>
+          <td>Applied Materials <span class="src-cell">US:AMAT</span></td>
+          <td class="num">626.84</td>
+          <td class="num">626.84</td>
+          <td class="num val-pos">
++0.0%          </td>
+          <td class="num">1</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">2026-W26</span></td>
+          <td>Applied Materials <span class="src-cell">US:AMAT</span></td>
+          <td class="num">617.11</td>
+          <td class="num">626.84</td>
+          <td class="num val-pos">
++1.6%          </td>
+          <td class="num">2</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">2026-W26</span></td>
+          <td>Micron <span class="src-cell">US:MU</span></td>
+          <td class="num">1133.99</td>
+          <td class="num">1132.33</td>
+          <td class="num val-neg">
+-0.1%          </td>
+          <td class="num">2</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">2026-W26</span></td>
+          <td>Lam Research <span class="src-cell">US:LRCX</span></td>
+          <td class="num">389.04</td>
+          <td class="num">379.09</td>
+          <td class="num val-neg">
+-2.6%          </td>
+          <td class="num">2</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">2026-W26</span></td>
+          <td>AMD <span class="src-cell">US:AMD</span></td>
+          <td class="num">537.37</td>
+          <td class="num">521.58</td>
+          <td class="num val-neg">
+-2.9%          </td>
+          <td class="num">2</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">2026-W26</span></td>
+          <td>奇鋐 AVC <span class="src-cell">TW:3017</span></td>
+          <td class="num">2420.00</td>
+          <td class="num">2290.00</td>
+          <td class="num val-neg">
+-5.4%          </td>
+          <td class="num">2</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">2026-W26</span></td>
+          <td>台積電 TSMC <span class="src-cell">TW:2330</span></td>
+          <td class="num">2510.00</td>
+          <td class="num">2375.00</td>
+          <td class="num val-neg">
+-5.4%          </td>
+          <td class="num">2</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">2026-W26</span></td>
+          <td>NVIDIA <span class="src-cell">US:NVDA</span></td>
+          <td class="num">210.69</td>
+          <td class="num">192.53</td>
+          <td class="num val-neg">
+-8.6%          </td>
+          <td class="num">2</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">2026-W26</span></td>
+          <td>台達電 Delta <span class="src-cell">TW:2308</span></td>
+          <td class="num">2150.00</td>
+          <td class="num">1915.00</td>
+          <td class="num val-neg">
+-10.9%          </td>
+          <td class="num">2</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">2026-W26</span></td>
+          <td>Broadcom <span class="src-cell">US:AVGO</span></td>
+          <td class="num">411.35</td>
+          <td class="num">365.02</td>
+          <td class="num val-neg">
+-11.3%          </td>
+          <td class="num">2</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">2026-W26</span></td>
+          <td>Marvell <span class="src-cell">US:MRVL</span></td>
+          <td class="num">310.58</td>
+          <td class="num">266.77</td>
+          <td class="num val-neg">
+-14.1%          </td>
+          <td class="num">2</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">2026-W25</span></td>
+          <td>Micron <span class="src-cell">US:MU</span></td>
+          <td class="num">981.61</td>
+          <td class="num">1132.33</td>
+          <td class="num val-pos">
++15.3%          </td>
+          <td class="num">3</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">2026-W25</span></td>
+          <td>Applied Materials <span class="src-cell">US:AMAT</span></td>
+          <td class="num">567.25</td>
+          <td class="num">626.84</td>
+          <td class="num val-pos">
++10.5%          </td>
+          <td class="num">3</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">2026-W25</span></td>
+          <td>Lam Research <span class="src-cell">US:LRCX</span></td>
+          <td class="num">366.81</td>
+          <td class="num">379.09</td>
+          <td class="num val-pos">
++3.4%          </td>
+          <td class="num">3</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">2026-W25</span></td>
+          <td>AMD <span class="src-cell">US:AMD</span></td>
+          <td class="num">511.57</td>
+          <td class="num">521.58</td>
+          <td class="num val-pos">
++2.0%          </td>
+          <td class="num">3</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">2026-W25</span></td>
+          <td>台積電 TSMC <span class="src-cell">TW:2330</span></td>
+          <td class="num">2375.00</td>
+          <td class="num">2375.00</td>
+          <td class="num val-pos">
++0.0%          </td>
+          <td class="num">3</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">2026-W25</span></td>
+          <td>Broadcom <span class="src-cell">US:AVGO</span></td>
+          <td class="num">382.07</td>
+          <td class="num">365.02</td>
+          <td class="num val-neg">
+-4.5%          </td>
+          <td class="num">3</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">2026-W25</span></td>
+          <td>Marvell <span class="src-cell">US:MRVL</span></td>
+          <td class="num">279.70</td>
+          <td class="num">266.77</td>
+          <td class="num val-neg">
+-4.6%          </td>
+          <td class="num">3</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">2026-W25</span></td>
+          <td>奇鋐 AVC <span class="src-cell">TW:3017</span></td>
+          <td class="num">2410.00</td>
+          <td class="num">2290.00</td>
+          <td class="num val-neg">
+-5.0%          </td>
+          <td class="num">3</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">2026-W25</span></td>
+          <td>NVIDIA <span class="src-cell">US:NVDA</span></td>
+          <td class="num">205.19</td>
+          <td class="num">192.53</td>
+          <td class="num val-neg">
+-6.2%          </td>
+          <td class="num">3</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">2026-W25</span></td>
+          <td>台達電 Delta <span class="src-cell">TW:2308</span></td>
+          <td class="num">2210.00</td>
+          <td class="num">1915.00</td>
+          <td class="num val-neg">
+-13.3%          </td>
+          <td class="num">3</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">2026-W24</span></td>
+          <td>Applied Materials <span class="src-cell">US:AMAT</span></td>
+          <td class="num">453.01</td>
+          <td class="num">626.84</td>
+          <td class="num val-pos">
++38.4%          </td>
+          <td class="num">4</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">2026-W24</span></td>
+          <td>Micron <span class="src-cell">US:MU</span></td>
+          <td class="num">864.01</td>
+          <td class="num">1132.33</td>
+          <td class="num val-pos">
++31.1%          </td>
+          <td class="num">4</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">2026-W24</span></td>
+          <td>Lam Research <span class="src-cell">US:LRCX</span></td>
+          <td class="num">303.28</td>
+          <td class="num">379.09</td>
+          <td class="num val-pos">
++25.0%          </td>
+          <td class="num">4</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">2026-W24</span></td>
+          <td>AMD <span class="src-cell">US:AMD</span></td>
+          <td class="num">466.38</td>
+          <td class="num">521.58</td>
+          <td class="num val-pos">
++11.8%          </td>
+          <td class="num">4</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">2026-W24</span></td>
+          <td>台積電 TSMC <span class="src-cell">TW:2330</span></td>
+          <td class="num">2300.00</td>
+          <td class="num">2375.00</td>
+          <td class="num val-pos">
++3.3%          </td>
+          <td class="num">4</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">2026-W24</span></td>
+          <td>Marvell <span class="src-cell">US:MRVL</span></td>
+          <td class="num">263.47</td>
+          <td class="num">266.77</td>
+          <td class="num val-pos">
++1.2%          </td>
+          <td class="num">4</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">2026-W24</span></td>
+          <td>Broadcom <span class="src-cell">US:AVGO</span></td>
+          <td class="num">385.73</td>
+          <td class="num">365.02</td>
+          <td class="num val-neg">
+-5.4%          </td>
+          <td class="num">4</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">2026-W24</span></td>
+          <td>NVIDIA <span class="src-cell">US:NVDA</span></td>
+          <td class="num">205.10</td>
+          <td class="num">192.53</td>
+          <td class="num val-neg">
+-6.1%          </td>
+          <td class="num">4</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">2026-W24</span></td>
+          <td>奇鋐 AVC <span class="src-cell">TW:3017</span></td>
+          <td class="num">2565.00</td>
+          <td class="num">2290.00</td>
+          <td class="num val-neg">
+-10.7%          </td>
+          <td class="num">4</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">2026-W24</span></td>
+          <td>台達電 Delta <span class="src-cell">TW:2308</span></td>
+          <td class="num">2245.00</td>
+          <td class="num">1915.00</td>
+          <td class="num val-neg">
+-14.7%          </td>
+          <td class="num">4</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">2026-W23</span></td>
+          <td>AMAT <span class="src-cell">US:AMAT</span></td>
+          <td class="num">458.17</td>
+          <td class="num">626.84</td>
+          <td class="num val-pos">
++36.8%          </td>
+          <td class="num">5</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">2026-W23</span></td>
+          <td>MRVL <span class="src-cell">US:MRVL</span></td>
+          <td class="num">219.43</td>
+          <td class="num">266.77</td>
+          <td class="num val-pos">
++21.6%          </td>
+          <td class="num">5</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">2026-W23</span></td>
+          <td>LRCX <span class="src-cell">US:LRCX</span></td>
+          <td class="num">317.12</td>
+          <td class="num">379.09</td>
+          <td class="num val-pos">
++19.5%          </td>
+          <td class="num">5</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">2026-W23</span></td>
+          <td>MU <span class="src-cell">US:MU</span></td>
+          <td class="num">1035.50</td>
+          <td class="num">1132.33</td>
+          <td class="num val-pos">
++9.3%          </td>
+          <td class="num">5</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">2026-W23</span></td>
+          <td>AMD <span class="src-cell">US:AMD</span></td>
+          <td class="num">510.13</td>
+          <td class="num">521.58</td>
+          <td class="num val-pos">
++2.2%          </td>
+          <td class="num">5</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">2026-W23</span></td>
+          <td>2330 <span class="src-cell">TW:2330</span></td>
+          <td class="num">2355.00</td>
+          <td class="num">2375.00</td>
+          <td class="num val-pos">
++0.8%          </td>
+          <td class="num">5</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">2026-W23</span></td>
+          <td>NVDA <span class="src-cell">US:NVDA</span></td>
+          <td class="num">224.10</td>
+          <td class="num">192.53</td>
+          <td class="num val-neg">
+-14.1%          </td>
+          <td class="num">5</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">2026-W23</span></td>
+          <td>3017 <span class="src-cell">TW:3017</span></td>
+          <td class="num">2785.00</td>
+          <td class="num">2290.00</td>
+          <td class="num val-neg">
+-17.8%          </td>
+          <td class="num">5</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">2026-W23</span></td>
+          <td>AVGO <span class="src-cell">US:AVGO</span></td>
+          <td class="num">459.97</td>
+          <td class="num">365.02</td>
+          <td class="num val-neg">
+-20.6%          </td>
+          <td class="num">5</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">2026-W23</span></td>
+          <td>2308 <span class="src-cell">TW:2308</span></td>
+          <td class="num">2420.00</td>
+          <td class="num">1915.00</td>
+          <td class="num val-neg">
+-20.9%          </td>
+          <td class="num">5</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">2026-W22</span></td>
+          <td>AMAT <span class="src-cell">US:AMAT</span></td>
+          <td class="num">454.89</td>
+          <td class="num">626.84</td>
+          <td class="num val-pos">
++37.8%          </td>
+          <td class="num">6</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">2026-W22</span></td>
+          <td>MRVL <span class="src-cell">US:MRVL</span></td>
+          <td class="num">208.26</td>
+          <td class="num">266.77</td>
+          <td class="num val-pos">
++28.1%          </td>
+          <td class="num">6</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">2026-W22</span></td>
+          <td>MU <span class="src-cell">US:MU</span></td>
+          <td class="num">895.88</td>
+          <td class="num">1132.33</td>
+          <td class="num val-pos">
++26.4%          </td>
+          <td class="num">6</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">2026-W22</span></td>
+          <td>LRCX <span class="src-cell">US:LRCX</span></td>
+          <td class="num">322.68</td>
+          <td class="num">379.09</td>
+          <td class="num val-pos">
++17.5%          </td>
+          <td class="num">6</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">2026-W22</span></td>
+          <td>AMD <span class="src-cell">US:AMD</span></td>
+          <td class="num">503.89</td>
+          <td class="num">521.58</td>
+          <td class="num val-pos">
++3.5%          </td>
+          <td class="num">6</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">2026-W22</span></td>
+          <td>2330 <span class="src-cell">TW:2330</span></td>
+          <td class="num">2310.00</td>
+          <td class="num">2375.00</td>
+          <td class="num val-pos">
++2.8%          </td>
+          <td class="num">6</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">2026-W22</span></td>
+          <td>NVDA <span class="src-cell">US:NVDA</span></td>
+          <td class="num">214.61</td>
+          <td class="num">192.53</td>
+          <td class="num val-neg">
+-10.3%          </td>
+          <td class="num">6</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">2026-W22</span></td>
+          <td>3017 <span class="src-cell">TW:3017</span></td>
+          <td class="num">2575.00</td>
+          <td class="num">2290.00</td>
+          <td class="num val-neg">
+-11.1%          </td>
+          <td class="num">6</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">2026-W22</span></td>
+          <td>AVGO <span class="src-cell">US:AVGO</span></td>
+          <td class="num">422.01</td>
+          <td class="num">365.02</td>
+          <td class="num val-neg">
+-13.5%          </td>
+          <td class="num">6</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">2026-W22</span></td>
+          <td>2308 <span class="src-cell">TW:2308</span></td>
+          <td class="num">2290.00</td>
+          <td class="num">1915.00</td>
+          <td class="num val-neg">
+-16.4%          </td>
+          <td class="num">6</td>
+        </tr>
+      </tbody>
+    </table>
+    <p style="font-size:12px;color:var(--faint);margin-top:8px;">進場價為首次推薦當週報價；最新價為本週更新時報價。報酬率不含股息或分割。</p>
+  </section>
+
+  <section>
+    <h2>本週復盤 <span class="count">10 檔虧損 &gt; 5%</span></h2>
+    <p style="font-size:13px;color:var(--muted);margin-bottom:12px;">
+      同期基準報酬：<b>SPY+QQQ</b>
+        <span class="val-pos">+46.0%</span>
+    </p>
+    <table>
+      <thead>
+        <tr>
+          <th>標的</th>
+          <th class="num">報酬率</th>
+          <th>診斷</th>
+          <th>說明</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="src-cell">US:NVDA</span></td>
+          <td class="num val-neg">-8.6%</td>
+          <td><span class="src-cell">model_failure</span></td>
+          <td style="font-size:13px;color:var(--muted)">基本面與傳導分數當時通過篩選，但股價仍下跌；需檢視篩選門檻</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">US:AVGO</span></td>
+          <td class="num val-neg">-11.3%</td>
+          <td><span class="src-cell">model_failure</span></td>
+          <td style="font-size:13px;color:var(--muted)">基本面與傳導分數當時通過篩選，但股價仍下跌；需檢視篩選門檻</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">US:MRVL</span></td>
+          <td class="num val-neg">-14.1%</td>
+          <td><span class="src-cell">model_failure</span></td>
+          <td style="font-size:13px;color:var(--muted)">基本面與傳導分數當時通過篩選，但股價仍下跌；需檢視篩選門檻</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">US:NVDA</span></td>
+          <td class="num val-neg">-6.2%</td>
+          <td><span class="src-cell">model_failure</span></td>
+          <td style="font-size:13px;color:var(--muted)">基本面與傳導分數當時通過篩選，但股價仍下跌；需檢視篩選門檻</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">US:AVGO</span></td>
+          <td class="num val-neg">-5.4%</td>
+          <td><span class="src-cell">model_failure</span></td>
+          <td style="font-size:13px;color:var(--muted)">基本面與傳導分數當時通過篩選，但股價仍下跌；需檢視篩選門檻</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">US:NVDA</span></td>
+          <td class="num val-neg">-6.1%</td>
+          <td><span class="src-cell">model_failure</span></td>
+          <td style="font-size:13px;color:var(--muted)">基本面與傳導分數當時通過篩選，但股價仍下跌；需檢視篩選門檻</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">US:NVDA</span></td>
+          <td class="num val-neg">-14.1%</td>
+          <td><span class="src-cell">model_failure</span></td>
+          <td style="font-size:13px;color:var(--muted)">基本面與傳導分數當時通過篩選，但股價仍下跌；需檢視篩選門檻</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">US:AVGO</span></td>
+          <td class="num val-neg">-20.6%</td>
+          <td><span class="src-cell">model_failure</span></td>
+          <td style="font-size:13px;color:var(--muted)">基本面與傳導分數當時通過篩選，但股價仍下跌；需檢視篩選門檻</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">US:NVDA</span></td>
+          <td class="num val-neg">-10.3%</td>
+          <td><span class="src-cell">model_failure</span></td>
+          <td style="font-size:13px;color:var(--muted)">基本面與傳導分數當時通過篩選，但股價仍下跌；需檢視篩選門檻</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">US:AVGO</span></td>
+          <td class="num val-neg">-13.5%</td>
+          <td><span class="src-cell">model_failure</span></td>
+          <td style="font-size:13px;color:var(--muted)">基本面與傳導分數當時通過篩選，但股價仍下跌；需檢視篩選門檻</td>
+        </tr>
+      </tbody>
+    </table>
+    <p style="font-size:12px;color:var(--faint);margin-top:8px;">
+      小結：0 檔純屬大盤連動 ／ 10 檔為模型錯判或基本面惡化
+    </p>
+  </section>
+
+  <section>
+    <h2>指標準確度 <span class="count">近 6 週</span></h2>
+    <table>
+      <thead>
+        <tr>
+          <th>指標群組</th>
+          <th class="num">與報酬相關係數</th>
+          <th class="num">樣本數</th>
+          <th>評估</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>balance_sheet</td>
+          <td class="num val-pos">
+0.123          </td>
+          <td class="num">60</td>
+          <td style="font-size:13px;color:var(--muted)">偏弱</td>
+        </tr>
+        <tr>
+          <td>cash_flow</td>
+          <td class="num val-neg">
+-0.071          </td>
+          <td class="num">60</td>
+          <td style="font-size:13px;color:var(--muted)">偏弱</td>
+        </tr>
+        <tr>
+          <td>growth</td>
+          <td class="num val-neg">
+-0.632          </td>
+          <td class="num">60</td>
+          <td style="font-size:13px;color:var(--muted)">有效</td>
+        </tr>
+        <tr>
+          <td>profitability</td>
+          <td class="num val-pos">
+0.114          </td>
+          <td class="num">60</td>
+          <td style="font-size:13px;color:var(--muted)">偏弱</td>
+        </tr>
+        <tr>
+          <td>valuation</td>
+          <td class="num val-neg">
+-0.232          </td>
+          <td class="num">60</td>
+          <td style="font-size:13px;color:var(--muted)">中等</td>
+        </tr>
+      </tbody>
+    </table>
+    <p style="font-size:12px;color:var(--faint);margin-top:8px;">相關係數以歷史推薦的原始分數與實際報酬率計算，反映各指標群組的選股預測力。資料累積後自動更新。</p>
+  </section>
+
+  <details class="glossary">
+    <summary>名詞白話解釋</summary>
+    <div class="gbody">
+      <h4>三個分數</h4>
+      <ul>
+        <li><b>基本面分數</b>：這家公司「財報體質」好不好（賺錢能力、負債、現金流、估值貴不貴），0–100 分。</li>
+        <li><b>傳導分數</b>：這檔股票「離需求源頭多近、證據多硬」。離催化劑越近、每段供應鏈關係都有出處，分數越高。</li>
+        <li><b>信心分數</b>：上面兩個分數各佔一半，再乘上「資料完整度」。資料缺越多被打越低，整個是公式算的，分析文字不能灌水。</li>
+      </ul>
+      <h4>常見名詞</h4>
+      <ul>
+        <li><b>催化劑</b>：帶動一整條產業需求的源頭事件（例：AI 資料中心大舉投資）。</li>
+        <li><b>需求傳導鏈／幾跳</b>：需求像骨牌一節節傳下去。「0 跳」＝它自己就是源頭；「2 跳」＝隔了兩層才受惠。</li>
+        <li><b>已查證 vs 敘事假設</b>：每段供應鏈關係都要有出處才算「已查證」。沒出處的只能叫「敘事假設」，<b>就算財報滿分也不會被推薦</b>（本工具最核心的防臆測設計）。</li>
+        <li><b>資料完整度</b>：13 項該有的數據實際拿到幾項。例：12／13 ＝ 完整度係數約 0.97。</li>
+      </ul>
+      <h4>為什麼有些欄位「資料缺漏」</h4>
+      <ul>
+        <li>最常見的是<b>月營收年增率</b>：只有<b>台股</b>法規要求每月公布營收，<b>美股沒有</b>，所以美股這格永遠空白。</li>
+        <li>其他偶發：資料來源那年某個數字本身就沒給（例如淨利從缺，連帶 ROE、淨利年增率算不出來），或前一年虧損、年增率算出來沒意義。</li>
+        <li><b>重點</b>：缺的一律留白、明白標出來，<b>絕不自己猜一個數字填進去</b> —— 這是刻意的設計。</li>
+      </ul>
+    </div>
+  </details>
+
+  <footer>
+    本報告由自動化雙引擎研究工具產生。所有數據附帶出處；標記「敘事假設」的環節尚未經來源證實，不得視為事實。非投資建議。
+  </footer>
+
+</div>
+
+<script>
+  // Watchlist: client-side filter + column sort. Vanilla JS, no dependencies.
+  (function () {
+    var table = document.getElementById("watch");
+    if (!table) return;
+    var tbody = table.querySelector("tbody");
+    var filter = document.getElementById("watch-filter");
+
+    if (filter) {
+      filter.addEventListener("input", function () {
+        var q = this.value.trim().toLowerCase();
+        tbody.querySelectorAll("tr").forEach(function (tr) {
+          tr.style.display = tr.textContent.toLowerCase().indexOf(q) > -1 ? "" : "none";
+        });
+      });
+    }
+
+    table.querySelectorAll("th[data-sort]").forEach(function (th) {
+      var asc = true;
+      th.addEventListener("click", function () {
+        var col = +th.dataset.col, type = th.dataset.sort;
+        var rows = Array.prototype.slice.call(tbody.querySelectorAll("tr"));
+        rows.sort(function (a, b) {
+          var x = a.children[col].textContent.trim();
+          var y = b.children[col].textContent.trim();
+          if (type === "num") { x = parseFloat(x) || 0; y = parseFloat(y) || 0; return asc ? x - y : y - x; }
+          return asc ? x.localeCompare(y, "zh-Hant") : y.localeCompare(x, "zh-Hant");
+        });
+        asc = !asc;
+        rows.forEach(function (r) { tbody.appendChild(r); });
+      });
+    });
+  })();
+</script>
+</body>
+</html>
