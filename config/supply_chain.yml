@@ -20,6 +20,30 @@ catalysts:
     drivers: ["us:MSFT", "us:GOOGL", "us:META"]  # capex 來源，用於自動偵測強度
     source: "MSFT/GOOGL/META FY24-25 10-K & earnings calls: record data-center capex guidance"
 
+  # 與 AI 完全獨立的第二條主題：GLP-1（減重/糖尿病）藥物放量帶動的產能與供應鏈投資。
+  # 用於證明「催化劑熱度排名」是真的會輪動——不是永遠只有 AI 一個選項。
+  - id: glp1_manufacturing
+    name: "GLP-1 減重／代謝藥物放量擴產"
+    description: >
+      Tirzepatide/semaglutide 需求暴增，藥廠大舉擴充原料藥與注射裝置產能，
+      需求沿藥物合約製造/裝置供應鏈往下傳導。
+    seeds: ["us:LLY"]                     # 催化劑首先灌入的節點（藥廠自身）
+    drivers: ["us:LLY"]                   # capex/營收來源，用於自動偵測強度
+    source: "Eli Lilly investor materials (2025-2026): $9B+ Indiana site expansion for \
+      tirzepatide API; Zepbound/Mounjaro combined ~56% of FY2025 revenue"
+
+  # 第三條主題：AI 資料中心以外、由電網級儲能（ESS）帶動的鋰化工需求。刻意選一個
+  # 目前熱度可能低於 AI 的主題，讓每週報告如實反映「AI 是否仍是最熱」而非預設答案。
+  - id: ess_grid_storage
+    name: "電網級儲能（ESS）鋰化工需求"
+    description: >
+      電動車銷量走平，但公用電網與資料中心備援用的電網級儲能系統（ESS）部署加速，
+      成為鋰化工需求的主要驅動力。
+    seeds: ["us:ALB"]                     # 目前公開資料源可查證的鏈僅此一節點
+    drivers: ["us:ALB"]
+    source: "Albemarle FY2025 10-K & Q1 2026 earnings: global lithium demand +30%+ YoY in \
+      2025, driven by ESS deployment (EV demand flat)"
+
 edges:
   # 運算晶片 -> 記憶體 / 代工 / 網通
   - {from: "us:NVDA", to: "us:MU",   relation: "GPU 模組需 HBM 高頻寬記憶體",   source: "Micron earnings: HBM capacity sold out through next year", verified: true}
@@ -42,6 +66,11 @@ edges:
   - {from: "us:NVDA", to: "tw:6669", relation: "緯穎供應雲端 AI 伺服器",          source: "Wiwynn earnings: hyperscale AI demand", verified: true}
   - {from: "tw:2317", to: "tw:2308", relation: "AI 伺服器需高功率電源",            source: "Delta earnings: AI power/PSU demand", verified: true}
   - {from: "tw:2382", to: "tw:3017", relation: "高功耗 GPU 機櫃需散熱方案",        source: "AVC earnings commentary on thermal demand", verified: true}
+
+  # GLP-1 藥廠放量 -> 自動注射裝置/合約製造供應商
+  - {from: "us:LLY", to: "us:WST", relation: "GLP-1 自動注射裝置組件與合約製造放量",
+     source: "West Pharmaceutical Services Q1 2026 earnings: GLP-1 high-value-product components ~10% of sales, growing mid-to-high-teens; West Vantage self-injection device revenue driven by obesity/diabetes demand",
+     verified: true}
 
   # 範例：尚未查證的提議邊（示範防呆機制；不得提升信心，直到附來源並 verified:true）
   - {from: "us:NVDA", to: "tw:3661", relation: "（待查）部分自研 ASIC 代工/IP 關聯", source: "", verified: false}

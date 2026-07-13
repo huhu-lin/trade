@@ -70,6 +70,24 @@ def test_unverified_node_never_recommended_even_if_fundamentals_strong():
     assert watch_3661 and "敘事假設" in watch_3661[0].reason
 
 
+def test_catalyst_auto_rotates_away_from_ai_when_another_theme_heats_up():
+    # ai_capex's drivers (MSFT/GOOGL/META/NVDA/AMD) show no growth data at all this run,
+    # while glp1_manufacturing's driver (LLY) shows strong growth. The catalyst picker
+    # must not stay pinned to ai_capex just because it won in prior weeks — it has to
+    # follow whichever theme's real momentum is currently highest.
+    def provider(market, ticker, name=""):
+        if (market, ticker) in {("us", "LLY"), ("us", "WST")}:
+            return _strong(market, ticker, name)
+        return _empty(market, ticker, name)
+
+    result = run_pipeline(catalyst=None, run_analyst=False, financials_provider=provider)
+
+    assert result.catalyst.id == "glp1_manufacturing"
+    rec_ids = {(r.packet.market, r.packet.ticker) for r in result.recommendations}
+    assert ("us", "LLY") in rec_ids
+    assert ("us", "WST") in rec_ids
+
+
 def test_report_renders_markdown_with_recommendation():
     def provider(market, ticker, name=""):
         return _strong(market, ticker, name) if (market, ticker) == ("us", "NVDA") else _empty(market, ticker, name)
