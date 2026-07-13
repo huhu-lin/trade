@@ -15,3 +15,6 @@
 - {id: "GOOGL", name: "Alphabet",         sectors: [hyperscaler, cloud_capex]}
 - {id: "META", name: "Meta",              sectors: [hyperscaler, cloud_capex]}
 - {id: "COST", name: "Costco",            sectors: [retail, consumer_staples]}
+- {id: "LLY",  name: "Eli Lilly",         sectors: [pharma, glp1]}
+- {id: "WST",  name: "West Pharmaceutical Services", sectors: [pharma_supplier, glp1, drug_delivery]}
+- {id: "ALB",  name: "Albemarle",         sectors: [lithium, energy_storage, battery_materials]}
