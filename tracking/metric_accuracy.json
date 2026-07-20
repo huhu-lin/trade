@@ -1,31 +1,31 @@
 {
-  "computed_at": "2026-07-13",
+  "computed_at": "2026-07-20",
   "n_periods": 8,
   "groups": {
     "balance_sheet": {
-      "corr": -0.005,
-      "n": 80,
+      "corr": -0.076,
+      "n": 72,
       "verdict": "偏弱"
     },
     "cash_flow": {
-      "corr": 0.242,
-      "n": 80,
-      "verdict": "中等"
+      "corr": 0.455,
+      "n": 72,
+      "verdict": "有效"
     },
     "growth": {
-      "corr": -0.265,
-      "n": 80,
-      "verdict": "中等"
+      "corr": 0.122,
+      "n": 72,
+      "verdict": "偏弱"
     },
     "profitability": {
-      "corr": 0.192,
-      "n": 80,
-      "verdict": "偏弱"
+      "corr": 0.277,
+      "n": 72,
+      "verdict": "中等"
     },
     "valuation": {
-      "corr": -0.052,
-      "n": 80,
-      "verdict": "偏弱"
+      "corr": 0.273,
+      "n": 72,
+      "verdict": "中等"
     }
   }
 }
