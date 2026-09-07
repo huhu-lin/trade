@@ -1,0 +1,1824 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>研究報告 2026-W37 · 雙引擎價值投資</title>
+<style>
+  /* System CJK font stacks only — no webfont CDN, fully offline & zero-dependency. */
+  :root {
+    --font-sans: ui-sans-serif, system-ui, "PingFang TC", "Noto Sans TC", "Microsoft JhengHei", sans-serif;
+    --font-serif: "Songti TC", "Noto Serif TC", "Source Han Serif TC", Georgia, serif;
+    --font-mono: ui-monospace, "SF Mono", "JetBrains Mono", "Cascadia Code", monospace;
+
+    --bg: oklch(0.98 0.008 95);
+    --surface: oklch(1 0 0);
+    --surface-2: oklch(0.985 0.006 95);
+    --ink: oklch(0.27 0.02 260);
+    --muted: oklch(0.55 0.018 260);
+    --faint: oklch(0.72 0.015 260);
+    --line: oklch(0.91 0.008 260);
+    --accent: oklch(0.55 0.12 250);
+    --pos: oklch(0.56 0.13 150);
+    --neg: oklch(0.57 0.17 25);
+    --high: oklch(0.58 0.13 150);
+    --medium: oklch(0.70 0.13 80);
+    --low: oklch(0.60 0.05 260);
+    --verified: oklch(0.55 0.12 150);
+    --assumption: oklch(0.66 0.15 62);
+    --shadow: 0 1px 2px oklch(0.27 0.02 260 / 0.04), 0 8px 24px oklch(0.27 0.02 260 / 0.06);
+    --radius: 14px;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: oklch(0.19 0.012 260);
+      --surface: oklch(0.23 0.014 260);
+      --surface-2: oklch(0.21 0.012 260);
+      --ink: oklch(0.92 0.01 260);
+      --muted: oklch(0.72 0.015 260);
+      --faint: oklch(0.55 0.015 260);
+      --line: oklch(0.31 0.012 260);
+      --accent: oklch(0.72 0.11 250);
+      --pos: oklch(0.72 0.13 150);
+      --neg: oklch(0.70 0.15 25);
+      --high: oklch(0.72 0.13 150);
+      --medium: oklch(0.78 0.12 80);
+      --low: oklch(0.68 0.04 260);
+      --verified: oklch(0.72 0.12 150);
+      --assumption: oklch(0.76 0.13 62);
+      --shadow: 0 1px 2px oklch(0 0 0 / 0.2), 0 10px 30px oklch(0 0 0 / 0.28);
+    }
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    font-family: var(--font-sans);
+    color: var(--ink);
+    background-color: var(--bg);
+    background-image: radial-gradient(oklch(0.5 0.02 260 / 0.05) 1px, transparent 1px);
+    background-size: 22px 22px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  .wrap { max-width: 1060px; margin: 0 auto; padding: clamp(20px, 4vw, 56px); }
+
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  /* ---- Masthead ---- */
+  .masthead { padding-bottom: 28px; border-bottom: 1px solid var(--line); margin-bottom: 36px; }
+  .eyebrow {
+    font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--faint); margin: 0 0 10px;
+  }
+  h1 {
+    font-family: var(--font-serif); font-weight: 600;
+    font-size: clamp(28px, 5vw, 46px); line-height: 1.1; letter-spacing: -0.01em;
+    margin: 0 0 18px;
+  }
+  .meta { display: flex; flex-wrap: wrap; gap: 10px 18px; align-items: center;
+          font-size: 14px; color: var(--muted); }
+  .meta .dot { color: var(--faint); }
+  .pill {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: var(--surface); border: 1px solid var(--line); border-radius: 999px;
+    padding: 4px 12px; font-size: 13px; box-shadow: var(--shadow);
+  }
+  .pill b { color: var(--accent); }
+  .lede { margin: 26px 0 0; color: var(--muted); font-size: 15px; max-width: 62ch; }
+  .lede b { color: var(--ink); }
+
+  /* ---- Section headings ---- */
+  h2 {
+    font-family: var(--font-serif); font-weight: 600; font-size: 22px;
+    margin: 48px 0 16px; display: flex; align-items: baseline; gap: 10px;
+  }
+  h2 .count { font-family: var(--font-mono); font-size: 13px; color: var(--faint); font-weight: 400; }
+
+  /* ---- Heat bars ---- */
+  .heat-row { display: grid; grid-template-columns: minmax(140px, 1fr) 2fr auto;
+              gap: 14px; align-items: center; padding: 10px 0; border-bottom: 1px solid var(--line); }
+  .heat-row:last-child { border-bottom: 0; }
+  .heat-name { font-size: 14px; }
+  .heat-name code { font-family: var(--font-mono); font-size: 11px; color: var(--faint); }
+  .heat-track { height: 8px; border-radius: 999px; background: var(--surface-2);
+                border: 1px solid var(--line); overflow: hidden; }
+  .heat-fill { height: 100%; background: linear-gradient(90deg, var(--accent), oklch(0.7 0.12 200)); }
+  .heat-val { font-family: var(--font-mono); font-size: 13px; color: var(--muted); text-align: right; min-width: 48px; }
+  .heat-sum { grid-column: 1 / -1; font-size: 12px; color: var(--faint); margin-top: -2px; }
+
+  /* ---- Recommendation cards ---- */
+  .card {
+    background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
+    box-shadow: var(--shadow); margin: 16px 0; overflow: clip;
+    transition: border-color 200ms ease;
+  }
+  .card[open] { border-color: oklch(0.82 0.02 260); }
+  .card > summary {
+    list-style: none; cursor: pointer; padding: 18px 22px;
+    display: grid; grid-template-columns: auto 1fr auto; gap: 18px; align-items: center;
+  }
+  .card > summary::-webkit-details-marker { display: none; }
+  .rank { font-family: var(--font-serif); font-size: 26px; color: var(--faint); width: 34px; text-align: center; }
+  .who .name { font-size: 17px; font-weight: 600; }
+  .who .tick { font-family: var(--font-mono); font-size: 12px; color: var(--muted); margin-top: 2px; }
+  .who .bars { margin-top: 9px; display: grid; gap: 5px; max-width: 320px; }
+  .sbar { display: grid; grid-template-columns: 64px 1fr 42px; gap: 8px; align-items: center; font-size: 11px; color: var(--muted); }
+  .sbar .track { display: block; height: 6px; border-radius: 999px; background: var(--surface-2); border: 1px solid var(--line); overflow: hidden; }
+  .sbar .fill { display: block; height: 100%; }
+  .fill.fund { background: var(--accent); }
+  .fill.prop { background: oklch(0.62 0.12 190); }
+  .sbar .num { font-family: var(--font-mono); text-align: right; }
+
+  .conf { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+  .donut { width: 56px; height: 56px; transform: rotate(-90deg); }
+  .donut .bg { fill: none; stroke: var(--surface-2); stroke-width: 6; }
+  .donut .fg { fill: none; stroke-width: 6; stroke-linecap: round; transition: stroke-dashoffset 600ms ease; }
+  .donut-num { transform: rotate(90deg); font-family: var(--font-mono); font-size: 14px; font-weight: 600; fill: var(--ink); }
+  .tier { font-size: 11px; font-weight: 600; letter-spacing: 0.04em; padding: 2px 9px; border-radius: 999px; }
+  .tier.high { color: var(--high); background: oklch(0.56 0.13 150 / 0.12); }
+  .tier.medium { color: var(--medium); background: oklch(0.70 0.13 80 / 0.14); }
+  .tier.low { color: var(--low); background: oklch(0.60 0.05 260 / 0.14); }
+  .stroke-high { stroke: var(--high); }
+  .stroke-medium { stroke: var(--medium); }
+  .stroke-low { stroke: var(--low); }
+
+  .card .body { padding: 4px 22px 22px; border-top: 1px solid var(--line); }
+  .breakdown { font-size: 12.5px; color: var(--muted); font-family: var(--font-mono);
+               background: var(--surface-2); border: 1px solid var(--line); border-radius: 8px;
+               padding: 10px 12px; margin: 16px 0; }
+
+  .subhead { font-size: 12px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase;
+             color: var(--faint); margin: 22px 0 10px; }
+
+  /* ---- Chain path ---- */
+  .chain { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+  .node { font-family: var(--font-mono); font-size: 12px; padding: 4px 10px; border-radius: 8px;
+          background: var(--surface-2); border: 1px solid var(--line); }
+  .arrow { color: var(--faint); }
+  .links { margin: 12px 0 0; display: grid; gap: 6px; }
+  .link { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; font-size: 13px; }
+  .link code { font-family: var(--font-mono); font-size: 12px; color: var(--muted); }
+  .badge { font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 999px; white-space: nowrap; }
+  .badge.ok { color: var(--verified); background: oklch(0.55 0.12 150 / 0.12); }
+  .badge.warn { color: var(--assumption); background: oklch(0.66 0.15 62 / 0.14); }
+  .link .src { font-size: 11px; color: var(--faint); }
+
+  /* ---- Tables ---- */
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; margin: 4px 0; }
+  th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--line); }
+  th { font-size: 11px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase;
+       color: var(--faint); }
+  td.num, th.num { text-align: right; font-family: var(--font-mono); }
+  .val-pos { color: var(--pos); }
+  .val-neg { color: var(--neg); }
+  .src-cell { color: var(--faint); font-size: 12px; font-family: var(--font-mono); }
+  .subscore { display: inline-grid; grid-template-columns: 40px 28px; gap: 6px; align-items: center; }
+  .subscore .track { display: block; height: 5px; border-radius: 999px; background: var(--surface-2); border: 1px solid var(--line); overflow: hidden; }
+  .subscore .fill { display: block; height: 100%; background: var(--accent); }
+  .gaps { font-size: 12px; color: var(--faint); margin: 8px 0 0; }
+  .gaps b { color: var(--assumption); font-weight: 600; }
+
+  /* ---- Narrative ---- */
+  .narrative { margin: 18px 0 0; padding: 16px 18px; border-left: 3px solid var(--accent);
+               background: var(--surface-2); border-radius: 0 10px 10px 0;
+               white-space: pre-wrap; font-size: 14.5px; line-height: 1.75; }
+  .narrative .model { display: block; font-family: var(--font-mono); font-size: 11px;
+                      color: var(--faint); margin-bottom: 10px; white-space: normal; }
+  .disabled { margin: 18px 0 0; font-size: 13px; color: var(--faint); font-style: italic; }
+
+  /* ---- Watchlist ---- */
+  .toolbar { display: flex; gap: 10px; align-items: center; margin: 6px 0 12px; }
+  .toolbar input { font: inherit; font-size: 14px; padding: 8px 12px; border-radius: 10px;
+                   border: 1px solid var(--line); background: var(--surface); color: var(--ink);
+                   width: 240px; max-width: 100%; }
+  .toolbar input:focus { outline: 2px solid oklch(0.55 0.12 250 / 0.4); outline-offset: 1px; }
+  #watch th { cursor: pointer; user-select: none; }
+  #watch th[data-sort]:hover { color: var(--accent); }
+  #watch th .ind { font-size: 10px; opacity: 0.6; }
+  #watch tbody tr:hover { background: var(--surface-2); }
+  .empty { color: var(--faint); font-size: 14px; padding: 12px 0; }
+
+  /* ---- Glossary + footer ---- */
+  .glossary { margin-top: 40px; background: var(--surface); border: 1px solid var(--line);
+              border-radius: var(--radius); box-shadow: var(--shadow); }
+  .glossary > summary { cursor: pointer; padding: 16px 22px; font-family: var(--font-serif);
+                        font-size: 18px; font-weight: 600; }
+  .glossary .gbody { padding: 4px 22px 20px; border-top: 1px solid var(--line); font-size: 14px; }
+  .glossary h4 { margin: 18px 0 6px; font-size: 13px; letter-spacing: 0.04em; color: var(--accent); }
+  .glossary ul { margin: 0; padding-left: 18px; }
+  .glossary li { margin: 5px 0; color: var(--muted); }
+  .glossary li b { color: var(--ink); }
+
+  footer { margin-top: 44px; padding-top: 20px; border-top: 1px solid var(--line);
+           font-size: 12px; color: var(--faint); line-height: 1.7; }
+
+  /* ---- Subtle entrance ---- */
+  @media (prefers-reduced-motion: no-preference) {
+    .card, .heat-row { animation: rise 360ms ease both; }
+    @keyframes rise { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="masthead">
+    <p class="eyebrow">雙引擎價值投資研究</p>
+    <h1>中長期投資研究報告 · 2026-W37</h1>
+    <div class="meta">
+      <span>產生時間 2026-09-07 05:20</span>
+      <span class="dot">·</span>
+      <span class="pill">催化劑 <b>GLP-1 減重／代謝藥物放量擴產</b> <code>glp1_manufacturing</code></span>
+      <span class="pill">推薦 <b>2</b> 檔</span>
+      <span class="pill">觀察 <b>0</b> 檔</span>
+    </div>
+    <p class="lede">每檔推薦都是<b>雙引擎交集</b>：通過量化基本面門檻，<b>且</b>位於一條<i>已查證</i>的需求傳導鏈上、該節點有真實需求流動證據。信心分數由公式計算，分析文字只負責解釋、不得灌水。</p>
+  </header>
+
+  <section>
+    <h2>催化劑熱度 <span class="count">需求源動能</span></h2>
+    <div class="heat-row">
+      <div class="heat-name">GLP-1 減重／代謝藥物放量擴產 <code>glp1_manufacturing</code></div>
+      <div class="heat-track"><div class="heat-fill" style="width: 100.0%"></div></div>
+      <div class="heat-val">100.0</div>
+      <div class="heat-sum">us:LLY: revenue +45%</div>
+    </div>
+    <div class="heat-row">
+      <div class="heat-name">AI 資料中心 capex 爆發 <code>ai_capex</code></div>
+      <div class="heat-track"><div class="heat-fill" style="width: 92.0%"></div></div>
+      <div class="heat-val">92.0</div>
+      <div class="heat-sum">us:MSFT: revenue +18%, capex +80% ｜ us:GOOGL: revenue +15%, capex +74% ｜ us:META: revenue +22%, capex +87% ｜ us:NVDA: revenue +65%, capex +87% ｜ us:AMD: revenue +34%, capex +53%</div>
+    </div>
+    <div class="heat-row">
+      <div class="heat-name">電網級儲能（ESS）鋰化工需求 <code>ess_grid_storage</code></div>
+      <div class="heat-track"><div class="heat-fill" style="width: 0.0%"></div></div>
+      <div class="heat-val">0.0</div>
+      <div class="heat-sum">us:ALB: revenue -4%, capex -65%</div>
+    </div>
+  </section>
+
+  <section>
+    <h2>推薦標的 <span class="count">通過雙引擎</span></h2>
+    <details class="card" open>
+      <summary>
+        <div class="rank">1</div>
+        <div class="who">
+          <div class="name">Eli Lilly</div>
+          <div class="tick">US:LLY · 離催化劑 0 跳</div>
+          <div class="bars">
+            <div class="sbar">
+              <span>基本面</span>
+              <span class="track"><span class="fill fund" style="width: 85.0%"></span></span>
+              <span class="num">85</span>
+            </div>
+            <div class="sbar">
+              <span>傳導</span>
+              <span class="track"><span class="fill prop" style="width: 100.0%"></span></span>
+              <span class="num">100</span>
+            </div>
+          </div>
+        </div>
+        <div class="conf">
+          <svg class="donut" viewBox="0 0 50 50" aria-hidden="true">
+            <circle class="bg" cx="25" cy="25" r="22"></circle>
+            <circle class="fg stroke-high" cx="25" cy="25" r="22"
+                    stroke-dasharray="138.23"
+                    stroke-dashoffset="37.74"></circle>
+            <text class="donut-num" x="25" y="30" text-anchor="middle">73</text>
+          </svg>
+          <span class="tier high">high</span>
+        </div>
+      </summary>
+
+      <div class="body">
+        <div class="breakdown">信心 72.7 ＝ 基本面 85.32 × 0.5 ＋ 傳導 100.0 × 0.5，資料完整度係數 0.7846（6/13 項有資料）</div>
+
+        <div class="subhead">需求傳導路徑</div>
+        <div class="chain">
+          <span class="node">us:LLY</span>        </div>
+        <div class="links">
+        </div>
+
+        <div class="subhead">需求流動證據</div>
+        <table>
+          <thead><tr><th>指標</th><th class="num">數值</th><th>期間</th><th>來源</th></tr></thead>
+          <tbody>
+            <tr>
+              <td>營收年增率</td>
+              <td class="num val-pos">+44.70%</td>
+              <td>FY2024-&gt;FY2025</td>
+              <td class="src-cell">edgar:revenue</td>
+            </tr>
+            <tr>
+              <td>應收帳款年增率（接單能見度）</td>
+              <td class="num val-pos">+61.37%</td>
+              <td>FY2024-&gt;FY2025</td>
+              <td class="src-cell">edgar:receivables</td>
+            </tr>
+          </tbody>
+        </table>
+<p class="gaps">資料缺口（明列、不估算）：<b>月營收年增率（台股獨有，需求領先訊號）、資本支出年增率（擴產投資）</b></p>
+        <div class="subhead">基本面佐證</div>
+        <table>
+          <thead><tr><th>指標</th><th class="num">數值</th><th class="num">子分數</th></tr></thead>
+          <tbody>
+            <tr>
+              <td>股東權益報酬率（ROE，賺錢效率）</td>
+              <td class="num">0.7778</td>
+              <td class="num">
+                <span class="subscore"><span class="track"><span class="fill" style="width: 100.0%"></span></span>1.00</span>
+              </td>
+            </tr>
+            <tr>
+              <td>現金流／淨利（盈餘品質）</td>
+              <td class="num">0.8146</td>
+              <td class="num">
+                <span class="subscore"><span class="track"><span class="fill" style="width: 45.0%"></span></span>0.45</span>
+              </td>
+            </tr>
+            <tr>
+              <td>近三年營收年複成長</td>
+              <td class="num">0.3169</td>
+              <td class="num">
+                <span class="subscore"><span class="track"><span class="fill" style="width: 100.0%"></span></span>1.00</span>
+              </td>
+            </tr>
+            <tr>
+              <td>淨利年增率</td>
+              <td class="num">0.9490</td>
+              <td class="num">
+                <span class="subscore"><span class="track"><span class="fill" style="width: 100.0%"></span></span>1.00</span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+<p class="gaps">缺漏指標（資料來源沒給，不估算）：<b>毛利率、營業利益率、負債比率（越低越穩健）、自由現金流利潤率、自由現金流殖利率（估值，越高越便宜）</b></p>
+        <div class="narrative"><span class="model">Claude 受限分析 · 模型 claude-sonnet-4-6</span>## 結論：值得進一步研究，但估值已相當昂貴，需留意多項財務資料缺漏後的真實獲利品質
+
+---
+
+## 需求傳導路徑
+
+LLY 本身就是 GLP-1 藥物（Zepbound／Mounjaro，即 tirzepatide）的製造商與銷售商，**傳導鏈長度為零跳**——也就是說，需求不需要透過中間供應商就能直接打到 LLY 的營收。這是這份封包裡信心最強的地方。
+
+封包中的催化劑說明（Eli Lilly investor materials 2025-2026）指出：
+- 禮來在印第安納州投入 **90 億美元以上**擴建 tirzepatide 原料藥廠，代表公司自己也預期未來需求持續放大。
+- Zepbound 與 Mounjaro 合計約佔 FY2025 全年營收的 **56%**，是整間公司最大的收入來源。
+
+需求有沒有真的傳進財報？有兩個量化指標可印證：
+
+1. **營收年增率 +44.70%（FY2024→FY2025，來源：edgar:revenue）**——接近翻倍的成長速度，直接反映 GLP-1 放量。
+2. **應收帳款年增率 +61.37%（FY2024→FY2025，來源：edgar:receivables）**——應收帳款（客戶尚未付款的貨款）成長速度甚至快過營收，通常代表出貨/開立訂單的能見度很高，是需求持續湧入的間接訊號。
+
+&gt; 此封包**不含任何敘事假設**（`narrative_assumption: false`），所有傳導關係均基於已揭露的財報數據，不是推測。
+
+---
+
+## 基本面佐證
+
+**① 三年營收年化成長率 +31.69%（FY2022→FY2025，來源：edgar:revenue）**
+從 FY2022 的約 285 億美元成長到 FY2025 的約 652 億美元，三年內幾乎翻了一倍以上。這個成長速度在大型製藥公司中極為罕見，單項子分數滿分（1.0）。
+
+**② 稅後純益年增率 +94.90%（FY2024→FY2025，來源：edgar:net_income）**
+去年純益約 106 億美元，今年跳升到 206 億美元，幾乎翻倍。單項子分數同樣滿分（1.0）。
+
+**③ 股東權益報酬率（ROE）77.78%（FY2025，來源：edgar:net_income／edgar:equity）**
+ROE 衡量的是「公司用股東的錢賺了多少錢」，77.78% 代表每 100 元股東資本創造近 78 元純益，遠超一般標準。
+
+**⚠️ 資料缺漏項目（共 5 項）：**
+
+| 缺漏指標 | 說明 |
+|---|---|
+| 毛利率 | 毛利（gross_profit）數值未取得，無法計算 |
+| 營業利益率 | 營業利益（operating_income）數值未取得，無法計算 |
+| 負債比率 | 總負債（liabilities）數值未取得，無法計算 |
+| 自由現金流利潤率 | 資本支出（capex）數值未取得，無法計算 |
+| 自由現金流殖利率 | 同上，capex 缺漏導致自由現金流無法算出 |
+
+美股在 SEC（美國證券管理委員會）申報格式上，部分細項科目的 XBRL 標籤不統一，導致系統自動抓取時出現缺值，並非公司刻意隱瞞，但確實讓這份分析的**資料完整度只有 78.46%**（6 項有值 ÷ 總計 13 項輸入）。
+
+---
+
+## 風險與資料缺口
+
+**1. 估值相當昂貴**
+- 本益比（股價 ÷ 每股盈餘）：**38.6 倍**——意味市場已預期未來幾年持續高速成長，若成長趨緩，股價修正空間大。
+- 股價淨值比（股價 ÷ 每股帳面價值）：**30.2 倍**——市場願意為每 1 元帳面資產付出 30 元，溢價幅度極高。
+- EV/EBITDA（企業總價值 ÷ 稅前息前折舊攤銷前獲利）：**25.7 倍**——同樣偏高，反映市場對成長的強烈期待，估值評分在本次分析中**得分為零**。
+
+**2. 盈餘品質有待觀察**
+營業現金流對純益比（一種衡量「帳面獲利有多少真的變成現金」的指標）為 **0.81 倍（FY2025，來源：edgar:operating_cash_flow／edgar:net_income）**，單項子分數僅 **0.449**，低於滿分，代表有部分獲利尚未完全轉換為現金，稍微拉低了整體評分。
+
+**3. 資本支出（cap</div>
+      </div>
+    </details>
+    <details class="card" >
+      <summary>
+        <div class="rank">2</div>
+        <div class="who">
+          <div class="name">West Pharmaceutical Services</div>
+          <div class="tick">US:WST · 離催化劑 1 跳</div>
+          <div class="bars">
+            <div class="sbar">
+              <span>基本面</span>
+              <span class="track"><span class="fill fund" style="width: 60.0%"></span></span>
+              <span class="num">60</span>
+            </div>
+            <div class="sbar">
+              <span>傳導</span>
+              <span class="track"><span class="fill prop" style="width: 7.0%"></span></span>
+              <span class="num">7</span>
+            </div>
+          </div>
+        </div>
+        <div class="conf">
+          <svg class="donut" viewBox="0 0 50 50" aria-hidden="true">
+            <circle class="bg" cx="25" cy="25" r="22"></circle>
+            <circle class="fg stroke-low" cx="25" cy="25" r="22"
+                    stroke-dasharray="138.23"
+                    stroke-dashoffset="93.18"></circle>
+            <text class="donut-num" x="25" y="30" text-anchor="middle">33</text>
+          </svg>
+          <span class="tier low">low</span>
+        </div>
+      </summary>
+
+      <div class="body">
+        <div class="breakdown">信心 32.6 ＝ 基本面 59.77 × 0.5 ＋ 傳導 7.47 × 0.5，資料完整度係數 0.9692（12/13 項有資料）</div>
+
+        <div class="subhead">需求傳導路徑</div>
+        <div class="chain">
+          <span class="node">us:LLY</span><span class="arrow">→</span>          <span class="node">us:WST</span>        </div>
+        <div class="links">
+          <div class="link">
+            <code>us:LLY → us:WST</code>
+            <span>GLP-1 自動注射裝置組件與合約製造放量</span>
+            <span class="badge ok">✓ 已查證</span><span class="src">West Pharmaceutical Services Q1 2026 earnings: GLP-1 high-value-product components ~10% of sales, growing mid-to-high-teens; West Vantage self-injection device revenue driven by obesity/diabetes demand</span>
+          </div>
+        </div>
+
+        <div class="subhead">需求流動證據</div>
+        <table>
+          <thead><tr><th>指標</th><th class="num">數值</th><th>期間</th><th>來源</th></tr></thead>
+          <tbody>
+            <tr>
+              <td>營收年增率</td>
+              <td class="num val-pos">+6.25%</td>
+              <td>FY2024-&gt;FY2025</td>
+              <td class="src-cell">edgar:revenue</td>
+            </tr>
+            <tr>
+              <td>資本支出年增率（擴產投資）</td>
+              <td class="num val-neg">-24.16%</td>
+              <td>FY2024-&gt;FY2025</td>
+              <td class="src-cell">edgar:capex</td>
+            </tr>
+            <tr>
+              <td>應收帳款年增率（接單能見度）</td>
+              <td class="num val-pos">+3.96%</td>
+              <td>FY2024-&gt;FY2025</td>
+              <td class="src-cell">edgar:receivables</td>
+            </tr>
+          </tbody>
+        </table>
+<p class="gaps">資料缺口（明列、不估算）：<b>月營收年增率（台股獨有，需求領先訊號）</b></p>
+        <div class="subhead">基本面佐證</div>
+        <table>
+          <thead><tr><th>指標</th><th class="num">數值</th><th class="num">子分數</th></tr></thead>
+          <tbody>
+            <tr>
+              <td>毛利率</td>
+              <td class="num">0.3591</td>
+              <td class="num">
+                <span class="subscore"><span class="track"><span class="fill" style="width: 65.0%"></span></span>0.65</span>
+              </td>
+            </tr>
+            <tr>
+              <td>營業利益率</td>
+              <td class="num">0.1903</td>
+              <td class="num">
+                <span class="subscore"><span class="track"><span class="fill" style="width: 76.0%"></span></span>0.76</span>
+              </td>
+            </tr>
+            <tr>
+              <td>股東權益報酬率（ROE，賺錢效率）</td>
+              <td class="num">0.1554</td>
+              <td class="num">
+                <span class="subscore"><span class="track"><span class="fill" style="width: 53.0%"></span></span>0.53</span>
+              </td>
+            </tr>
+            <tr>
+              <td>負債比率（越低越穩健）</td>
+              <td class="num">0.2562</td>
+              <td class="num">
+                <span class="subscore"><span class="track"><span class="fill" style="width: 100.0%"></span></span>1.00</span>
+              </td>
+            </tr>
+            <tr>
+              <td>現金流／淨利（盈餘品質）</td>
+              <td class="num">1.5289</td>
+              <td class="num">
+                <span class="subscore"><span class="track"><span class="fill" style="width: 100.0%"></span></span>1.00</span>
+              </td>
+            </tr>
+            <tr>
+              <td>近三年營收年複成長</td>
+              <td class="num">0.0212</td>
+              <td class="num">
+                <span class="subscore"><span class="track"><span class="fill" style="width: 11.0%"></span></span>0.11</span>
+              </td>
+            </tr>
+            <tr>
+              <td>淨利年增率</td>
+              <td class="num">0.0020</td>
+              <td class="num">
+                <span class="subscore"><span class="track"><span class="fill" style="width: 26.0%"></span></span>0.26</span>
+              </td>
+            </tr>
+            <tr>
+              <td>自由現金流利潤率</td>
+              <td class="num">0.1525</td>
+              <td class="num">
+                <span class="subscore"><span class="track"><span class="fill" style="width: 76.0%"></span></span>0.76</span>
+              </td>
+            </tr>
+            <tr>
+              <td>自由現金流殖利率（估值，越高越便宜）</td>
+              <td class="num">0.0196</td>
+              <td class="num">
+                <span class="subscore"><span class="track"><span class="fill" style="width: 33.0%"></span></span>0.33</span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="narrative"><span class="model">Claude 受限分析 · 模型 claude-sonnet-4-6</span>## 結論：觀察，等待成長動能確認後再行介入
+
+WST（West Pharmaceutical Services）確實直接受惠於 GLP-1 藥物放量趨勢，供應鏈關係明確且已有財報佐證，但目前成長數字偏緩、估值偏貴，信心分數偏低（32.59），建議持續追蹤而非立刻買進。
+
+---
+
+## 需求傳導路徑
+
+本次催化劑是「GLP-1 減重／代謝藥物放量擴產」，起點是製藥龍頭禮來（Eli Lilly，代號 us:LLY）。
+
+**第一節（也是唯一一節）：禮來 → West Pharmaceutical Services（us:WST）**
+
+- **供應鏈關係是什麼？**
+  禮來大規模擴產 GLP-1 類藥物（包括 Zepbound 與 Mounjaro），這類藥物多以自動注射筆形式給藥。WST 正是提供這類「自動注射裝置關鍵零組件與合約製造」的核心供應商——它生產的 Vantage 自動注射裝置，直接被用於糖尿病與肥胖症藥物的投藥系統。
+- **出處：** West Pharmaceutical Services Q1 2026 財報電話會議（earnings call）披露：GLP-1 相關高附加價值產品（high-value-product components）約佔當季營收的 10%，且成長速度在「mid-to-high-teens」（中高十幾個百分點）區間；自動注射裝置業務直接由肥胖症與糖尿病需求驅動。
+- **此環節是否已查證？** 是，已由財報出處確認，**並非敘事假設**（封包標記 `narrative_assumption: false`）。
+
+傳導路徑簡述：
+&gt; **禮來 GLP-1 放量** → 需要大量自動注射裝置 → **WST 提供裝置零組件與合約製造** → WST 相關業務成長中高十幾個百分點
+
+傳導鏈僅一個跳點（chain_hops = 1），關係直接、清晰，無中間模糊環節。
+
+---
+
+## 基本面佐證
+
+### 1. 獲利能力：毛利率與營業利益率表現穩健
+
+- **毛利率**（毛利佔營收比例，衡量產品本身的賺錢效率）：**35.91%**（FY2025，來源：edgar:gross_profit / edgar:revenue）。毛利潤為 11.04 億美元，營收 30.74 億美元，屬於醫療零組件製造業中相當不錯的水準。
+- **營業利益率**（扣掉日常營運費用後的獲利率）：**19.03%**（FY2025，來源：edgar:operating_income / edgar:revenue），營業利益 5.85 億美元，顯示公司在管控費用上有一定紀律。
+
+### 2. 現金流品質優異，但成長明顯放緩
+
+- **營業現金流 ÷ 淨利**（衡量帳面盈利有多少真正轉化為現金）比率達 **1.53 倍**（FY2025，來源：edgar:operating_cash_flow / edgar:net_income），數字高於 1 代表現金品質良好，盈利有真實現金支撐，並非紙上富貴。
+- **但是**，成長數字令人警惕：
+  - **三年營收複合年增率**（CAGR，衡量三年平均每年長多快）僅有 **+2.12%**（FY2022→FY2025，來源：edgar:revenue），成長動能相當疲軟。
+  - **每股盈利年增率**幾近零：淨利從 4.927 億（FY2024）微升至 4.937 億美元（FY2025），年增率僅 **+0.20%**（來源：edgar:net_income），幾乎原地踏步。
+  - **整體營收年增率**：**+6.25%**（FY2024→FY2025，來源：edgar:revenue），雖有正成長，但與 GLP-1 業務本身高速成長相比，顯示 GLP-1 相關業務目前佔比（約 10%）還不夠大，尚未推動整體數字明顯加速。
+
+### 3. 資料缺漏說明
+
+- **月營收年增率**：資料缺漏。原因是美股上市公司（非台灣股市）不公布月營收，此項在封包中標記為 `n/a outside TW`，無法取得。
+- 資本支出（capex）FY2024→FY2025 年減 **24.16%**（來源：edgar:capex），代表公司近期擴產投資實際上是**下降**的，與「催化劑帶動擴產」的敘事方向相反，需留意。
+
+---
+
+## 風險與資料缺口
+
+### 1. 估值偏貴，安全邊際薄弱
+
+- 本益比（P/E，股價相對每股盈利的倍數）：**43.47 倍**，遠高於大盤平均，代表市場已對未來成長給予高度期待。
+- 股價淨值比（P/B，股價相對帳面</div>
+      </div>
+    </details>
+  </section>
+
+  <section>
+    <h2>觀察名單 <span class="count">在鏈上但未通過雙引擎</span></h2>
+    <p class="empty">本期觀察名單為空。</p>
+  </section>
+
+  <section>
+    <h2>歷史推薦追蹤績效 <span class="count">94 筆</span></h2>
+    <table id="tracking">
+      <thead>
+        <tr>
+          <th>推薦週</th>
+          <th>標的</th>
+          <th class="num">進場價</th>
+          <th class="num">最新價</th>
+          <th class="num">報酬率</th>
+          <th class="num">追蹤週數</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="src-cell">2026-W36</span></td>
+          <td>Eli Lilly <span class="src-cell">US:LLY</span></td>
+          <td class="num">1174.61</td>
+          <td class="num">1174.61</td>
+          <td class="num val-pos">
++0.0%          </td>
+          <td class="num">1</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">2026-W36</span></td>
+          <td>West Pharmaceutical Services <span class="src-cell">US:WST</span></td>
+          <td class="num">337.47</td>
+          <td class="num">337.47</td>
+          <td class="num val-pos">
++0.0%          </td>
+          <td class="num">1</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">2026-W35</span></td>
+          <td>West Pharmaceutical Services <span class="src-cell">US:WST</span></td>
+          <td class="num">353.08</td>
+          <td class="num">337.47</td>
+          <td class="num val-neg">
+-4.4%          </td>
+          <td class="num">2</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">2026-W35</span></td>
+          <td>Eli Lilly <span class="src-cell">US:LLY</span></td>
+          <td class="num">1255.40</td>
+          <td class="num">1174.61</td>
+          <td class="num val-neg">
+-6.4%          </td>
+          <td class="num">2</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">2026-W34</span></td>
+          <td>Eli Lilly <span class="src-cell">US:LLY</span></td>
+          <td class="num">1180.16</td>
+          <td class="num">1174.61</td>
+          <td class="num val-neg">
+-0.5%          </td>
+          <td class="num">3</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">2026-W34</span></td>
+          <td>West Pharmaceutical Services <span class="src-cell">US:WST</span></td>
+          <td class="num">349.42</td>
+          <td class="num">337.47</td>
+          <td class="num val-neg">
+-3.4%          </td>
+          <td class="num">3</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">2026-W33</span></td>
+          <td>Eli Lilly <span class="src-cell">US:LLY</span></td>
+          <td class="num">1185.71</td>
+          <td class="num">1174.61</td>
+          <td class="num val-neg">
+-0.9%          </td>
+          <td class="num">4</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">2026-W33</span></td>
+          <td>West Pharmaceutical Services <span class="src-cell">US:WST</span></td>
+          <td class="num">354.07</td>
+          <td class="num">337.47</td>
+          <td class="num val-neg">
+-4.7%          </td>
+          <td class="num">4</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">2026-W32</span></td>
+          <td>Eli Lilly <span class="src-cell">US:LLY</span></td>
+          <td class="num">1148.84</td>
+          <td class="num">1174.61</td>
+          <td class="num val-pos">
++2.2%          </td>
+          <td class="num">5</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">2026-W32</span></td>
+          <td>West Pharmaceutical Services <span class="src-cell">US:WST</span></td>
+          <td class="num">340.96</td>
+          <td class="num">337.47</td>
+          <td class="num val-neg">
+-1.0%          </td>
+          <td class="num">5</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">2026-W31</span></td>
+          <td>West Pharmaceutical Services <span class="src-cell">US:WST</span></td>
+          <td class="num">328.20</td>
+          <td class="num">337.47</td>
+          <td class="num val-pos">
++2.8%          </td>
+          <td class="num">6</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">2026-W31</span></td>
+          <td>Eli Lilly <span class="src-cell">US:LLY</span></td>
+          <td class="num">1196.03</td>
+          <td class="num">1174.61</td>
+          <td class="num val-neg">
+-1.8%          </td>
+          <td class="num">6</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">2026-W30</span></td>
+          <td>Eli Lilly <span class="src-cell">US:LLY</span></td>
+          <td class="num">1179.11</td>
+          <td class="num">1174.61</td>
+          <td class="num val-neg">
+-0.4%          </td>
+          <td class="num">7</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">2026-W30</span></td>
+          <td>West Pharmaceutical Services <span class="src-cell">US:WST</span></td>
+          <td class="num">358.24</td>
+          <td class="num">337.47</td>
+          <td class="num val-neg">
+-5.8%          </td>
+          <td class="num">7</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">2026-W29</span></td>
+          <td>奇鋐 AVC <span class="src-cell">TW:3017</span></td>
+          <td class="num">2215.00</td>
+          <td class="num">3425.00</td>
+          <td class="num val-pos">
++54.6%          </td>
+          <td class="num">8</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">2026-W29</span></td>
+          <td>NVIDIA <span class="src-cell">US:NVDA</span></td>
+          <td class="num">210.96</td>
+          <td class="num">217.55</td>
+          <td class="num val-pos">
++3.1%          </td>
+          <td class="num">8</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">2026-W29</span></td>
+          <td>台積電 TSMC <span class="src-cell">TW:2330</span></td>
+          <td class="num">2450.00</td>
+          <td class="num">2405.00</td>
+          <td class="num val-neg">
+-1.8%          </td>
+          <td class="num">8</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">2026-W29</span></td>
+          <td>台達電 Delta <span class="src-cell">TW:2308</span></td>
+          <td class="num">1885.00</td>
+          <td class="num">1840.00</td>
+          <td class="num val-neg">
+-2.4%          </td>
+          <td class="num">8</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">2026-W29</span></td>
+          <td>Micron <span class="src-cell">US:MU</span></td>
+          <td class="num">979.30</td>
+          <td class="num">932.86</td>
+          <td class="num val-neg">
+-4.7%          </td>
+          <td class="num">8</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">2026-W29</span></td>
+          <td>Broadcom <span class="src-cell">US:AVGO</span></td>
+          <td class="num">399.97</td>
+          <td class="num">368.79</td>
+          <td class="num val-neg">
+-7.8%          </td>
+          <td class="num">8</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">2026-W29</span></td>
+          <td>Marvell <span class="src-cell">US:MRVL</span></td>
+          <td class="num">235.81</td>
+          <td class="num">216.62</td>
+          <td class="num val-neg">
+-8.1%          </td>
+          <td class="num">8</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">2026-W29</span></td>
+          <td>Lam Research <span class="src-cell">US:LRCX</span></td>
+          <td class="num">350.33</td>
+          <td class="num">301.90</td>
+          <td class="num val-neg">
+-13.8%          </td>
+          <td class="num">8</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">2026-W29</span></td>
+          <td>AMD <span class="src-cell">US:AMD</span></td>
+          <td class="num">557.89</td>
+          <td class="num">465.58</td>
+          <td class="num val-neg">
+-16.6%          </td>
+          <td class="num">8</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">2026-W29</span></td>
+          <td>Applied Materials <span class="src-cell">US:AMAT</span></td>
+          <td class="num">602.50</td>
+          <td class="num">461.67</td>
+          <td class="num val-neg">
+-23.4%          </td>
+          <td class="num">8</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">2026-W28</span></td>
+          <td>奇鋐 AVC <span class="src-cell">TW:3017</span></td>
+          <td class="num">2705.00</td>
+          <td class="num">3425.00</td>
+          <td class="num val-pos">
++26.6%          </td>
+          <td class="num">9</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">2026-W28</span></td>
+          <td>NVIDIA <span class="src-cell">US:NVDA</span></td>
+          <td class="num">194.83</td>
+          <td class="num">217.55</td>
+          <td class="num val-pos">
++11.7%          </td>
+          <td class="num">9</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">2026-W28</span></td>
+          <td>Broadcom <span class="src-cell">US:AVGO</span></td>
+          <td class="num">360.45</td>
+          <td class="num">368.79</td>
+          <td class="num val-pos">
++2.3%          </td>
+          <td class="num">9</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">2026-W28</span></td>
+          <td>台積電 TSMC <span class="src-cell">TW:2330</span></td>
+          <td class="num">2480.00</td>
+          <td class="num">2405.00</td>
+          <td class="num val-neg">
+-3.0%          </td>
+          <td class="num">9</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">2026-W28</span></td>
+          <td>Micron <span class="src-cell">US:MU</span></td>
+          <td class="num">975.56</td>
+          <td class="num">932.86</td>
+          <td class="num val-neg">
+-4.4%          </td>
+          <td class="num">9</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">2026-W28</span></td>
+          <td>台達電 Delta <span class="src-cell">TW:2308</span></td>
+          <td class="num">2010.00</td>
+          <td class="num">1840.00</td>
+          <td class="num val-neg">
+-8.5%          </td>
+          <td class="num">9</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">2026-W28</span></td>
+          <td>AMD <span class="src-cell">US:AMD</span></td>
+          <td class="num">517.82</td>
+          <td class="num">465.58</td>
+          <td class="num val-neg">
+-10.1%          </td>
+          <td class="num">9</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">2026-W28</span></td>
+          <td>Marvell <span class="src-cell">US:MRVL</span></td>
+          <td class="num">245.29</td>
+          <td class="num">216.62</td>
+          <td class="num val-neg">
+-11.7%          </td>
+          <td class="num">9</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">2026-W28</span></td>
+          <td>Lam Research <span class="src-cell">US:LRCX</span></td>
+          <td class="num">351.41</td>
+          <td class="num">301.90</td>
+          <td class="num val-neg">
+-14.1%          </td>
+          <td class="num">9</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">2026-W28</span></td>
+          <td>Applied Materials <span class="src-cell">US:AMAT</span></td>
+          <td class="num">603.04</td>
+          <td class="num">461.67</td>
+          <td class="num val-neg">
+-23.4%          </td>
+          <td class="num">9</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">2026-W27</span></td>
+          <td>奇鋐 AVC <span class="src-cell">TW:3017</span></td>
+          <td class="num">2290.00</td>
+          <td class="num">3425.00</td>
+          <td class="num val-pos">
++49.6%          </td>
+          <td class="num">10</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">2026-W27</span></td>
+          <td>NVIDIA <span class="src-cell">US:NVDA</span></td>
+          <td class="num">192.53</td>
+          <td class="num">217.55</td>
+          <td class="num val-pos">
++13.0%          </td>
+          <td class="num">10</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">2026-W27</span></td>
+          <td>台積電 TSMC <span class="src-cell">TW:2330</span></td>
+          <td class="num">2375.00</td>
+          <td class="num">2405.00</td>
+          <td class="num val-pos">
++1.3%          </td>
+          <td class="num">10</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">2026-W27</span></td>
+          <td>Broadcom <span class="src-cell">US:AVGO</span></td>
+          <td class="num">365.02</td>
+          <td class="num">368.79</td>
+          <td class="num val-pos">
++1.0%          </td>
+          <td class="num">10</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">2026-W27</span></td>
+          <td>台達電 Delta <span class="src-cell">TW:2308</span></td>
+          <td class="num">1915.00</td>
+          <td class="num">1840.00</td>
+          <td class="num val-neg">
+-3.9%          </td>
+          <td class="num">10</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">2026-W27</span></td>
+          <td>AMD <span class="src-cell">US:AMD</span></td>
+          <td class="num">521.58</td>
+          <td class="num">465.58</td>
+          <td class="num val-neg">
+-10.7%          </td>
+          <td class="num">10</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">2026-W27</span></td>
+          <td>Micron <span class="src-cell">US:MU</span></td>
+          <td class="num">1132.33</td>
+          <td class="num">932.86</td>
+          <td class="num val-neg">
+-17.6%          </td>
+          <td class="num">10</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">2026-W27</span></td>
+          <td>Marvell <span class="src-cell">US:MRVL</span></td>
+          <td class="num">266.77</td>
+          <td class="num">216.62</td>
+          <td class="num val-neg">
+-18.8%          </td>
+          <td class="num">10</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">2026-W27</span></td>
+          <td>Lam Research <span class="src-cell">US:LRCX</span></td>
+          <td class="num">379.09</td>
+          <td class="num">301.90</td>
+          <td class="num val-neg">
+-20.4%          </td>
+          <td class="num">10</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">2026-W27</span></td>
+          <td>Applied Materials <span class="src-cell">US:AMAT</span></td>
+          <td class="num">626.84</td>
+          <td class="num">461.67</td>
+          <td class="num val-neg">
+-26.4%          </td>
+          <td class="num">10</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">2026-W26</span></td>
+          <td>奇鋐 AVC <span class="src-cell">TW:3017</span></td>
+          <td class="num">2420.00</td>
+          <td class="num">3425.00</td>
+          <td class="num val-pos">
++41.5%          </td>
+          <td class="num">11</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">2026-W26</span></td>
+          <td>NVIDIA <span class="src-cell">US:NVDA</span></td>
+          <td class="num">210.69</td>
+          <td class="num">217.55</td>
+          <td class="num val-pos">
++3.3%          </td>
+          <td class="num">11</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">2026-W26</span></td>
+          <td>台積電 TSMC <span class="src-cell">TW:2330</span></td>
+          <td class="num">2510.00</td>
+          <td class="num">2405.00</td>
+          <td class="num val-neg">
+-4.2%          </td>
+          <td class="num">11</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">2026-W26</span></td>
+          <td>Broadcom <span class="src-cell">US:AVGO</span></td>
+          <td class="num">411.35</td>
+          <td class="num">368.79</td>
+          <td class="num val-neg">
+-10.3%          </td>
+          <td class="num">11</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">2026-W26</span></td>
+          <td>AMD <span class="src-cell">US:AMD</span></td>
+          <td class="num">537.37</td>
+          <td class="num">465.58</td>
+          <td class="num val-neg">
+-13.4%          </td>
+          <td class="num">11</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">2026-W26</span></td>
+          <td>台達電 Delta <span class="src-cell">TW:2308</span></td>
+          <td class="num">2150.00</td>
+          <td class="num">1840.00</td>
+          <td class="num val-neg">
+-14.4%          </td>
+          <td class="num">11</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">2026-W26</span></td>
+          <td>Micron <span class="src-cell">US:MU</span></td>
+          <td class="num">1133.99</td>
+          <td class="num">932.86</td>
+          <td class="num val-neg">
+-17.7%          </td>
+          <td class="num">11</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">2026-W26</span></td>
+          <td>Lam Research <span class="src-cell">US:LRCX</span></td>
+          <td class="num">389.04</td>
+          <td class="num">301.90</td>
+          <td class="num val-neg">
+-22.4%          </td>
+          <td class="num">11</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">2026-W26</span></td>
+          <td>Applied Materials <span class="src-cell">US:AMAT</span></td>
+          <td class="num">617.11</td>
+          <td class="num">461.67</td>
+          <td class="num val-neg">
+-25.2%          </td>
+          <td class="num">11</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">2026-W26</span></td>
+          <td>Marvell <span class="src-cell">US:MRVL</span></td>
+          <td class="num">310.58</td>
+          <td class="num">216.62</td>
+          <td class="num val-neg">
+-30.2%          </td>
+          <td class="num">11</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">2026-W25</span></td>
+          <td>奇鋐 AVC <span class="src-cell">TW:3017</span></td>
+          <td class="num">2410.00</td>
+          <td class="num">3425.00</td>
+          <td class="num val-pos">
++42.1%          </td>
+          <td class="num">12</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">2026-W25</span></td>
+          <td>NVIDIA <span class="src-cell">US:NVDA</span></td>
+          <td class="num">205.19</td>
+          <td class="num">217.55</td>
+          <td class="num val-pos">
++6.0%          </td>
+          <td class="num">12</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">2026-W25</span></td>
+          <td>台積電 TSMC <span class="src-cell">TW:2330</span></td>
+          <td class="num">2375.00</td>
+          <td class="num">2405.00</td>
+          <td class="num val-pos">
++1.3%          </td>
+          <td class="num">12</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">2026-W25</span></td>
+          <td>Broadcom <span class="src-cell">US:AVGO</span></td>
+          <td class="num">382.07</td>
+          <td class="num">368.79</td>
+          <td class="num val-neg">
+-3.5%          </td>
+          <td class="num">12</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">2026-W25</span></td>
+          <td>Micron <span class="src-cell">US:MU</span></td>
+          <td class="num">981.61</td>
+          <td class="num">932.86</td>
+          <td class="num val-neg">
+-5.0%          </td>
+          <td class="num">12</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">2026-W25</span></td>
+          <td>AMD <span class="src-cell">US:AMD</span></td>
+          <td class="num">511.57</td>
+          <td class="num">465.58</td>
+          <td class="num val-neg">
+-9.0%          </td>
+          <td class="num">12</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">2026-W25</span></td>
+          <td>台達電 Delta <span class="src-cell">TW:2308</span></td>
+          <td class="num">2210.00</td>
+          <td class="num">1840.00</td>
+          <td class="num val-neg">
+-16.7%          </td>
+          <td class="num">12</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">2026-W25</span></td>
+          <td>Lam Research <span class="src-cell">US:LRCX</span></td>
+          <td class="num">366.81</td>
+          <td class="num">301.90</td>
+          <td class="num val-neg">
+-17.7%          </td>
+          <td class="num">12</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">2026-W25</span></td>
+          <td>Applied Materials <span class="src-cell">US:AMAT</span></td>
+          <td class="num">567.25</td>
+          <td class="num">461.67</td>
+          <td class="num val-neg">
+-18.6%          </td>
+          <td class="num">12</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">2026-W25</span></td>
+          <td>Marvell <span class="src-cell">US:MRVL</span></td>
+          <td class="num">279.70</td>
+          <td class="num">216.62</td>
+          <td class="num val-neg">
+-22.6%          </td>
+          <td class="num">12</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">2026-W24</span></td>
+          <td>奇鋐 AVC <span class="src-cell">TW:3017</span></td>
+          <td class="num">2565.00</td>
+          <td class="num">3425.00</td>
+          <td class="num val-pos">
++33.5%          </td>
+          <td class="num">13</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">2026-W24</span></td>
+          <td>Micron <span class="src-cell">US:MU</span></td>
+          <td class="num">864.01</td>
+          <td class="num">932.86</td>
+          <td class="num val-pos">
++8.0%          </td>
+          <td class="num">13</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">2026-W24</span></td>
+          <td>NVIDIA <span class="src-cell">US:NVDA</span></td>
+          <td class="num">205.10</td>
+          <td class="num">217.55</td>
+          <td class="num val-pos">
++6.1%          </td>
+          <td class="num">13</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">2026-W24</span></td>
+          <td>台積電 TSMC <span class="src-cell">TW:2330</span></td>
+          <td class="num">2300.00</td>
+          <td class="num">2405.00</td>
+          <td class="num val-pos">
++4.6%          </td>
+          <td class="num">13</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">2026-W24</span></td>
+          <td>Applied Materials <span class="src-cell">US:AMAT</span></td>
+          <td class="num">453.01</td>
+          <td class="num">461.67</td>
+          <td class="num val-pos">
++1.9%          </td>
+          <td class="num">13</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">2026-W24</span></td>
+          <td>AMD <span class="src-cell">US:AMD</span></td>
+          <td class="num">466.38</td>
+          <td class="num">465.58</td>
+          <td class="num val-neg">
+-0.2%          </td>
+          <td class="num">13</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">2026-W24</span></td>
+          <td>Lam Research <span class="src-cell">US:LRCX</span></td>
+          <td class="num">303.28</td>
+          <td class="num">301.90</td>
+          <td class="num val-neg">
+-0.5%          </td>
+          <td class="num">13</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">2026-W24</span></td>
+          <td>Broadcom <span class="src-cell">US:AVGO</span></td>
+          <td class="num">385.73</td>
+          <td class="num">368.79</td>
+          <td class="num val-neg">
+-4.4%          </td>
+          <td class="num">13</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">2026-W24</span></td>
+          <td>Marvell <span class="src-cell">US:MRVL</span></td>
+          <td class="num">263.47</td>
+          <td class="num">216.62</td>
+          <td class="num val-neg">
+-17.8%          </td>
+          <td class="num">13</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">2026-W24</span></td>
+          <td>台達電 Delta <span class="src-cell">TW:2308</span></td>
+          <td class="num">2245.00</td>
+          <td class="num">1840.00</td>
+          <td class="num val-neg">
+-18.0%          </td>
+          <td class="num">13</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">2026-W23</span></td>
+          <td>3017 <span class="src-cell">TW:3017</span></td>
+          <td class="num">2785.00</td>
+          <td class="num">3425.00</td>
+          <td class="num val-pos">
++23.0%          </td>
+          <td class="num">14</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">2026-W23</span></td>
+          <td>2330 <span class="src-cell">TW:2330</span></td>
+          <td class="num">2355.00</td>
+          <td class="num">2405.00</td>
+          <td class="num val-pos">
++2.1%          </td>
+          <td class="num">14</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">2026-W23</span></td>
+          <td>AMAT <span class="src-cell">US:AMAT</span></td>
+          <td class="num">458.17</td>
+          <td class="num">461.67</td>
+          <td class="num val-pos">
++0.8%          </td>
+          <td class="num">14</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">2026-W23</span></td>
+          <td>MRVL <span class="src-cell">US:MRVL</span></td>
+          <td class="num">219.43</td>
+          <td class="num">216.62</td>
+          <td class="num val-neg">
+-1.3%          </td>
+          <td class="num">14</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">2026-W23</span></td>
+          <td>NVDA <span class="src-cell">US:NVDA</span></td>
+          <td class="num">224.10</td>
+          <td class="num">217.55</td>
+          <td class="num val-neg">
+-2.9%          </td>
+          <td class="num">14</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">2026-W23</span></td>
+          <td>LRCX <span class="src-cell">US:LRCX</span></td>
+          <td class="num">317.12</td>
+          <td class="num">301.90</td>
+          <td class="num val-neg">
+-4.8%          </td>
+          <td class="num">14</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">2026-W23</span></td>
+          <td>AMD <span class="src-cell">US:AMD</span></td>
+          <td class="num">510.13</td>
+          <td class="num">465.58</td>
+          <td class="num val-neg">
+-8.7%          </td>
+          <td class="num">14</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">2026-W23</span></td>
+          <td>MU <span class="src-cell">US:MU</span></td>
+          <td class="num">1035.50</td>
+          <td class="num">932.86</td>
+          <td class="num val-neg">
+-9.9%          </td>
+          <td class="num">14</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">2026-W23</span></td>
+          <td>AVGO <span class="src-cell">US:AVGO</span></td>
+          <td class="num">459.97</td>
+          <td class="num">368.79</td>
+          <td class="num val-neg">
+-19.8%          </td>
+          <td class="num">14</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">2026-W23</span></td>
+          <td>2308 <span class="src-cell">TW:2308</span></td>
+          <td class="num">2420.00</td>
+          <td class="num">1840.00</td>
+          <td class="num val-neg">
+-24.0%          </td>
+          <td class="num">14</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">2026-W22</span></td>
+          <td>3017 <span class="src-cell">TW:3017</span></td>
+          <td class="num">2575.00</td>
+          <td class="num">3425.00</td>
+          <td class="num val-pos">
++33.0%          </td>
+          <td class="num">15</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">2026-W22</span></td>
+          <td>MU <span class="src-cell">US:MU</span></td>
+          <td class="num">895.88</td>
+          <td class="num">932.86</td>
+          <td class="num val-pos">
++4.1%          </td>
+          <td class="num">15</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">2026-W22</span></td>
+          <td>2330 <span class="src-cell">TW:2330</span></td>
+          <td class="num">2310.00</td>
+          <td class="num">2405.00</td>
+          <td class="num val-pos">
++4.1%          </td>
+          <td class="num">15</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">2026-W22</span></td>
+          <td>MRVL <span class="src-cell">US:MRVL</span></td>
+          <td class="num">208.26</td>
+          <td class="num">216.62</td>
+          <td class="num val-pos">
++4.0%          </td>
+          <td class="num">15</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">2026-W22</span></td>
+          <td>AMAT <span class="src-cell">US:AMAT</span></td>
+          <td class="num">454.89</td>
+          <td class="num">461.67</td>
+          <td class="num val-pos">
++1.5%          </td>
+          <td class="num">15</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">2026-W22</span></td>
+          <td>NVDA <span class="src-cell">US:NVDA</span></td>
+          <td class="num">214.61</td>
+          <td class="num">217.55</td>
+          <td class="num val-pos">
++1.4%          </td>
+          <td class="num">15</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">2026-W22</span></td>
+          <td>LRCX <span class="src-cell">US:LRCX</span></td>
+          <td class="num">322.68</td>
+          <td class="num">301.90</td>
+          <td class="num val-neg">
+-6.4%          </td>
+          <td class="num">15</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">2026-W22</span></td>
+          <td>AMD <span class="src-cell">US:AMD</span></td>
+          <td class="num">503.89</td>
+          <td class="num">465.58</td>
+          <td class="num val-neg">
+-7.6%          </td>
+          <td class="num">15</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">2026-W22</span></td>
+          <td>AVGO <span class="src-cell">US:AVGO</span></td>
+          <td class="num">422.01</td>
+          <td class="num">368.79</td>
+          <td class="num val-neg">
+-12.6%          </td>
+          <td class="num">15</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">2026-W22</span></td>
+          <td>2308 <span class="src-cell">TW:2308</span></td>
+          <td class="num">2290.00</td>
+          <td class="num">1840.00</td>
+          <td class="num val-neg">
+-19.6%          </td>
+          <td class="num">15</td>
+        </tr>
+      </tbody>
+    </table>
+    <p style="font-size:12px;color:var(--faint);margin-top:8px;">進場價為首次推薦當週報價；最新價為本週更新時報價。報酬率不含股息或分割。</p>
+  </section>
+
+  <section>
+    <h2>本週復盤 <span class="count">33 檔虧損 &gt; 5%</span></h2>
+    <p style="font-size:13px;color:var(--muted);margin-bottom:12px;">
+      同期基準報酬：<b>SPY+QQQ</b>
+        <span class="val-neg">-65.5%</span>
+    </p>
+    <table>
+      <thead>
+        <tr>
+          <th>標的</th>
+          <th class="num">報酬率</th>
+          <th>診斷</th>
+          <th>說明</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="src-cell">US:LLY</span></td>
+          <td class="num val-neg">-6.4%</td>
+          <td><span class="src-cell">model_failure</span></td>
+          <td style="font-size:13px;color:var(--muted)">基本面與傳導分數當時通過篩選，但股價仍下跌；需檢視篩選門檻</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">US:WST</span></td>
+          <td class="num val-neg">-5.8%</td>
+          <td><span class="src-cell">model_failure</span></td>
+          <td style="font-size:13px;color:var(--muted)">基本面與傳導分數當時通過篩選，但股價仍下跌；需檢視篩選門檻</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">US:AVGO</span></td>
+          <td class="num val-neg">-7.8%</td>
+          <td><span class="src-cell">model_failure</span></td>
+          <td style="font-size:13px;color:var(--muted)">基本面與傳導分數當時通過篩選，但股價仍下跌；需檢視篩選門檻</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">US:MRVL</span></td>
+          <td class="num val-neg">-8.1%</td>
+          <td><span class="src-cell">model_failure</span></td>
+          <td style="font-size:13px;color:var(--muted)">基本面與傳導分數當時通過篩選，但股價仍下跌；需檢視篩選門檻</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">US:LRCX</span></td>
+          <td class="num val-neg">-13.8%</td>
+          <td><span class="src-cell">model_failure</span></td>
+          <td style="font-size:13px;color:var(--muted)">基本面與傳導分數當時通過篩選，但股價仍下跌；需檢視篩選門檻</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">US:AMD</span></td>
+          <td class="num val-neg">-16.6%</td>
+          <td><span class="src-cell">model_failure</span></td>
+          <td style="font-size:13px;color:var(--muted)">基本面與傳導分數當時通過篩選，但股價仍下跌；需檢視篩選門檻</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">US:AMAT</span></td>
+          <td class="num val-neg">-23.4%</td>
+          <td><span class="src-cell">model_failure</span></td>
+          <td style="font-size:13px;color:var(--muted)">基本面與傳導分數當時通過篩選，但股價仍下跌；需檢視篩選門檻</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">US:AMD</span></td>
+          <td class="num val-neg">-10.1%</td>
+          <td><span class="src-cell">model_failure</span></td>
+          <td style="font-size:13px;color:var(--muted)">基本面與傳導分數當時通過篩選，但股價仍下跌；需檢視篩選門檻</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">US:MRVL</span></td>
+          <td class="num val-neg">-11.7%</td>
+          <td><span class="src-cell">model_failure</span></td>
+          <td style="font-size:13px;color:var(--muted)">基本面與傳導分數當時通過篩選，但股價仍下跌；需檢視篩選門檻</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">US:LRCX</span></td>
+          <td class="num val-neg">-14.1%</td>
+          <td><span class="src-cell">model_failure</span></td>
+          <td style="font-size:13px;color:var(--muted)">基本面與傳導分數當時通過篩選，但股價仍下跌；需檢視篩選門檻</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">US:AMAT</span></td>
+          <td class="num val-neg">-23.4%</td>
+          <td><span class="src-cell">model_failure</span></td>
+          <td style="font-size:13px;color:var(--muted)">基本面與傳導分數當時通過篩選，但股價仍下跌；需檢視篩選門檻</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">US:AMD</span></td>
+          <td class="num val-neg">-10.7%</td>
+          <td><span class="src-cell">model_failure</span></td>
+          <td style="font-size:13px;color:var(--muted)">基本面與傳導分數當時通過篩選，但股價仍下跌；需檢視篩選門檻</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">US:MU</span></td>
+          <td class="num val-neg">-17.6%</td>
+          <td><span class="src-cell">model_failure</span></td>
+          <td style="font-size:13px;color:var(--muted)">基本面與傳導分數當時通過篩選，但股價仍下跌；需檢視篩選門檻</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">US:MRVL</span></td>
+          <td class="num val-neg">-18.8%</td>
+          <td><span class="src-cell">model_failure</span></td>
+          <td style="font-size:13px;color:var(--muted)">基本面與傳導分數當時通過篩選，但股價仍下跌；需檢視篩選門檻</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">US:LRCX</span></td>
+          <td class="num val-neg">-20.4%</td>
+          <td><span class="src-cell">model_failure</span></td>
+          <td style="font-size:13px;color:var(--muted)">基本面與傳導分數當時通過篩選，但股價仍下跌；需檢視篩選門檻</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">US:AMAT</span></td>
+          <td class="num val-neg">-26.4%</td>
+          <td><span class="src-cell">model_failure</span></td>
+          <td style="font-size:13px;color:var(--muted)">基本面與傳導分數當時通過篩選，但股價仍下跌；需檢視篩選門檻</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">US:AVGO</span></td>
+          <td class="num val-neg">-10.3%</td>
+          <td><span class="src-cell">model_failure</span></td>
+          <td style="font-size:13px;color:var(--muted)">基本面與傳導分數當時通過篩選，但股價仍下跌；需檢視篩選門檻</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">US:AMD</span></td>
+          <td class="num val-neg">-13.4%</td>
+          <td><span class="src-cell">model_failure</span></td>
+          <td style="font-size:13px;color:var(--muted)">基本面與傳導分數當時通過篩選，但股價仍下跌；需檢視篩選門檻</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">US:MU</span></td>
+          <td class="num val-neg">-17.7%</td>
+          <td><span class="src-cell">model_failure</span></td>
+          <td style="font-size:13px;color:var(--muted)">基本面與傳導分數當時通過篩選，但股價仍下跌；需檢視篩選門檻</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">US:LRCX</span></td>
+          <td class="num val-neg">-22.4%</td>
+          <td><span class="src-cell">model_failure</span></td>
+          <td style="font-size:13px;color:var(--muted)">基本面與傳導分數當時通過篩選，但股價仍下跌；需檢視篩選門檻</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">US:AMAT</span></td>
+          <td class="num val-neg">-25.2%</td>
+          <td><span class="src-cell">model_failure</span></td>
+          <td style="font-size:13px;color:var(--muted)">基本面與傳導分數當時通過篩選，但股價仍下跌；需檢視篩選門檻</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">US:MRVL</span></td>
+          <td class="num val-neg">-30.2%</td>
+          <td><span class="src-cell">model_failure</span></td>
+          <td style="font-size:13px;color:var(--muted)">基本面與傳導分數當時通過篩選，但股價仍下跌；需檢視篩選門檻</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">US:AMD</span></td>
+          <td class="num val-neg">-9.0%</td>
+          <td><span class="src-cell">model_failure</span></td>
+          <td style="font-size:13px;color:var(--muted)">基本面與傳導分數當時通過篩選，但股價仍下跌；需檢視篩選門檻</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">US:LRCX</span></td>
+          <td class="num val-neg">-17.7%</td>
+          <td><span class="src-cell">model_failure</span></td>
+          <td style="font-size:13px;color:var(--muted)">基本面與傳導分數當時通過篩選，但股價仍下跌；需檢視篩選門檻</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">US:AMAT</span></td>
+          <td class="num val-neg">-18.6%</td>
+          <td><span class="src-cell">model_failure</span></td>
+          <td style="font-size:13px;color:var(--muted)">基本面與傳導分數當時通過篩選，但股價仍下跌；需檢視篩選門檻</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">US:MRVL</span></td>
+          <td class="num val-neg">-22.6%</td>
+          <td><span class="src-cell">model_failure</span></td>
+          <td style="font-size:13px;color:var(--muted)">基本面與傳導分數當時通過篩選，但股價仍下跌；需檢視篩選門檻</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">US:MRVL</span></td>
+          <td class="num val-neg">-17.8%</td>
+          <td><span class="src-cell">model_failure</span></td>
+          <td style="font-size:13px;color:var(--muted)">基本面與傳導分數當時通過篩選，但股價仍下跌；需檢視篩選門檻</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">US:AMD</span></td>
+          <td class="num val-neg">-8.7%</td>
+          <td><span class="src-cell">model_failure</span></td>
+          <td style="font-size:13px;color:var(--muted)">基本面與傳導分數當時通過篩選，但股價仍下跌；需檢視篩選門檻</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">US:MU</span></td>
+          <td class="num val-neg">-9.9%</td>
+          <td><span class="src-cell">model_failure</span></td>
+          <td style="font-size:13px;color:var(--muted)">基本面與傳導分數當時通過篩選，但股價仍下跌；需檢視篩選門檻</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">US:AVGO</span></td>
+          <td class="num val-neg">-19.8%</td>
+          <td><span class="src-cell">model_failure</span></td>
+          <td style="font-size:13px;color:var(--muted)">基本面與傳導分數當時通過篩選，但股價仍下跌；需檢視篩選門檻</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">US:LRCX</span></td>
+          <td class="num val-neg">-6.4%</td>
+          <td><span class="src-cell">model_failure</span></td>
+          <td style="font-size:13px;color:var(--muted)">基本面與傳導分數當時通過篩選，但股價仍下跌；需檢視篩選門檻</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">US:AMD</span></td>
+          <td class="num val-neg">-7.6%</td>
+          <td><span class="src-cell">model_failure</span></td>
+          <td style="font-size:13px;color:var(--muted)">基本面與傳導分數當時通過篩選，但股價仍下跌；需檢視篩選門檻</td>
+        </tr>
+        <tr>
+          <td><span class="src-cell">US:AVGO</span></td>
+          <td class="num val-neg">-12.6%</td>
+          <td><span class="src-cell">model_failure</span></td>
+          <td style="font-size:13px;color:var(--muted)">基本面與傳導分數當時通過篩選，但股價仍下跌；需檢視篩選門檻</td>
+        </tr>
+      </tbody>
+    </table>
+    <p style="font-size:12px;color:var(--faint);margin-top:8px;">
+      小結：0 檔純屬大盤連動 ／ 33 檔為模型錯判或基本面惡化
+    </p>
+  </section>
+
+  <section>
+    <h2>指標準確度 <span class="count">近 8 週</span></h2>
+    <table>
+      <thead>
+        <tr>
+          <th>指標群組</th>
+          <th class="num">與報酬相關係數</th>
+          <th class="num">樣本數</th>
+          <th>評估</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>balance_sheet</td>
+          <td class="num val-neg">
+-0.134          </td>
+          <td class="num">24</td>
+          <td style="font-size:13px;color:var(--muted)">偏弱</td>
+        </tr>
+        <tr>
+          <td>cash_flow</td>
+          <td class="num val-pos">
+0.027          </td>
+          <td class="num">24</td>
+          <td style="font-size:13px;color:var(--muted)">偏弱</td>
+        </tr>
+        <tr>
+          <td>growth</td>
+          <td class="num val-pos">
+0.274          </td>
+          <td class="num">24</td>
+          <td style="font-size:13px;color:var(--muted)">中等</td>
+        </tr>
+        <tr>
+          <td>profitability</td>
+          <td class="num val-neg">
+-0.077          </td>
+          <td class="num">24</td>
+          <td style="font-size:13px;color:var(--muted)">偏弱</td>
+        </tr>
+        <tr>
+          <td>valuation</td>
+          <td class="num val-pos">
+0.485          </td>
+          <td class="num">24</td>
+          <td style="font-size:13px;color:var(--muted)">有效</td>
+        </tr>
+      </tbody>
+    </table>
+    <p style="font-size:12px;color:var(--faint);margin-top:8px;">相關係數以歷史推薦的原始分數與實際報酬率計算，反映各指標群組的選股預測力。資料累積後自動更新。</p>
+  </section>
+
+  <details class="glossary">
+    <summary>名詞白話解釋</summary>
+    <div class="gbody">
+      <h4>三個分數</h4>
+      <ul>
+        <li><b>基本面分數</b>：這家公司「財報體質」好不好（賺錢能力、負債、現金流、估值貴不貴），0–100 分。</li>
+        <li><b>傳導分數</b>：這檔股票「離需求源頭多近、證據多硬」。離催化劑越近、每段供應鏈關係都有出處，分數越高。</li>
+        <li><b>信心分數</b>：上面兩個分數各佔一半，再乘上「資料完整度」。資料缺越多被打越低，整個是公式算的，分析文字不能灌水。</li>
+      </ul>
+      <h4>常見名詞</h4>
+      <ul>
+        <li><b>催化劑</b>：帶動一整條產業需求的源頭事件（例：AI 資料中心大舉投資）。</li>
+        <li><b>需求傳導鏈／幾跳</b>：需求像骨牌一節節傳下去。「0 跳」＝它自己就是源頭；「2 跳」＝隔了兩層才受惠。</li>
+        <li><b>已查證 vs 敘事假設</b>：每段供應鏈關係都要有出處才算「已查證」。沒出處的只能叫「敘事假設」，<b>就算財報滿分也不會被推薦</b>（本工具最核心的防臆測設計）。</li>
+        <li><b>資料完整度</b>：13 項該有的數據實際拿到幾項。例：12／13 ＝ 完整度係數約 0.97。</li>
+      </ul>
+      <h4>為什麼有些欄位「資料缺漏」</h4>
+      <ul>
+        <li>最常見的是<b>月營收年增率</b>：只有<b>台股</b>法規要求每月公布營收，<b>美股沒有</b>，所以美股這格永遠空白。</li>
+        <li>其他偶發：資料來源那年某個數字本身就沒給（例如淨利從缺，連帶 ROE、淨利年增率算不出來），或前一年虧損、年增率算出來沒意義。</li>
+        <li><b>重點</b>：缺的一律留白、明白標出來，<b>絕不自己猜一個數字填進去</b> —— 這是刻意的設計。</li>
+      </ul>
+    </div>
+  </details>
+
+  <footer>
+    本報告由自動化雙引擎研究工具產生。所有數據附帶出處；標記「敘事假設」的環節尚未經來源證實，不得視為事實。非投資建議。
+  </footer>
+
+</div>
+
+<script>
+  // Watchlist: client-side filter + column sort. Vanilla JS, no dependencies.
+  (function () {
+    var table = document.getElementById("watch");
+    if (!table) return;
+    var tbody = table.querySelector("tbody");
+    var filter = document.getElementById("watch-filter");
+
+    if (filter) {
+      filter.addEventListener("input", function () {
+        var q = this.value.trim().toLowerCase();
+        tbody.querySelectorAll("tr").forEach(function (tr) {
+          tr.style.display = tr.textContent.toLowerCase().indexOf(q) > -1 ? "" : "none";
+        });
+      });
+    }
+
+    table.querySelectorAll("th[data-sort]").forEach(function (th) {
+      var asc = true;
+      th.addEventListener("click", function () {
+        var col = +th.dataset.col, type = th.dataset.sort;
+        var rows = Array.prototype.slice.call(tbody.querySelectorAll("tr"));
+        rows.sort(function (a, b) {
+          var x = a.children[col].textContent.trim();
+          var y = b.children[col].textContent.trim();
+          if (type === "num") { x = parseFloat(x) || 0; y = parseFloat(y) || 0; return asc ? x - y : y - x; }
+          return asc ? x.localeCompare(y, "zh-Hant") : y.localeCompare(x, "zh-Hant");
+        });
+        asc = !asc;
+        rows.forEach(function (r) { tbody.appendChild(r); });
+      });
+    });
+  })();
+</script>
+</body>
+</html>
