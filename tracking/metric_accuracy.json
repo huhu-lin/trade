@@ -1,31 +1,31 @@
 {
-  "computed_at": "2026-10-26",
+  "computed_at": "2026-11-02",
   "n_periods": 8,
   "groups": {
     "balance_sheet": {
-      "corr": -0.057,
+      "corr": -0.441,
       "n": 16,
-      "verdict": "偏弱"
+      "verdict": "有效"
     },
     "cash_flow": {
-      "corr": -0.057,
+      "corr": -0.441,
       "n": 16,
-      "verdict": "偏弱"
+      "verdict": "有效"
     },
     "growth": {
-      "corr": 0.057,
+      "corr": 0.441,
       "n": 16,
-      "verdict": "偏弱"
+      "verdict": "有效"
     },
     "profitability": {
-      "corr": 0.057,
+      "corr": 0.441,
       "n": 16,
-      "verdict": "偏弱"
+      "verdict": "有效"
     },
     "valuation": {
-      "corr": -0.012,
+      "corr": -0.406,
       "n": 16,
-      "verdict": "偏弱"
+      "verdict": "有效"
     }
   }
 }
